@@ -131,6 +131,7 @@ class VisionExtractResponse(BaseModel):
     fitType: Optional[str]
     confidence: float
     lowConfidenceFields: List[str]    # fields with confidence < 0.6
+    imageUrl: Optional[str] = None
 
 
 # ── Admin ─────────────────────────────────────────────────────────────────────

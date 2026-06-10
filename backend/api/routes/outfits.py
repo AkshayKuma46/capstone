@@ -35,7 +35,8 @@ async def recommend(
 ):
     """Score outfit combinations from wardrobe for a given occasion."""
     from ml.feature_extractor import extract_features
-    from rag.pipeline import _generate_outfit_combinations
+    from rag.pipeline import _generate_outfit_combinations, _call_gemini_stylist
+    from vector_store.store import get_vector_store
 
     wardrobe = await _get_or_create_wardrobe(body.userId, db)
     garment_result = await db.execute(
@@ -78,23 +79,56 @@ async def recommend(
     scored.sort(key=lambda x: x[0].compatibilityScore, reverse=True)
     top3 = scored[:3]
 
-    cards = [
-        OutfitCard(
-            outfitId=resp.outfitId,
-            garmentNames=[g.get("name") for g in combo],
-            garmentIds=[g.get("garmentId") for g in combo],
-            compatibilityScore=resp.compatibilityScore,
-            confidenceScore=resp.confidenceScore,
-            lowConfidence=resp.confidenceScore < 0.6,
-            corpusVersion=resp.corpusVersion,
-            occasion=body.occasion,
+    # Retrieve relevant rules from vector store
+    retrieved_rule_texts = []
+    low_confidence_retrieval = False
+    try:
+        vs = get_vector_store()
+        retrieval = vs.retrieve(
+            query=body.occasion,
+            user_id=body.userId,
+            k=body.k,
         )
-        for resp, combo in top3
-    ]
+        if retrieval:
+            low_confidence_retrieval = retrieval.lowConfidence
+            for record in retrieval.records:
+                if record.type == "rule":
+                    retrieved_rule_texts.append(
+                        record.metadata.get("description", "") or
+                        record.metadata.get("document", "")
+                    )
+    except Exception as e:
+        logger.error(f"[OutfitsRoute] Vector store retrieval failed: {e}")
+        low_confidence_retrieval = True
+
+    cards = []
+    for resp, combo in top3:
+        garment_names = [g.get("name") for g in combo]
+        explanation = _call_gemini_stylist(
+            garment_names=garment_names,
+            compatibility_score=resp.compatibilityScore,
+            confidence_score=resp.confidenceScore,
+            occasion=body.occasion,
+            retrieved_rules=retrieved_rule_texts,
+        )
+        cards.append(
+            OutfitCard(
+                outfitId=resp.outfitId,
+                garmentNames=garment_names,
+                garmentIds=[g.get("garmentId") for g in combo],
+                compatibilityScore=resp.compatibilityScore,
+                confidenceScore=resp.confidenceScore,
+                lowConfidence=resp.confidenceScore < 0.6,
+                explanation=explanation or "",
+                explanationUnavailable=explanation is None,
+                corpusVersion=resp.corpusVersion,
+                occasion=body.occasion,
+            )
+        )
 
     return RecommendResponse(
         recommendations=cards,
-        lowConfidence=any(c.lowConfidence for c in cards),
+        lowConfidence=any(c.lowConfidence for c in cards) or low_confidence_retrieval,
         requestId=str(uuid.uuid4()),
         corpusVersion=_corpus_version,
     )
@@ -153,17 +187,18 @@ async def list_outfits(
         query = query.where(Outfit.collectionName == collection)
     result = await db.execute(query)
     outfits = result.scalars().all()
-    return {
-        "outfits": [
-            {
-                "outfitId": o.outfitId,
-                "collectionName": o.collectionName,
-                "compatibilityScore": o.compatibilityScore,
-                "confidenceScore": o.confidenceScore,
-                "explanation": o.explanation,
-                "occasion": o.occasion,
-                "createdAt": o.createdAt.isoformat(),
-            }
-            for o in outfits
-        ]
-    }
+    
+    outfit_dicts = []
+    for o in outfits:
+        await db.refresh(o, ["garment_links"])
+        outfit_dicts.append({
+            "outfitId": o.outfitId,
+            "collectionName": o.collectionName,
+            "compatibilityScore": o.compatibilityScore,
+            "confidenceScore": o.confidenceScore,
+            "explanation": o.explanation,
+            "occasion": o.occasion,
+            "garmentIds": [link.garmentId for link in o.garment_links],
+            "createdAt": o.createdAt.isoformat(),
+        })
+    return {"outfits": outfit_dicts}

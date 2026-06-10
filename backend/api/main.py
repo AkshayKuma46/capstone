@@ -20,13 +20,14 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 # ── Path setup (allow running from project root or backend/) ──────────────────
 BACKEND_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BACKEND_DIR))
 
 from config import (
-    LOG_LEVEL, RULE_CORPUS_DIR, MODELS_DIR, APP_ENV
+    LOG_LEVEL, RULE_CORPUS_DIR, MODELS_DIR, APP_ENV, UPLOADS_DIR
 )
 
 logging.basicConfig(
@@ -144,6 +145,8 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+
+app.mount("/static/uploads", StaticFiles(directory=str(UPLOADS_DIR)), name="uploads")
 
 # ── CORS ───────────────────────────────────────────────────────────────────────
 app.add_middleware(

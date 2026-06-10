@@ -12,6 +12,8 @@ load_dotenv(ROOT_DIR / ".env")
 
 # ── API Keys ──────────────────────────────────────────────────────────────────
 GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+if GEMINI_API_KEY == "your_gemini_api_key_here":
+    GEMINI_API_KEY = ""
 
 # ── Database ──────────────────────────────────────────────────────────────────
 DATABASE_URL: str = os.getenv(
@@ -25,7 +27,8 @@ CHROMA_PERSIST_DIR: Path = Path(
 )
 
 # ── Embedding ─────────────────────────────────────────────────────────────────
-EMBEDDING_BACKEND: str = os.getenv("EMBEDDING_BACKEND", "local")
+embed_model = os.getenv("EMBEDDING_BACKEND", "local")
+EMBEDDING_BACKEND: str = embed_model
 # Local model: all-MiniLM-L6-v2 (384-dim), fast, no API key needed
 LOCAL_EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
 GEMINI_EMBEDDING_MODEL: str = "models/text-embedding-004"
@@ -34,11 +37,13 @@ GEMINI_EMBEDDING_MODEL: str = "models/text-embedding-004"
 RULE_CORPUS_DIR: Path = Path(os.getenv("RULE_CORPUS_DIR", str(ROOT_DIR / "data")))
 MODELS_DIR: Path = Path(os.getenv("MODELS_DIR", str(ROOT_DIR / "models")))
 DATA_DIR: Path = ROOT_DIR / "data"
+UPLOADS_DIR: Path = DATA_DIR / "uploads"
 
 # Ensure directories exist
 CHROMA_PERSIST_DIR.mkdir(parents=True, exist_ok=True)
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
 DATA_DIR.mkdir(parents=True, exist_ok=True)
+UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── Retrieval ─────────────────────────────────────────────────────────────────
 RAG_DEFAULT_K: int = 5

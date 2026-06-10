@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { WardrobeProvider } from './context/WardrobeContext';
-import BottomNav from './components/BottomNav';
 import Toast from './components/Toast';
 import WardrobePage from './pages/WardrobePage';
 import UploadPage from './pages/UploadPage';
@@ -15,35 +14,23 @@ function AppContent() {
   function renderPage() {
     switch (page) {
       case 'wardrobe':
-        return <WardrobePage setPage={setPage} setSelectedGarmentId={setSelectedGarmentId} />;
+        return <WardrobePage page={page} setPage={setPage} setSelectedGarmentId={setSelectedGarmentId} />;
       case 'upload':
         return <UploadPage setPage={setPage} />;
       case 'garment-detail':
         return <GarmentDetailPage garmentId={selectedGarmentId} setPage={setPage} />;
       case 'recommend':
-        return <RecommendPage setPage={setPage} />;
+        return <RecommendPage page={page} setPage={setPage} />;
       case 'collections':
-        return <CollectionsPage />;
+        return <CollectionsPage page={page} setPage={setPage} />;
       default:
-        return <WardrobePage setPage={setPage} setSelectedGarmentId={setSelectedGarmentId} />;
+        return <WardrobePage page={page} setPage={setPage} setSelectedGarmentId={setSelectedGarmentId} />;
     }
   }
-
-  // Pages that show bottom nav
-  const showBottomNav = ['wardrobe', 'recommend', 'collections'].includes(page);
 
   return (
     <div className="app">
       {renderPage()}
-      {showBottomNav && (
-        <BottomNav
-          page={page}
-          setPage={p => {
-            setPage(p);
-            setSelectedGarmentId(null);
-          }}
-        />
-      )}
       <Toast />
     </div>
   );

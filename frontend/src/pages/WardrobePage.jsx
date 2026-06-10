@@ -7,7 +7,7 @@ const CATEGORY_OPTIONS = ['All', 'top', 'bottom', 'outerwear', 'footwear', 'acce
 const COLOR_OPTIONS = ['All', ...Object.keys(COLOR_MAP)];
 const OCCASION_OPTIONS = ['All', 'casual', 'business casual', 'formal', 'outdoor', 'sport', 'date night', 'travel', 'wedding', 'festival', 'party'];
 
-export default function WardrobePage({ setPage, setSelectedGarmentId }) {
+export default function WardrobePage({ page, setPage, setSelectedGarmentId }) {
   const { garments } = useWardrobe();
   const [filterCategory, setFilterCategory] = useState('All');
   const [filterColor, setFilterColor] = useState('All');
@@ -32,8 +32,12 @@ export default function WardrobePage({ setPage, setSelectedGarmentId }) {
     <>
       {/* Top Nav */}
       <div className="top-nav">
-        <span className="logo">✦ AWS</span>
-        <span className="nav-title">Wardrobe ({garments.length})</span>
+        <span className="logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>✦ AWS</span>
+        <div className="nav-links">
+          <button className={`nav-link ${page === 'wardrobe' ? 'active' : ''}`} onClick={() => setPage('wardrobe')}>Wardrobe</button>
+          <button className={`nav-link ${page === 'recommend' ? 'active' : ''}`} onClick={() => setPage('recommend')}>Recommended</button>
+          <button className={`nav-link ${page === 'collections' ? 'active' : ''}`} onClick={() => setPage('collections')}>Saved</button>
+        </div>
         <button className="nav-action" onClick={() => setPage('upload')} aria-label="Add garment">
           + Add
         </button>

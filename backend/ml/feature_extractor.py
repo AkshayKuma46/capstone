@@ -146,17 +146,6 @@ def _compute_occasion_score(garments: list[dict], occasion: Optional[str], rules
     if not occasion:
         return 70.0
 
-    style_rules = rules.get("style_occasion_rules", {})
-    occasion_garments = style_rules.get(occasion.lower(), {}).get("appropriate_categories", [])
-
-    if not occasion_garments:
-        return 70.0
-
-    garment_categories = [g.get("category", "").lower() for g in garments]
-    garment_occasion_tags = []
-    for g in garments:
-        garment_occasion_tags.extend(t.lower() for t in g.get("occasionTags", []))
-
     # Check if all garments have the occasion tag
     tag_matches = sum(1 for g in garments if occasion.lower() in [t.lower() for t in g.get("occasionTags", [])])
     tag_score = (tag_matches / max(len(garments), 1)) * 100
@@ -166,7 +155,7 @@ def _compute_occasion_score(garments: list[dict], occasion: Optional[str], rules
 
 def _compute_footwear_score(garments: list[dict], occasion: Optional[str], rules: dict) -> float:
     """Score footwear appropriateness for the occasion."""
-    footwear = next((g for g in garments if g.get("category", "").lower() == "footwear"), None)
+    footwear = next((g for g in garments if (g.get("category") or "").lower() == "footwear"), None)
     if not footwear:
         return 0.0   # Missing footwear — will trigger sentinel
 
@@ -174,12 +163,19 @@ def _compute_footwear_score(garments: list[dict], occasion: Optional[str], rules
     if not occasion:
         return 70.0
 
-    occasion_footwear = footwear_rules.get(occasion.lower(), {})
-    appropriate = [s.lower() for s in occasion_footwear.get("appropriate_styles", [])]
-    inappropriate = [s.lower() for s in occasion_footwear.get("inappropriate_styles", [])]
+    occasion_footwear = footwear_rules.get(occasion.lower(), [])
+    if isinstance(occasion_footwear, list):
+        appropriate = [s.lower() for s in occasion_footwear]
+        inappropriate = []
+    elif isinstance(occasion_footwear, dict):
+        appropriate = [s.lower() for s in occasion_footwear.get("appropriate_styles", [])]
+        inappropriate = [s.lower() for s in occasion_footwear.get("inappropriate_styles", [])]
+    else:
+        appropriate = []
+        inappropriate = []
 
-    style_tag = footwear.get("styleTag", "").lower()
-    name_lower = footwear.get("name", "").lower()
+    style_tag = (footwear.get("styleTag") or "").lower()
+    name_lower = (footwear.get("name") or "").lower()
 
     # Check by style tag or name keywords
     is_appropriate = any(s in style_tag or s in name_lower for s in appropriate)
@@ -198,9 +194,9 @@ def _compute_pattern_score(garments: list[dict], rules: dict) -> float:
     max_patterns = pattern_rules.get("max_patterns_in_outfit", 1)
 
     patterns = [
-        g.get("patternType", "").lower().strip()
+        (g.get("patternType") or "").lower().strip()
         for g in garments
-        if g.get("patternType", "").lower() not in ("", "solid", "plain", "none")
+        if (g.get("patternType") or "").lower() not in ("", "solid", "plain", "none")
     ]
 
     pattern_count = len(patterns)
@@ -225,7 +221,7 @@ def _compute_fit_score(garments: list[dict], rules: dict) -> float:
     ]
 
     fits = set(
-        g.get("fitType", "").lower().strip()
+        (g.get("fitType") or "").lower().strip()
         for g in garments
         if g.get("fitType")
     )
@@ -249,7 +245,7 @@ def _compute_category_balance_score(garments: list[dict]) -> float:
     Score completeness of garment categories.
     A complete outfit has: top + bottom + footwear (outerwear optional).
     """
-    categories = {g.get("category", "").lower() for g in garments}
+    categories = {(g.get("category") or "").lower() for g in garments}
 
     required = {"top", "bottom", "footwear"}
     has_required = required.issubset(categories)
@@ -281,9 +277,15 @@ def _compute_season_material_score(garments: list[dict], rules: dict) -> float:
 
     scores = []
     for garment in garments:
-        fabric = garment.get("fabricType", "").lower()
+        fabric = (garment.get("fabricType") or "").lower()
         for season, materials in season_rules.items():
-            appropriate = [m.lower() for m in materials.get("appropriate_fabrics", [])]
+            if isinstance(materials, list):
+                appropriate = [m.lower() for m in materials]
+            elif isinstance(materials, dict):
+                appropriate = [m.lower() for m in materials.get("appropriate_fabrics", [])]
+            else:
+                appropriate = []
+
             if fabric in appropriate:
                 scores.append(90.0)
                 break

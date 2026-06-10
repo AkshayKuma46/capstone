@@ -1,26 +1,39 @@
 import { useState } from 'react';
 import { useWardrobe } from '../context/WardrobeContext';
-import { OCCASIONS, generateOutfits, COLOR_MAP } from '../data/mockData';
+import { OCCASIONS, COLOR_MAP } from '../data/mockData';
 import GarmentColorBlock from '../components/GarmentColorBlock';
 
-export default function RecommendPage({ setPage }) {
+export default function RecommendPage({ page, setPage }) {
   const { garments, saveOutfitToCollection, showToast } = useWardrobe();
   const [selectedOccasion, setSelectedOccasion] = useState(null);
   const [loading, setLoading] = useState(false);
   const [outfits, setOutfits] = useState([]);
   const [saveModal, setSaveModal] = useState(null); // outfit to save
 
-  function handleOccasionSelect(occ) {
+  async function handleOccasionSelect(occ) {
     if (garments.length === 0) return;
     setSelectedOccasion(occ);
     setLoading(true);
     setOutfits([]);
-    // Simulate scoring delay
-    setTimeout(() => {
-      const results = generateOutfits(occ.id, garments);
-      setOutfits(results);
+    try {
+      const res = await fetch('http://localhost:8000/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: 'demo-user',
+          occasion: occ.id,
+          k: 5
+        })
+      });
+      if (!res.ok) throw new Error('Failed to get recommendations');
+      const data = await res.json();
+      setOutfits(data.recommendations || []);
+    } catch (err) {
+      console.error(err);
+      showToast('Failed to load recommendations', 'error');
+    } finally {
       setLoading(false);
-    }, 1800);
+    }
   }
 
   function handleRefresh() {
@@ -52,10 +65,12 @@ export default function RecommendPage({ setPage }) {
   return (
     <>
       <div className="top-nav">
-        <span className="logo">✦ AWS</span>
-        <span className="nav-title">
-          {selectedOccasion && !loading ? `Outfits for ${selectedOccasion.label}` : 'Recommendations'}
-        </span>
+        <span className="logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>✦ AWS</span>
+        <div className="nav-links">
+          <button className={`nav-link ${page === 'wardrobe' ? 'active' : ''}`} onClick={() => setPage('wardrobe')}>Wardrobe</button>
+          <button className={`nav-link ${page === 'recommend' ? 'active' : ''}`} onClick={() => setPage('recommend')}>Recommended</button>
+          <button className={`nav-link ${page === 'collections' ? 'active' : ''}`} onClick={() => setPage('collections')}>Saved</button>
+        </div>
         {selectedOccasion && !loading && outfits.length > 0 ? (
           <button className="nav-action" onClick={handleRefresh} aria-label="Refresh outfits">↻</button>
         ) : (

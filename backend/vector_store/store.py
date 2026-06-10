@@ -172,6 +172,7 @@ class VectorStore:
                         "type": "rule",
                         "corpusVersion": corpus_version,
                         "ruleType": rule.get("ruleType", ""),
+                        "description": text,
                         "updatedAt": datetime.now(timezone.utc).isoformat(),
                     }
                 }
@@ -214,12 +215,15 @@ class VectorStore:
         if filter_type in (None, "rule", "both"):
             for rid, entry in self._rules.items():
                 sim = _cosine_similarity(qvec, entry["vector"])
+                meta = entry["metadata"].copy()
+                meta["document"] = entry.get("document", "")
+                meta["description"] = entry.get("document", "")
                 records.append(EmbeddingRecord(
                     id=rid, type="rule", userId=None,
-                    corpusVersion=entry["metadata"].get("corpusVersion"),
-                    metadata=entry["metadata"],
+                    corpusVersion=meta.get("corpusVersion"),
+                    metadata=meta,
                     similarityScore=round(sim, 4),
-                    updatedAt=entry["metadata"].get("updatedAt", ""),
+                    updatedAt=meta.get("updatedAt", ""),
                 ))
 
         records.sort(key=lambda r: r.similarityScore, reverse=True)

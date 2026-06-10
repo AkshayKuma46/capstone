@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useWardrobe } from '../context/WardrobeContext';
 import GarmentColorBlock from '../components/GarmentColorBlock';
 
-export default function CollectionsPage() {
+export default function CollectionsPage({ page, setPage }) {
   const { collections, renameCollection, deleteCollection, garments } = useWardrobe();
   const [selectedCollection, setSelectedCollection] = useState(null);
 
@@ -23,8 +23,12 @@ export default function CollectionsPage() {
   return (
     <>
       <div className="top-nav">
-        <span className="logo">✦ AWS</span>
-        <span className="nav-title">Collections</span>
+        <span className="logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>✦ AWS</span>
+        <div className="nav-links">
+          <button className={`nav-link ${page === 'wardrobe' ? 'active' : ''}`} onClick={() => setPage('wardrobe')}>Wardrobe</button>
+          <button className={`nav-link ${page === 'recommend' ? 'active' : ''}`} onClick={() => setPage('recommend')}>Recommended</button>
+          <button className={`nav-link ${page === 'collections' ? 'active' : ''}`} onClick={() => setPage('collections')}>Saved</button>
+        </div>
         <div style={{ width: 60 }} />
       </div>
       <div className="page" style={{ paddingTop: 16 }}>

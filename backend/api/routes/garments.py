@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, status
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, status, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
@@ -21,7 +21,7 @@ from db.database import get_db
 from db.models import Garment, GarmentOccasionTag, Wardrobe, User
 from api.schemas import GarmentCreate, GarmentUpdate, GarmentOut, VisionExtractResponse
 from vector_store.store import get_vector_store
-from config import GEMINI_API_KEY, VISION_MODEL, DATA_DIR
+from config import GEMINI_API_KEY, VISION_MODEL, DATA_DIR, UPLOADS_DIR
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/garments", tags=["garments"])
@@ -69,7 +69,7 @@ def _garment_to_dict(garment: Garment) -> dict:
 
 # ── Vision Extraction ─────────────────────────────────────────────────────────
 @router.post("/extract-from-image", response_model=VisionExtractResponse)
-async def extract_from_image(file: UploadFile = File(...)):
+async def extract_from_image(request: Request, file: UploadFile = File(...)):
     """Extract garment attributes from an uploaded image using Vision Model."""
     # Validate file
     content_type = file.content_type or ""
@@ -81,6 +81,18 @@ async def extract_from_image(file: UploadFile = File(...)):
     data = await file.read()
     if len(data) > MAX_IMAGE_BYTES:
         raise HTTPException(status_code=413, detail="File exceeds the 5 MB limit.")
+
+    # Save the file permanently
+    import uuid
+    suffix = Path(file.filename or "").suffix or (".jpg" if content_type == "image/jpeg" else ".png")
+    unique_filename = f"{uuid.uuid4().hex}{suffix}"
+    upload_path = UPLOADS_DIR / unique_filename
+    try:
+        upload_path.write_bytes(data)
+        image_url = f"{str(request.base_url).rstrip('/')}/static/uploads/{unique_filename}"
+    except Exception as e:
+        logger.error(f"[GarmentsRoute] Failed to save uploaded image: {e}")
+        image_url = None
 
     if GEMINI_API_KEY:
         try:
@@ -128,6 +140,7 @@ Output only valid JSON, no other text."""
                 fitType=attrs.get("fitType"),
                 confidence=attrs.get("confidence", 0.7),
                 lowConfidenceFields=low_conf_fields,
+                imageUrl=image_url,
             )
         except Exception as e:
             logger.error(f"[GarmentsRoute] Vision extraction failed: {e}")
@@ -143,6 +156,7 @@ Output only valid JSON, no other text."""
             fitType="regular fit",
             confidence=0.85,
             lowConfidenceFields=[],
+            imageUrl=image_url,
         )
 
 
@@ -312,6 +326,17 @@ async def delete_garment(
     garment = result.scalar_one_or_none()
     if not garment:
         raise HTTPException(status_code=404, detail="Garment not found")
+
+    # Delete local photo from UPLOADS_DIR if it exists
+    if garment.imageUrl:
+        try:
+            filename = garment.imageUrl.split("/static/uploads/")[-1]
+            filepath = UPLOADS_DIR / filename
+            if filepath.exists() and filepath.is_file():
+                filepath.unlink()
+                logger.info(f"[GarmentsRoute] Deleted image file: {filepath}")
+        except Exception as e:
+            logger.error(f"[GarmentsRoute] Failed to delete image file: {e}")
 
     # Delete from vector store
     try:

@@ -48,34 +48,62 @@ export default function UploadPage({ setPage }) {
     }
     const url = URL.createObjectURL(file);
     setImagePreview(url);
-    runMockProcessing();
+    runImageExtraction(file);
   }
 
-  function runMockProcessing() {
+  async function runImageExtraction(file) {
     setStep('processing');
     setProgress(0);
-    let p = 0;
     const interval = setInterval(() => {
-      p += 20;
-      setProgress(p);
-      if (p >= 100) {
-        clearInterval(interval);
-        // Populate form with mock extraction
-        const attrs = MOCK_EXTRACTION;
-        setForm({
-          name: `${capitalize(attrs.primaryColor)} ${capitalize(attrs.category)}`,
-          category: attrs.category,
-          primaryColor: attrs.primaryColor,
-          secondaryColor: attrs.secondaryColor || '',
-          fabricType: attrs.fabricType,
-          patternType: attrs.patternType,
-          fitType: attrs.fitType,
-          occasionTags: ['formal', 'business casual'],
-        });
-        setLowConfidenceFields(attrs.lowConfidenceFields || []);
-        setStep('review');
+      setProgress(p => Math.min(p + 10, 90));
+    }, 200);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('http://localhost:8000/garments/extract-from-image', {
+        method: 'POST',
+        body: formData
+      });
+
+      clearInterval(interval);
+      setProgress(100);
+
+      if (!res.ok) {
+        throw new Error('Failed to analyze image');
       }
-    }, 300);
+
+      const attrs = await res.json();
+      setForm({
+        name: `${capitalize(attrs.primaryColor)} ${capitalize(attrs.category)}`,
+        category: attrs.category,
+        primaryColor: attrs.primaryColor,
+        secondaryColor: attrs.secondaryColor || '',
+        fabricType: attrs.fabricType,
+        patternType: attrs.patternType || '',
+        fitType: attrs.fitType || '',
+        occasionTags: ['casual', 'everyday'],
+      });
+      setLowConfidenceFields(attrs.lowConfidenceFields || []);
+      setStep('review');
+    } catch (err) {
+      clearInterval(interval);
+      console.error(err);
+      setForm({
+        name: '',
+        category: '',
+        primaryColor: '',
+        secondaryColor: '',
+        fabricType: '',
+        patternType: '',
+        fitType: '',
+        occasionTags: [],
+      });
+      setLowConfidenceFields([]);
+      setUploadError('Vision extraction failed. Entering manual details.');
+      setStep('manual');
+    }
   }
 
   function handleDrop(e) {
