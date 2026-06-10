@@ -1,0 +1,167 @@
+{
+  "version": "1.0.0",
+  "category": "contemporary_luxury",
+  "sources": [
+    "The Italian Gentleman — Hugo Jacomet",
+    "Sprezzatura — Style without Effort",
+    "Tom Ford (Rizzoli monograph)",
+    "Loro Piana References",
+    "Brunello Cucinelli References"
+  ],
+
+  "core_principles": [
+
+    {
+      "rule_name": "Quiet Luxury Principle",
+      "description": "Luxury is communicated through fabric quality, precise fit, and restraint — not through visible logos, loud patterns, or excessive hardware. The garment should whisper, not shout.",
+      "why_it_works": "Quiet luxury is the aesthetic language of old money and genuine wealth. It requires knowledge to appreciate — which is its own form of exclusivity.",
+      "when_to_use": "All contemporary luxury outfits.",
+      "when_to_avoid": "When you need a statement piece for a specific context — one discreet logo is acceptable.",
+      "outfit_examples": [
+        "Cashmere crewneck + tailored trousers + suede loafers — no visible logos",
+        "Brunello Cucinelli linen shirt + wide silk trousers + leather moccasins"
+      ]
+    },
+
+    {
+      "rule_name": "Fabric as the Statement",
+      "description": "In luxury dressing, the fabric IS the design. Cashmere, vicuña, fine merino, silk, double-face wool, and suede carry the outfit. Cut is simple — fabric is extraordinary.",
+      "why_it_works": "Premium fabrics drape, move, and age in ways that cheaper materials cannot replicate. The untrained eye feels the quality even without identifying it.",
+      "when_to_use": "Every luxury outfit — invest in fewer, better fabrics.",
+      "when_to_avoid": "Luxury fabrics in the wrong context look misplaced — cashmere at the beach is impractical.",
+      "outfit_examples": [
+        "Double-cashmere rollneck + fine wool trousers + suede boots",
+        "Loro Piana Storm System wool jacket + silk turtleneck + flannel trousers"
+      ]
+    },
+
+    {
+      "rule_name": "Texture Hierarchy",
+      "description": "Layer textures from coarser to finer from inner to outer — or mix two textures of similar weight but different weave (e.g., smooth wool trousers + textured knit). Never layer two high-sheen fabrics.",
+      "why_it_works": "Texture contrast creates visual depth without color complexity. It is the most sophisticated way to make a neutral outfit interesting.",
+      "when_to_use": "Any luxury outfit where all colors are neutrals.",
+      "when_to_avoid": "Double sheen (silk + satin) creates visual competition.",
+      "outfit_examples": [
+        "Textured cashmere knit + smooth flannel trousers + brushed suede loafers",
+        "Bouclé jacket + fine merino turtleneck + plain wool trousers"
+      ]
+    },
+
+    {
+      "rule_name": "Neutral Palette Construction",
+      "description": "Build the luxury wardrobe in a neutral foundation: stone, ecru, ivory, sand, taupe, slate gray, navy, and charcoal. Introduce single accent tones seasonally (burgundy in winter, pale blue in summer).",
+      "why_it_works": "Neutral palettes create maximum outfit combinations and age perfectly. They also allow fabric quality to be the visual focus instead of color.",
+      "when_to_use": "All contemporary luxury outfits.",
+      "when_to_avoid": "Bright, saturated colors signal fast-fashion energy in luxury contexts.",
+      "outfit_examples": [
+        "Stone cashmere + taupe trousers + sand suede shoes (all warm neutrals)",
+        "Slate gray knit + charcoal flannel trousers + dark navy suede boots (all cool neutrals)"
+      ]
+    },
+
+    {
+      "rule_name": "Effortless Appearance (Sprezzatura)",
+      "description": "Luxury dressing should appear unconsidered — as if you threw it on without effort. This is achieved through precise fit, quality construction, and soft, unstructured garments. The effort is invisible.",
+      "why_it_works": "Sprezzatura (Italian for studied carelessness) is the defining quality of Italian luxury style. Trying too hard is as bad as not trying at all.",
+      "when_to_use": "All luxury casual and smart casual contexts.",
+      "when_to_avoid": "Overly matched, overly pressed, or overly coordinated looks lose the effortless quality.",
+      "outfit_examples": [
+        "Slightly rumpled linen shirt (intentional) + well-cut trousers + leather loafers (no socks)",
+        "Cashmere draped over shoulders (not arms) + fine knit underneath + tailored pants"
+      ]
+    },
+
+    {
+      "rule_name": "Relaxed Tailoring System",
+      "description": "Contemporary luxury tailoring is soft and unstructured — no shoulder padding, minimal canvas, natural drape. Suits and blazers should feel like a second skin, not a suit of armor.",
+      "why_it_works": "Soft tailoring is the Brunello Cucinelli and Loro Piana approach — it merges the refinement of a suit with the comfort of a sweater. It communicates ease and quality simultaneously.",
+      "when_to_use": "Smart casual to semi-formal luxury contexts.",
+      "when_to_avoid": "Formal business contexts still require structured tailoring.",
+      "outfit_examples": [
+        "Unstructured linen blazer + fine knit turtleneck + wide flannel trousers + loafers",
+        "Soft cashmere sport coat + linen trousers + leather moccasins"
+      ]
+    },
+
+    {
+      "rule_name": "Sophisticated Layering (Warmth Through Texture)",
+      "description": "Luxury layering adds warmth without bulk — fine turtleneck under a cashmere sport coat, or a silk scarf under a wool coat. Each layer should be fine-gauge and lightweight.",
+      "why_it_works": "Multiple lightweight luxury layers create warmth without the visual and physical weight of a single thick garment. The layered look also creates depth.",
+      "when_to_use": "Autumn and winter luxury outfits.",
+      "when_to_avoid": "Chunky layering that creates bulk conflicts with the refined luxury aesthetic.",
+      "outfit_examples": [
+        "Fine merino turtleneck + cashmere sport coat + tailored trousers + suede chelsea boots",
+        "Silk turtleneck + double-face wool blazer + flannel trousers + leather loafers"
+      ]
+    },
+
+    {
+      "rule_name": "Luxury Casualwear Rule",
+      "description": "Luxury casual is the most demanding category — relaxed garments made in extraordinary materials. A cashmere t-shirt, a suede bomber, a vicuña crewneck. Nothing loud, nothing logoed, nothing synthetic.",
+      "why_it_works": "Luxury casual demonstrates taste and restraint. It is harder to execute than formal luxury because there is no suit to hide behind — only fabric quality and fit.",
+      "when_to_use": "Weekends, travel, casual dinners for luxury dressers.",
+      "when_to_avoid": "Do not substitute performance fabrics in luxury casual contexts — they undermine the quality signal.",
+      "outfit_examples": [
+        "Cashmere t-shirt + linen wide trousers + leather sandals (summer luxury casual)",
+        "Fine merino crewneck + cashmere track pants + suede sneakers (winter luxury casual)"
+      ]
+    },
+
+    {
+      "rule_name": "Color Restraint Principle",
+      "description": "Never more than two colors in a luxury outfit. One neutral + one accent maximum. If wearing a third color, it must be another neutral.",
+      "why_it_works": "Color restraint signals confidence and taste. It says 'I do not need color to get attention — my garments do the work.'",
+      "when_to_use": "All luxury outfits.",
+      "when_to_avoid": "Color restraint in summer can feel funeral — allow lighter, softer colors in warm months.",
+      "outfit_examples": [
+        "Stone + charcoal (two neutrals): stone cashmere + charcoal trousers",
+        "Ivory + navy (one neutral + one anchor): ivory linen shirt + navy wide trousers"
+      ]
+    },
+
+    {
+      "rule_name": "Investment Piece Logic",
+      "description": "In luxury dressing, buy the best single piece you can afford in each category — one perfect cashmere crewneck, one perfect suede loafer, one perfect unstructured blazer. Then stop.",
+      "why_it_works": "Luxury is about quality over quantity. One extraordinary piece worn repeatedly is more impactful and economical than many mediocre ones.",
+      "when_to_use": "When building a luxury wardrobe.",
+      "when_to_avoid": "Do not apply this logic to trend-driven items — only invest in timeless pieces.",
+      "outfit_examples": [
+        "Loro Piana cashmere crewneck worn across 10 different outfits",
+        "One pair of John Lobb suede loafers resoled and worn for decades"
+      ]
+    }
+  ],
+
+  "outfit_formulas": [
+    {
+      "formula": "Cashmere Crewneck + Tailored Flannel Trousers + Suede Loafers",
+      "occasion": "Smart casual, date night, dinner",
+      "season": "Autumn, winter",
+      "why_it_works": "The three-pillar luxury casual formula. Cashmere provides warmth and softness, flannel adds texture contrast, suede loafers complete the tactile richness."
+    },
+    {
+      "formula": "Unstructured Linen Blazer + Fine Knit Turtleneck + Wide Linen Trousers + Leather Moccasins",
+      "occasion": "Smart casual, dinner, creative professional",
+      "season": "Spring, summer",
+      "why_it_works": "All linen creates a unified texture story. The unstructured blazer adds layering without formality. Turtleneck fills the neckline elegantly."
+    },
+    {
+      "formula": "Suede Bomber Jacket + Merino Turtleneck + Slim Flannel Trousers + Chelsea Boots",
+      "occasion": "Smart casual, autumn weekend, date",
+      "season": "Autumn",
+      "why_it_works": "Suede bomber elevates the casual register of a bomber through material alone. Merino and flannel share weight and warmth. Chelsea boots finish the silhouette."
+    },
+    {
+      "formula": "Double-Face Wool Overcoat + Cashmere Rollneck + Tailored Trousers + Oxford Shoes",
+      "occasion": "Winter smart casual, urban formal adjacent",
+      "season": "Winter",
+      "why_it_works": "The overcoat is the luxury statement. Everything beneath is deliberately quiet — cashmere rollneck, tailored trousers. Oxford shoes ground the look in traditional elegance."
+    },
+    {
+      "formula": "Linen Shirt (Open Collar) + Silk Wide Trousers + Leather Sandals",
+      "occasion": "Summer luxury casual, holiday, dinner",
+      "season": "Summer",
+      "why_it_works": "Silk wide trousers are the luxury element — they move and drape unlike any other fabric. Linen shirt and leather sandals are relaxed anchors. No logos, no noise."
+    }
+  ]
+}

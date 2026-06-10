@@ -1,0 +1,208 @@
+{
+  "version": "1.0.0",
+  "category": "korean_fashion",
+  "sources": [
+    "K-Fashion: Wearing Contemporary Korea",
+    "Seoul Fashion City",
+    "Musinsa Editorial Archives",
+    "Seoul Fashion Week Collections"
+  ],
+
+  "core_principles": [
+
+    {
+      "rule_name": "Wide-Fit Silhouette Principle",
+      "description": "Korean menswear favors wide trousers, wide-leg pants, and relaxed-fit bottoms as the standard — not the exception. The bottom is the dominant volume element.",
+      "why_it_works": "The wide silhouette creates an effortless, draped quality that reads as intentional and modern. It references Scandinavian minimalism filtered through Seoul's aesthetic.",
+      "when_to_use": "As the foundation of any Korean fashion outfit — smart casual to streetwear.",
+      "when_to_avoid": "When the top is also extremely voluminous — one volume zone must be restrained.",
+      "outfit_examples": [
+        "Fitted white tee + wide slate gray trousers + white loafers",
+        "Cropped knit + wide beige linen trousers + suede loafers"
+      ]
+    },
+
+    {
+      "rule_name": "Cropped Top Proportion Rule",
+      "description": "Crop the top to just above the waistband when wearing high-waist wide-leg trousers. The crop and the rise of the trouser must connect visually.",
+      "why_it_works": "When wide trousers have a high rise, a cropped or tucked top balances the mass below the waist. A long top on wide trousers buries the silhouette.",
+      "when_to_use": "Wide-leg trousers with high waistbands, high-rise wide jeans.",
+      "when_to_avoid": "Low-rise or mid-rise trousers — standard length top is fine.",
+      "outfit_examples": [
+        "Cropped mock-neck tee + wide pinstripe trousers + derby shoes",
+        "Half-tucked linen shirt + high-waist wide jeans + clean sneakers"
+      ]
+    },
+
+    {
+      "rule_name": "Tonal Dressing (Seoul Palette System)",
+      "description": "Build the outfit within a single color temperature — all warm (beige, cream, tan, camel, brown) or all cool (gray, slate, navy, off-white, stone). Avoid mixing warm and cool tones in Korean fashion.",
+      "why_it_works": "Tonal dressing creates a cohesive visual field. The Seoul aesthetic is rooted in quiet, refined color — clashing temperatures disrupt this quality.",
+      "when_to_use": "Korean smart casual, minimal Korean streetwear, any refined Korean look.",
+      "when_to_avoid": "When wearing a deliberate accent or color contrast — must be done with intention.",
+      "outfit_examples": [
+        "Cream shirt + tan wide trousers + ivory sneakers + camel tote (all warm)",
+        "Slate gray overshirt + charcoal wide pants + white sneakers (all cool)"
+      ]
+    },
+
+    {
+      "rule_name": "Soft Color Palette (Muted Tones)",
+      "description": "Korean fashion uses desaturated, muted versions of colors — dusty rose instead of hot pink, sage instead of lime green, slate blue instead of royal blue.",
+      "why_it_works": "Muted tones reduce visual aggression and create a refined, contemplative mood. They also photograph beautifully, which influences the Seoul fashion visual culture.",
+      "when_to_use": "All Korean fashion contexts.",
+      "when_to_avoid": "When you want streetwear energy or color-block statements — those require saturated tones.",
+      "outfit_examples": [
+        "Dusty rose crewneck + stone gray wide trousers + off-white sneakers",
+        "Sage green linen shirt + cream wide pants + tan suede shoes"
+      ]
+    },
+
+    {
+      "rule_name": "Modern Minimalist Layering",
+      "description": "Layers in Korean fashion are clean and uncluttered. An overshirt over a plain tee, or a structured jacket over a thin knit — never more than two visible layers.",
+      "why_it_works": "Korean minimalism is about restraint. Every layer must earn its place. More than two visible layers begins to look busy against the clean silhouette standard.",
+      "when_to_use": "Spring, autumn, and winter Korean outfits.",
+      "when_to_avoid": "Summer — single-layer outfits are correct.",
+      "outfit_examples": [
+        "Thin cream turtleneck + wide gray trousers + oversized structured coat on top",
+        "Plain white tee + open boxy overshirt + wide tan trousers"
+      ]
+    },
+
+    {
+      "rule_name": "Overshirt as Outer Layer",
+      "description": "The overshirt (a shirt worn fully open or half-open as a light jacket) is a core Korean casual layering piece. It should be at least one size up from your fitted size.",
+      "why_it_works": "The relaxed overshirt gives volume at the top without the bulk of a jacket. It's versatile across seasons and elevates a plain tee to a styled look.",
+      "when_to_use": "Spring, summer, and autumn Korean smart casual.",
+      "when_to_avoid": "Cold winter — needs a proper jacket. Also avoid if trousers are very wide — competing volumes.",
+      "outfit_examples": [
+        "White tee + olive linen overshirt (open) + wide cream trousers + white sneakers",
+        "Gray tee + beige cotton overshirt (half-buttoned) + slate gray wide pants"
+      ]
+    },
+
+    {
+      "rule_name": "Knitwear in Korean Context",
+      "description": "Knitwear in Korean fashion uses fine gauge, soft textures (cotton, linen blend, lightweight wool) and boxy or slightly oversized fits. Chunky fisherman knits are not part of the Korean aesthetic.",
+      "why_it_works": "Fine-gauge knitwear drapes softly and maintains the minimal silhouette. Chunky knits add too much visual weight for the clean Korean proportions.",
+      "when_to_use": "Autumn and winter Korean outfits. Spring with lighter gauges.",
+      "when_to_avoid": "Heavy chunky knits disrupt the silhouette.",
+      "outfit_examples": [
+        "Cream fine-gauge crewneck knit + wide beige trousers + loafers",
+        "Dusty blue boxy knit + straight-leg gray jeans + white low sneakers"
+      ]
+    },
+
+    {
+      "rule_name": "Cropped Jacket Balance Rule",
+      "description": "Cropped jackets (ending above the hip) require wide or relaxed-fit trousers below to balance the shortened torso.",
+      "why_it_works": "A cropped jacket visually shortens the torso. Wide trousers below redistribute mass downward, re-balancing the overall silhouette.",
+      "when_to_use": "Whenever wearing cropped outerwear in a Korean fashion context.",
+      "when_to_avoid": "With slim or skinny trousers — the silhouette becomes top-heavy and imbalanced.",
+      "outfit_examples": [
+        "Cropped structured jacket + wide charcoal trousers + white derby shoes",
+        "Cropped black bomber + wide-leg stone pants + minimalist sneakers"
+      ]
+    },
+
+    {
+      "rule_name": "Korean Smart Casual Formula",
+      "description": "The core Korean smart casual structure: one textured or tonal top + wide relaxed trousers + clean minimalist footwear. No excess accessories.",
+      "why_it_works": "This formula is deliberately simple and proportionally precise — it communicates effortless taste without over-explaining itself.",
+      "when_to_use": "Office, date night, casual dinner, Seoul-inspired outfits.",
+      "when_to_avoid": "When you need formal or evening wear — this stays in the smart-casual register.",
+      "outfit_examples": [
+        "Beige linen shirt + wide cream trousers + tan suede loafers",
+        "White mock-neck + wide dark navy pants + clean white sneakers"
+      ]
+    },
+
+    {
+      "rule_name": "Footwear in Korean Fashion",
+      "description": "Korean fashion footwear is clean, minimal, and low-profile: clean white sneakers, minimalist leather sneakers, loafers, simple derby shoes. Avoid chunky streetwear sneakers in Korean minimal contexts.",
+      "why_it_works": "Chunky soles fight the quiet quality of the Korean silhouette. Low-profile shoes allow the wide trouser silhouette to land cleanly at the ground.",
+      "when_to_use": "All Korean fashion outfits.",
+      "when_to_avoid": "Korean streetwear contexts can allow chunky soles as an intentional contrast.",
+      "outfit_examples": [
+        "Wide gray trousers + white Common Projects Achilles sneakers",
+        "Wide linen trousers + suede penny loafers"
+      ]
+    },
+
+    {
+      "rule_name": "Accessory Restraint Rule",
+      "description": "Korean fashion uses minimal accessories — one bag, one subtle piece of jewelry, no hat unless it is architecturally minimal (bucket hat, minimal cap). No heavy accessory stacking.",
+      "why_it_works": "Accessories compete with the silhouette in Korean fashion. The silhouette IS the statement — accessories support, not compete.",
+      "when_to_use": "All Korean fashion outfits.",
+      "when_to_avoid": "Korean streetwear can layer accessories for a different effect.",
+      "outfit_examples": [
+        "Clean outfit + single minimal crossbody bag + no other accessories",
+        "Wide-leg trouser outfit + small tote bag + no cap, no jewelry"
+      ]
+    }
+  ],
+
+  "outfit_formulas": [
+    {
+      "formula": "Overshirt (Open) + Plain Tee + Wide Trousers + Clean White Sneakers",
+      "occasion": "Everyday, college, smart casual",
+      "season": "Spring, summer, autumn",
+      "why_it_works": "The open overshirt creates a layered look without bulk. Wide trousers are the silhouette focus. Clean sneakers ground it all."
+    },
+    {
+      "formula": "Fine-Gauge Boxy Knit + Wide Relaxed Slacks + Suede Loafers",
+      "occasion": "Smart casual, date night, office (creative)",
+      "season": "Autumn, winter",
+      "why_it_works": "Knit softens the top. Wide slacks create elegant volume below. Suede loafers add tactile refinement. Entirely tonal."
+    },
+    {
+      "formula": "Cropped Structured Jacket + Wide Charcoal Trousers + Derby Shoes",
+      "occasion": "Smart casual, date night, Seoul-inspired",
+      "season": "Spring, autumn",
+      "why_it_works": "Cropped jacket + wide trouser is the defining Korean fashion proportion. Derby shoes elevate the register without breaking the minimalism."
+    },
+    {
+      "formula": "Cream Turtleneck + Wide Beige Trousers + Minimal White Sneakers",
+      "occasion": "Everyday, smart casual, autumn dressing",
+      "season": "Autumn, winter",
+      "why_it_works": "Full warm-tonal outfit. Turtleneck adds structure to the neckline. Wide trousers are the volume zone. Sneakers keep it casual."
+    },
+    {
+      "formula": "Linen Shirt (Half-Tucked) + High-Rise Wide Jeans + Clean Sneakers",
+      "occasion": "Summer casual, everyday, date",
+      "season": "Spring, summer",
+      "why_it_works": "Half-tuck is the Korean smart-casual gesture — not fully formal, not fully casual. Wide jeans with a high rise are the silhouette anchor."
+    },
+    {
+      "formula": "Mock-Neck Tee + Wide Pinstripe Trousers + White Low Sneakers",
+      "occasion": "Office casual, smart casual",
+      "season": "Autumn, spring",
+      "why_it_works": "Mock-neck elevates the plain tee. Pinstripe trousers introduce subtle pattern within the tonal palette. White sneakers keep the ground clean."
+    },
+    {
+      "formula": "Oversized Structured Coat + Minimal Tee + Wide Straight Trousers + Sneakers",
+      "occasion": "Cold-weather Korean look, autumn/winter casual",
+      "season": "Winter, late autumn",
+      "why_it_works": "The oversized coat is the single statement. Everything beneath is deliberately minimal. The wide trouser provides the silhouette continuation below the coat."
+    },
+    {
+      "formula": "Dusty Blue Boxy Knit + Straight-Leg Gray Jeans + White Low Sneakers",
+      "occasion": "Everyday, weekend, casual",
+      "season": "Autumn, spring",
+      "why_it_works": "Muted blue and gray are tonal cool companions. The boxy knit reads as deliberate. Straight jeans avoid the complexity of wide while still feeling modern."
+    },
+    {
+      "formula": "Sage Green Linen Shirt + Cream Wide Pants + Tan Suede Shoes",
+      "occasion": "Summer smart casual, travel",
+      "season": "Summer, spring",
+      "why_it_works": "Sage and cream are complementary muted tones in the same temperature range. Linen adds texture without weight. Suede shoes warm the base."
+    },
+    {
+      "formula": "Beige Oversized Coat + Charcoal Turtleneck + Wide Dark Gray Trousers + White Sneakers",
+      "occasion": "Smart casual winter, Korean editorial",
+      "season": "Winter",
+      "why_it_works": "Warm-tone coat over cool-tone inner layers creates subtle contrast while staying tonal. Wide trousers continue the volumetric language of the coat."
+    }
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "version": "1.0.0",
+  "category": "streetwear",
+  "sources": [
+    "This Is Not a T-Shirt — Bobby Hundreds",
+    "The Incomplete — Highsnobiety",
+    "Out of the Box — Elizabeth Semmelhack"
+  ],
+
+  "core_principles": [
+
+    {
+      "rule_name": "Oversized Fit Foundation",
+      "description": "Streetwear silhouettes lean oversized on top — one to two sizes larger than your fitted size on shirts, hoodies, and jackets.",
+      "why_it_works": "The oversized silhouette is the visual language of streetwear. It communicates anti-establishment ease and references hip-hop and skate culture origins.",
+      "when_to_use": "Tops, hoodies, graphic tees, sweatshirts in any streetwear outfit.",
+      "when_to_avoid": "When the bottom is also oversized or wide — double volume collapses the silhouette.",
+      "outfit_examples": [
+        "Oversized hoodie + slim joggers + Air Force 1s",
+        "Oversized graphic tee + slim black jeans + chunky sneakers",
+        "Boxy crewneck + tapered cargo pants + Jordan 1s"
+      ]
+    },
+
+    {
+      "rule_name": "Volume Balance (Top-Heavy Rule)",
+      "description": "If the top is oversized or boxy, the bottom must be slim, tapered, or fitted. Never match volume for volume.",
+      "why_it_works": "The contrast between a relaxed top and a tighter bottom creates a clean, intentional silhouette — the eye reads shape even in loose clothing.",
+      "when_to_use": "Every streetwear outfit with an oversized top piece.",
+      "when_to_avoid": "Intentional wide-leg techwear or Korean-influenced wide-wide silhouette (different aesthetic system).",
+      "outfit_examples": [
+        "Oversized Supreme hoodie + slim black jeans + Travis Scott Nike",
+        "Large boxy tee + tapered track pants + New Balance 550"
+      ]
+    },
+
+    {
+      "rule_name": "Sneaker as Outfit Anchor",
+      "description": "In streetwear, the sneaker is chosen first. The outfit is built around it.",
+      "why_it_works": "Sneaker culture is the origin point of streetwear — the shoe carries the most cultural and aesthetic weight in the outfit.",
+      "when_to_use": "Always when building a streetwear look from scratch.",
+      "when_to_avoid": "When you are working with a statement jacket or rare graphic tee that should anchor instead.",
+      "outfit_examples": [
+        "Jordan 4 'Military Blue' → navy + gray + white outfit built around it",
+        "Yeezy Foam Runner → monochrome earthy tone outfit to match"
+      ]
+    },
+
+    {
+      "rule_name": "Sneaker Color Pull",
+      "description": "Pull at least one color from the sneaker and repeat it somewhere in the outfit — on the tee, pants, or cap.",
+      "why_it_works": "Creates visual cohesion — the outfit looks intentionally assembled rather than thrown together.",
+      "when_to_use": "Whenever wearing multi-color sneakers.",
+      "when_to_avoid": "When wearing all-white or all-black sneakers — these are neutrals and need no color pull.",
+      "outfit_examples": [
+        "Jordan 3 'Cardinal' (red detail) → red tee + white shorts + Jordan 3",
+        "Nike Dunk 'Panda' (black/white) → all-black outfit or all-white outfit"
+      ]
+    },
+
+    {
+      "rule_name": "Graphic Tee Balance Rule",
+      "description": "A graphic tee is the statement. Everything else in the outfit must be solid — no competing prints or logos.",
+      "why_it_works": "A busy graphic tee needs visual breathing room. Competing patterns create noise that cancels the graphic's impact.",
+      "when_to_use": "Every time a graphic tee is worn as the focal piece.",
+      "when_to_avoid": "When layering under an open shirt or jacket — the graphic is partially hidden so conflict is reduced.",
+      "outfit_examples": [
+        "Vintage band tee + solid black cargo pants + clean white sneakers",
+        "Supreme box logo tee + solid gray shorts + Jordan 1 Bred"
+      ]
+    },
+
+    {
+      "rule_name": "Logo Placement Hierarchy",
+      "description": "One visible logo at a time. The most prominent logo should be on the most prominent garment. Avoid stacking chest logo + cap logo + bag logo all in the same sightline.",
+      "why_it_works": "Multiple competing logos create visual noise and undermine each brand's identity. One logo per focal zone.",
+      "when_to_use": "When wearing branded pieces.",
+      "when_to_avoid": "Head-to-toe branding is an intentional statement look — acceptable if all logos are from the same brand.",
+      "outfit_examples": [
+        "Jordan tee (chest logo) + plain Nike shorts + Air Jordan sneaker (heel logo) — three logos but spatially separated",
+        "Off-White tee + plain Carhartt pants + unbranded sneakers"
+      ]
+    },
+
+    {
+      "rule_name": "The Streetwear Neutral Palette",
+      "description": "Core streetwear neutrals: black, white, gray, off-white, beige, and washed tones. These anchor any outfit and let statement pieces lead.",
+      "why_it_works": "Neutrals are the canvas. Statement sneakers, graphics, and logos read clearest against neutral backgrounds.",
+      "when_to_use": "As base garments (pants, plain tees, hoodies) in any streetwear outfit.",
+      "when_to_avoid": "When you want a full color-block outfit — intentional deviation from neutrals.",
+      "outfit_examples": [
+        "White tee + black cargo pants + any colorful sneaker",
+        "Gray crewneck + beige chinos + Yeezy 700"
+      ]
+    },
+
+    {
+      "rule_name": "Color Blocking in Streetwear",
+      "description": "Two bold, contrasting colors worn in large blocks — one on top, one on bottom. Keep each block solid with no patterns.",
+      "why_it_works": "Color blocking is visual punctuation. It communicates confidence and references graphic design aesthetics from Supreme, Palace, and Stussy.",
+      "when_to_use": "When you want a bold, high-energy look.",
+      "when_to_avoid": "Formal or professional settings. Also avoid more than two bold colors simultaneously.",
+      "outfit_examples": [
+        "Bright orange hoodie + cobalt blue joggers + white sneakers",
+        "Red bomber jacket + black trousers + white Air Force 1"
+      ]
+    },
+
+    {
+      "rule_name": "Layering System: Base + Mid + Outer",
+      "description": "Layer a base tee under a flannel, hoodie, or overshirt, then add an outer jacket. Each layer should be slightly longer than the one beneath it.",
+      "why_it_works": "Visible layering creates depth and signals intentionality. Length staggering makes layering readable — you see each piece.",
+      "when_to_use": "Autumn and winter streetwear outfits.",
+      "when_to_avoid": "Summer — single-layer tee outfits are correct for heat.",
+      "outfit_examples": [
+        "White tee + open flannel + denim jacket + black jeans + boots",
+        "Black tee + hoodie + puffer vest + joggers + chunky sneakers"
+      ]
+    },
+
+    {
+      "rule_name": "Cargo Pants Utility Rule",
+      "description": "Cargo pants are a functional statement piece. Wear them slightly tapered with an oversized top — avoid very wide cargo + oversized top simultaneously.",
+      "why_it_works": "Cargo pants already carry visual weight through pockets and construction. An oversized top balances the width of cargo without adding competing volume.",
+      "when_to_use": "Casual streetwear outfits, techwear-adjacent looks.",
+      "when_to_avoid": "Smart casual or any formal context.",
+      "outfit_examples": [
+        "Oversized crewneck + olive cargo pants + Nike ACG boots",
+        "Black tee + tapered black cargo pants + white New Balance 990"
+      ]
+    },
+
+    {
+      "rule_name": "Varsity Jacket Rule",
+      "description": "Varsity jackets work as the statement outer layer. Keep everything underneath and below simple — solid tee and simple trousers.",
+      "why_it_works": "Varsity jackets are loaded with color and detail (stripes, patches, logos). Everything else must recede so the jacket leads.",
+      "when_to_use": "Autumn and spring streetwear, college-adjacent looks.",
+      "when_to_avoid": "Over complex outfits with competing statement pieces.",
+      "outfit_examples": [
+        "Navy/white varsity jacket + white tee + black slim jeans + white Air Force 1",
+        "Black/gold varsity + black hoodie (under) + black joggers + Jordan 11"
+      ]
+    },
+
+    {
+      "rule_name": "Hype vs Timeless Distinction",
+      "description": "Hype pieces are trend-driven (collabs, limited drops, seasonal graphics). Timeless streetwear pieces are silhouette- and construction-based (classic crewneck, white tee, Levi's 501, Air Force 1).",
+      "why_it_works": "Building around timeless pieces means your wardrobe has a long shelf life. Hype pieces should accent — not anchor — an outfit.",
+      "when_to_use": "When budgeting a wardrobe — invest in timeless, accent with hype.",
+      "when_to_avoid": "Don't build an entire wardrobe around one season's hype items.",
+      "outfit_examples": [
+        "Timeless: White tee + 501 jeans + Air Force 1 (works in any year)",
+        "Hype accent: Same base + limited Palace jacket on top"
+      ]
+    },
+
+    {
+      "rule_name": "Statement Piece Isolation",
+      "description": "If you own a rare, loud, or visually complex piece (graphic jacket, bold sneaker collab, heavily printed tee), build the rest of the outfit in plain neutrals.",
+      "why_it_works": "Statement pieces need white space. Surrounding them with neutrals amplifies their impact instead of diluting it.",
+      "when_to_use": "Whenever wearing rare or premium statement streetwear items.",
+      "when_to_avoid": "When you want a balanced, understated look — no statement pieces needed then.",
+      "outfit_examples": [
+        "Takashi Murakami x Louis Vuitton jacket + plain black tee + black joggers + white sneakers",
+        "Travis Scott Jordan 1 + beige tee + stone-wash jeans — everything recedes"
+      ]
+    },
+
+    {
+      "rule_name": "Proportion for Streetwear Shorts",
+      "description": "Shorts in streetwear should hit just above the knee. Overly long basketball shorts or very short shorts disrupt the streetwear proportion.",
+      "why_it_works": "Above-knee length is the modern streetwear standard — long enough to be functional, short enough to feel contemporary.",
+      "when_to_use": "Spring and summer streetwear outfits.",
+      "when_to_avoid": "Autumn and winter.",
+      "outfit_examples": [
+        "Above-knee mesh shorts + graphic tee + Air Jordan",
+        "Cargo shorts (above knee) + oversized tee + Adidas Samba"
+      ]
+    },
+
+    {
+      "rule_name": "Cap and Hat Coordination",
+      "description": "A cap (snapback, fitted, 6-panel) should match the dominant or accent color of the outfit. Avoid caps that introduce a completely new fourth color.",
+      "why_it_works": "Headwear is part of the total silhouette in streetwear. An unrelated cap reads as an afterthought rather than an intentional accessory.",
+      "when_to_use": "Any streetwear outfit where a cap is desired.",
+      "when_to_avoid": "Formal adjacent or clean minimal outfits.",
+      "outfit_examples": [
+        "All-black outfit + black New Era fitted",
+        "Navy + white outfit + navy snapback"
+      ]
+    }
+  ],
+
+  "outfit_formulas": [
+    {
+      "formula": "Graphic Tee + Slim Black Jeans + White Air Force 1",
+      "occasion": "Everyday, college, casual hangout",
+      "season": "Spring, summer, autumn",
+      "why_it_works": "The white sneaker and black jeans are neutral anchors — they let the graphic tee be the only statement. Clean, readable, and endlessly repeatable."
+    },
+    {
+      "formula": "Oversized Hoodie + Cargo Pants + Chunky Sneaker",
+      "occasion": "Everyday, casual, festival",
+      "season": "Autumn, winter",
+      "why_it_works": "Oversized top + tapered cargo creates the streetwear silhouette. Chunky sole adds height and visual weight at the base."
+    },
+    {
+      "formula": "Varsity Jacket + White Tee + Black Slim Jeans + Clean Sneaker",
+      "occasion": "College, casual night out, weekend",
+      "season": "Spring, autumn",
+      "why_it_works": "The varsity is the statement. White tee and black jeans are invisible — they exist to frame the jacket."
+    },
+    {
+      "formula": "Puffer Jacket + Black Hoodie (under) + Black Joggers + Jordans",
+      "occasion": "Winter casual, everyday",
+      "season": "Winter",
+      "why_it_works": "Monochrome black base makes the puffer the only visual event. Jordans break the black with color."
+    },
+    {
+      "formula": "Flannel Shirt (open) + White Tee + Dark Slim Jeans + Nike Dunks",
+      "occasion": "College, everyday, casual",
+      "season": "Autumn, spring",
+      "why_it_works": "Open flannel acts as a light jacket layer. White tee grounds it. Dunks add the color story."
+    },
+    {
+      "formula": "Track Jacket + Plain Tee + Straight Leg Jeans + Adidas Samba",
+      "occasion": "Everyday, casual",
+      "season": "Spring, autumn",
+      "why_it_works": "Track jacket references retro sportswear. Straight jeans are a modern balance. Samba is a clean, classic anchor."
+    },
+    {
+      "formula": "Crewneck Sweatshirt + Tapered Chinos + New Balance 990",
+      "occasion": "College, smart casual streetwear",
+      "season": "Autumn, winter",
+      "why_it_works": "Elevated casualwear — the crewneck and chinos lift the look above pure streetwear while the New Balance keeps it grounded."
+    },
+    {
+      "formula": "Boxy Tee + Wide Leg Jeans + Low-Top Sneaker",
+      "occasion": "Everyday, casual",
+      "season": "Spring, summer",
+      "why_it_works": "Wide-wide silhouette works when the tee is boxy (not draped) and the sneaker is low-profile — the flat sole gives visual stability to the wide silhouette."
+    },
+    {
+      "formula": "Coach Jacket + Plain Tee + Cargo Pants + Trail Sneakers",
+      "occasion": "Casual, outdoor streetwear",
+      "season": "Spring, autumn",
+      "why_it_works": "Coach jacket is a clean, unbranded outer layer. Trail sneakers add technical edge. Cargos bridge utility and streetwear."
+    },
+    {
+      "formula": "Denim Jacket + Black Graphic Tee + Black Jeans + Black Boots",
+      "occasion": "Evening casual, night out",
+      "season": "Autumn, spring",
+      "why_it_works": "All-black base with denim jacket on top creates dark sophistication with a streetwear edge. Black boots over sneakers elevate the register slightly."
+    }
+  ]
+}

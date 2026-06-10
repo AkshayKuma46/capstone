@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Wardrobe Stylist — System Flowchart</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0f0f13;color:#e2e2e8;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;padding:48px 24px 80px}
+    h1{font-size:22px;font-weight:700;color:#fff;border-bottom:1px solid #2a2a38;padding-bottom:16px;margin-bottom:12px;letter-spacing:.01em}
+    .subtitle{font-size:13px;color:#5050a0;margin-bottom:48px}
+
+    /* layout */
+    .chart{display:flex;flex-direction:column;align-items:center}
+
+    /* arrows */
+    .arr{width:2px;height:36px;background:#3a3a52;position:relative;flex-shrink:0}
+    .arr::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #3a3a52}
+    .arr-lg{height:56px}
+
+    /* nodes */
+    .node{border-radius:10px;padding:13px 26px;text-align:center;font-size:13.5px;font-weight:500;min-width:260px;max-width:340px;line-height:1.5}
+    .n-terminal{background:#1e1e2e;border:1.5px solid #3a3a52;border-radius:50px;color:#a0a0c0;font-weight:600}
+    .n-process{background:#1a1a2e;border:1.5px solid #3a3a52;color:#c8c8e8}
+    .n-action{background:#1e1630;border:1.5px solid #5a3fa0;color:#b39ddb;font-weight:600}
+    .n-data{background:#141428;border:1.5px solid #2e2e50;color:#9090b8;font-style:italic}
+    .n-error{background:#1e1010;border:1.5px solid #7a2020;border-radius:10px;color:#e07070}
+    .n-end{background:#0f1a20;border:1.5px solid #2a5a3a;border-radius:50px;color:#70c8a0;font-weight:700}
+    .n-external{background:#131e1a;border:1.5px solid #2a6a4a;color:#70c8a0}
+    .sub{font-size:11px;color:#6060a0;margin-top:4px;font-weight:400;font-style:normal}
+
+    /* diamond */
+    .diam-outer{display:flex;flex-direction:column;align-items:center}
+    .diam{width:156px;height:156px;background:#1e1630;border:1.5px solid #5a3fa0;transform:rotate(45deg);display:flex;align-items:center;justify-content:center}
+    .diam-txt{transform:rotate(-45deg);font-size:12.5px;font-weight:600;color:#b39ddb;text-align:center;padding:8px;line-height:1.4}
+
+    /* section labels */
+    .sec{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#4a4a70;background:#0f0f13;padding:2px 14px;border:1px solid #2a2a38;border-radius:4px;margin:6px 0}
+
+    /* branch */
+    .branch-lbl{font-size:11px;color:#6060a0;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:3px}
+    .h-line{height:2px;background:#3a3a52}
+
+    /* two-path split */
+    .split{display:flex;gap:72px;align-items:flex-start;justify-content:center}
+    .split-col{display:flex;flex-direction:column;align-items:center}
+
+    /* score chips row */
+    .chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    .chip{background:#1a1228;border:1px solid #4a3080;border-radius:6px;padding:7px 12px;font-size:11.5px;color:#9070c8;text-align:center;min-width:108px}
+    .chip strong{display:block;color:#b39ddb;font-size:12.5px;margin-bottom:2px}
+
+    /* two-column input row */
+    .two-input{display:flex;gap:64px;align-items:flex-start;justify-content:center}
+    .two-input-col{display:flex;flex-direction:column;align-items:center}
+    .two-input-col .lbl{font-size:11px;font-weight:700;color:#4a4a70;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+
+    /* legend */
+    .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:64px;padding:18px 22px;background:#14141e;border:1px solid #2a2a38;border-radius:10px;max-width:760px}
+    .leg-item{display:flex;align-items:center;gap:8px;font-size:12px;color:#8080a0}
+    .leg-sw{width:26px;height:16px;border-radius:3px}
+  </style>
+</head>
+<body>
+
+<h1>Design Document: AI Wardrobe Stylist — System Flowchart</h1>
+<p class="subtitle">Recommendation Engine · Not a chatbot · Input: photo + occasion → Output: ranked outfit cards</p>
+
+<div class="chart">
+
+  <!-- ══════════════════════ PART A: GARMENT CATALOGUING ══════════════════════ -->
+  <div class="sec">Part A — Garment Cataloguing</div>
+
+  <div class="node n-terminal">User</div>
+  <div class="arr"></div>
+
+  <div class="node n-action">
+    Uploads garment photo
+    <div class="sub">JPEG / PNG · max 5 MB</div>
+  </div>
+  <div class="arr"></div>
+
+  <div class="node n-process">
+    Wardrobe Manager — validates file
+    <div class="sub">format + size check</div>
+  </div>
+  <div class="arr"></div>
+
+  <!-- Decision: valid file? -->
+  <div class="diam-outer">
+    <div class="diam"><div class="diam-txt">Valid<br/>file?</div></div>
+  </div>
+
+  <div class="split" style="margin-top:0">
+    <!-- NO -->
+    <div class="split-col">
+      <div class="branch-lbl">No</div>
+      <div class="arr"></div>
+      <div class="node n-error" style="min-width:190px">
+        Reject upload
+        <div class="sub">Return error message</div>
+      </div>
+      <div class="arr"></div>
+      <div class="node n-end" style="min-width:190px">End</div>
+    </div>
+    <!-- YES -->
+    <div class="split-col">
+      <div class="branch-lbl">Yes</div>
+      <div class="arr"></div>
+
+      <div class="node n-external">
+        Pretrained Vision Model
+        <div class="sub">Gemini Vision / CLIP · external API</div>
+      </div>
+      <div class="arr"></div>
+
+      <div class="node n-process">
+        Extracts garment attributes
+        <div class="sub">category · color · fabric · pattern · fit</div>
+      </div>
+      <div class="arr"></div>
+
+      <div class="node n-data">
+        Structured garment object
+        <div class="sub">{ name, category, color, fabric, pattern, fit, confidence }</div>
+      </div>
+      <div class="arr"></div>
+
+      <!-- Confidence check -->
+      <div class="diam-outer">
+        <div class="diam"><div class="diam-txt">Vision<br/>confidence<br/>≥ 0.6?</div></div>
+      </div>
+
+      <div class="split">
+        <!-- Low confidence -->
+        <div class="split-col">
+          <div class="branch-lbl">No</div>
+          <div class="arr"></div>
+          <div class="node n-error" style="min-width:190px">
+            Highlight low-confidence fields
+            <div class="sub">User must verify / correct</div>
+          </div>
+        </div>
+        <!-- High confidence -->
+        <div class="split-col">
+          <div class="branch-lbl">Yes</div>
+          <div class="arr arr-lg"></div>
+        </div>
+      </div>
+
+      <div class="arr"></div>
+
+      <div class="node n-action">
+        User reviews extracted attributes
+        <div class="sub">Can edit any field before confirming</div>
+      </div>
+      <div class="arr"></div>
+
+      <div class="node n-action">
+        User assigns occasion tags
+        <div class="sub">casual · formal · business casual · outdoor · sport</div>
+      </div>
+      <div class="arr"></div>
+
+      <div class="node n-process">
+        Persist Garment to Wardrobe DB
+        <div class="sub">Confirmation within 2 s</div>
+      </div>
+      <div class="arr"></div>
+
+      <div class="node n-process">
+        Generate garment embedding
+        <div class="sub">Structured attributes → vector</div>
+      </div>
+      <div class="arr"></div>
+
+      <div class="node n-action">
+        Store embedding in Vector Store
+        <div class="sub">Updated within 10 s</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arr arr-lg"></div>
+
+  <!-- ══════════════════════ PART B: RECOMMENDATION ══════════════════════ -->
+  <div class="sec">Part B — Outfit Recommendation</div>
+
+  <div class="node n-terminal">User selects an occasion</div>
+  <div class="arr"></div>
+
+  <!-- Empty wardrobe check -->
+  <div class="diam-outer">
+    <div class="diam"><div class="diam-txt">Wardrobe<br/>has<br/>garments?</div></div>
+  </div>
+
+  <div class="split">
+    <!-- Empty -->
+    <div class="split-col">
+      <div class="branch-lbl">No</div>
+      <div class="arr"></div>
+      <div class="node n-error" style="min-width:190px">
+        Show empty-state prompt
+        <div class="sub">Direct user to upload garments first</div>
+      </div>
+      <div class="arr"></div>
+      <div class="node n-end" style="min-width:190px">End</div>
+    </div>
+    <!-- Has garments -->
+    <div class="split-col">
+      <div class="branch-lbl">Yes</div>
+      <div class="arr"></div>
+
+      <div class="node n-process">
+        Recommendation Engine
+        <div class="sub">Generates candidate outfit combinations<br/>from user's wardrobe for this occasion</div>
+      </div>
+      <div class="arr"></div>
+
+      <!-- ══ VECTOR STORE ══ -->
+      <div class="sec">Rule Retrieval</div>
+
+      <div class="node n-process">
+        Vector Store — top-K retrieval
+        <div class="sub">K=5 default · similarity threshold 0.7<br/>Returns: relevant rules + garment embeddings</div>
+      </div>
+      <div class="arr"></div>
+
+      <div class="diam-outer">
+        <div class="diam"><div class="diam-txt">≥ 3 results<br/>above<br/>threshold?</div></div>
+      </div>
+
+      <div class="split">
+        <div class="split-col">
+          <div class="branch-lbl">No</div>
+          <div class="arr"></div>
+          <div class="node n-error" style="min-width:190px">
+            Fallback: top-3 by raw score
+            <div class="sub">low_confidence: true</div>
+          </div>
+        </div>
+        <div class="split-col">
+          <div class="branch-lbl">Yes</div>
+          <div class="arr arr-lg"></div>
+        </div>
+      </div>
+
+      <div class="arr"></div>
+
+      <!-- ══ RULE CORPUS ══ -->
+      <div class="sec">Knowledge Base</div>
+
+      <div class="node n-process">
+        Load relevant rules from Rule Corpus
+        <div class="sub">fashion_rulebook · rulebook_streetwear<br/>rulebook_korean · rulebook_techwear · rulebook_luxury</div>
+      </div>
+      <div class="arr"></div>
+
+      <!-- ══ XGBOOST SCORER ══ -->
+      <div class="sec">Outfit Scoring</div>
+
+      <div class="node n-action">
+        XGBoost Outfit Scorer
+        <div class="sub">Scores each candidate outfit combination</div>
+      </div>
+      <div class="arr"></div>
+
+      <!-- Score chips -->
+      <div class="chips">
+        <div class="chip"><strong>Color</strong>0–100 · wt 0.30</div>
+        <div class="chip"><strong>Style / Occasion</strong>0–100 · wt 0.25</div>
+        <div class="chip"><strong>Footwear</strong>0–100 · wt 0.20</div>
+        <div class="chip"><strong>Pattern</strong>0–100 · wt 0.10</div>
+        <div class="chip"><strong>Fit Balance</strong>0–100 · wt 0.10</div>
+        <div class="chip"><strong>Season / Fabric</strong>0–100 · wt 0.05</div>
+      </div>
+      <div class="arr arr-lg"></div>
+
+      <div class="node n-data">
+        Compatibility score (0–100) + Confidence score (0–1)
+        <div class="sub">per candidate outfit</div>
+      </div>
+      <div class="arr"></div>
+
+      <div class="node n-process">
+        Select top 3 highest-scoring outfits
+      </div>
+      <div class="arr"></div>
+
+      <!-- ══ LLM STYLIST ══ -->
+      <div class="sec">Explanation Generation</div>
+
+      <div class="node n-external">
+        LLM Stylist — explanation only
+        <div class="sub">Gemini · external API<br/>Input: outfit + score + rules + occasion<br/>Output: 20–100 word explanation per outfit</div>
+      </div>
+      <div class="arr"></div>
+
+      <!-- LLM available? -->
+      <div class="diam-outer">
+        <div class="diam"><div class="diam-txt">LLM<br/>available?</div></div>
+      </div>
+
+      <div class="split">
+        <div class="split-col">
+          <div class="branch-lbl">No</div>
+          <div class="arr"></div>
+          <div class="node n-error" style="min-width:190px">
+            Show cards without explanation
+            <div class="sub">Notice: explanation unavailable</div>
+          </div>
+        </div>
+        <div class="split-col">
+          <div class="branch-lbl">Yes</div>
+          <div class="arr arr-lg"></div>
+        </div>
+      </div>
+
+      <div class="arr"></div>
+
+      <!-- ══ DISPLAY ══ -->
+      <div class="sec">Recommendation Display</div>
+
+      <div class="node n-action">
+        Render top 3 Outfit Cards
+        <div class="sub">garment images · compatibility score<br/>confidence indicator · LLM explanation</div>
+      </div>
+      <div class="arr"></div>
+
+      <!-- Confidence display -->
+      <div class="diam-outer">
+        <div class="diam"><div class="diam-txt">Any outfit<br/>confidence<br/>&lt; 0.6?</div></div>
+      </div>
+
+      <div class="split">
+        <div class="split-col">
+          <div class="branch-lbl">Yes</div>
+          <div class="arr"></div>
+          <div class="node n-error" style="min-width:190px">
+            Show low-confidence indicator
+            <div class="sub">Display actual confidence value</div>
+          </div>
+        </div>
+        <div class="split-col">
+          <div class="branch-lbl">No</div>
+          <div class="arr arr-lg"></div>
+        </div>
+      </div>
+
+      <div class="arr"></div>
+
+      <!-- Save outfit -->
+      <div class="diam-outer">
+        <div class="diam"><div class="diam-txt">User saves<br/>outfit?</div></div>
+      </div>
+
+      <div class="split">
+        <div class="split-col">
+          <div class="branch-lbl">Yes</div>
+          <div class="arr"></div>
+          <div class="node n-action" style="min-width:190px">
+            Save to named collection
+            <div class="sub">Confirmation within 2 s</div>
+          </div>
+        </div>
+        <div class="split-col">
+          <div class="branch-lbl">No</div>
+          <div class="arr arr-lg"></div>
+        </div>
+      </div>
+
+      <div class="arr"></div>
+      <div class="node n-end">Done</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- LEGEND -->
+<div style="display:flex;justify-content:center;margin-top:64px">
+  <div class="legend">
+    <div class="leg-item">
+      <div class="leg-sw" style="background:#1e1e2e;border:1.5px solid #3a3a52;border-radius:50px"></div>
+      Start / End
+    </div>
+    <div class="leg-item">
+      <div class="leg-sw" style="background:#1a1a2e;border:1.5px solid #3a3a52"></div>
+      Process / Component
+    </div>
+    <div class="leg-item">
+      <div class="leg-sw" style="background:#1e1630;border:1.5px solid #5a3fa0"></div>
+      Action / Built Component
+    </div>
+    <div class="leg-item">
+      <div class="leg-sw" style="background:#131e1a;border:1.5px solid #2a6a4a"></div>
+      External API (Vision Model / LLM)
+    </div>
+    <div class="leg-item">
+      <div class="leg-sw" style="background:#141428;border:1.5px solid #2e2e50"></div>
+      Data / Output
+    </div>
+    <div class="leg-item">
+      <div class="leg-sw" style="background:#1e1010;border:1.5px solid #7a2020"></div>
+      Error / Fallback
+    </div>
+    <div class="leg-item">
+      <div class="leg-sw" style="background:#0f1a20;border:1.5px solid #2a5a3a;border-radius:50px"></div>
+      Terminal
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

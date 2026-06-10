@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "trained_on": "2026-06-10T10:25:09.855243",
+  "training_examples": 543,
+  "feature_columns": [
+    "color",
+    "fabric",
+    "style_occ",
+    "footwear",
+    "pattern",
+    "fit",
+    "balance"
+  ],
+  "scoring_weights": {
+    "color": 0.3,
+    "fabric": 0.15,
+    "style_occ": 0.2,
+    "footwear": 0.15,
+    "pattern": 0.08,
+    "fit": 0.07,
+    "balance": 0.05
+  },
+  "regressor": {
+    "n_estimators": 114,
+    "mae_test": 2.464,
+    "r2_test": 0.956
+  },
+  "classifier": {
+    "classes": [
+      "bad (0-40)",
+      "medium (41-70)",
+      "good (71-100)"
+    ],
+    "accuracy_test": 0.936
+  },
+  "cv_mae_mean": 3.461,
+  "cv_mae_std": 0.837
+}

@@ -1,0 +1,323 @@
+"""
+garments.py — Garment CRUD routes
+POST /garments         → add garment (with optional vision extraction)
+GET  /garments         → list all garments in wardrobe
+GET  /garments/{id}    → get single garment
+PUT  /garments/{id}    → update garment
+DELETE /garments/{id}  → delete garment
+POST /garments/extract-from-image → vision model extraction
+"""
+import uuid
+import logging
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Optional
+
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, status
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
+
+from db.database import get_db
+from db.models import Garment, GarmentOccasionTag, Wardrobe, User
+from api.schemas import GarmentCreate, GarmentUpdate, GarmentOut, VisionExtractResponse
+from vector_store.store import get_vector_store
+from config import GEMINI_API_KEY, VISION_MODEL, DATA_DIR
+
+logger = logging.getLogger(__name__)
+router = APIRouter(prefix="/garments", tags=["garments"])
+
+MAX_IMAGE_BYTES = 5 * 1024 * 1024   # 5 MB
+ALLOWED_MIME = {"image/jpeg", "image/png"}
+
+
+# ── Helper: ensure wardrobe exists ────────────────────────────────────────────
+async def _get_or_create_wardrobe(user_id: str, db: AsyncSession) -> Wardrobe:
+    result = await db.execute(select(Wardrobe).where(Wardrobe.userId == user_id))
+    wardrobe = result.scalar_one_or_none()
+    if not wardrobe:
+        # Auto-create user + wardrobe for dev convenience
+        user_result = await db.execute(select(User).where(User.userId == user_id))
+        user = user_result.scalar_one_or_none()
+        if not user:
+            user = User(userId=user_id, email=f"{user_id}@wardrobe.local", role="user")
+            db.add(user)
+        wardrobe = Wardrobe(wardrobeId=str(uuid.uuid4()), userId=user_id)
+        db.add(wardrobe)
+        await db.flush()
+    return wardrobe
+
+
+def _garment_to_dict(garment: Garment) -> dict:
+    return {
+        "garmentId": garment.garmentId,
+        "wardrobeId": garment.wardrobeId,
+        "name": garment.name,
+        "category": garment.category,
+        "primaryColor": garment.primaryColor,
+        "secondaryColor": garment.secondaryColor,
+        "fabricType": garment.fabricType,
+        "patternType": garment.patternType,
+        "fitType": garment.fitType,
+        "styleTag": garment.styleTag,
+        "occasionTags": [t.tag for t in garment.occasion_tags],
+        "imageUrl": garment.imageUrl,
+        "embeddingId": garment.embeddingId,
+        "createdAt": garment.createdAt.isoformat(),
+        "updatedAt": garment.updatedAt.isoformat(),
+    }
+
+
+# ── Vision Extraction ─────────────────────────────────────────────────────────
+@router.post("/extract-from-image", response_model=VisionExtractResponse)
+async def extract_from_image(file: UploadFile = File(...)):
+    """Extract garment attributes from an uploaded image using Vision Model."""
+    # Validate file
+    content_type = file.content_type or ""
+    if content_type not in ALLOWED_MIME:
+        raise HTTPException(
+            status_code=415,
+            detail=f"Only JPEG and PNG files are accepted. Got: {content_type}",
+        )
+    data = await file.read()
+    if len(data) > MAX_IMAGE_BYTES:
+        raise HTTPException(status_code=413, detail="File exceeds the 5 MB limit.")
+
+    if GEMINI_API_KEY:
+        try:
+            import google.generativeai as genai
+            import base64
+            genai.configure(api_key=GEMINI_API_KEY)
+            model = genai.GenerativeModel(VISION_MODEL)
+
+            prompt = """Analyze this clothing image and extract attributes as JSON:
+{
+  "category": "top|bottom|outerwear|footwear|accessory|full_outfit",
+  "primaryColor": "color name",
+  "secondaryColor": "color name or null",
+  "fabricType": "fabric type (e.g. cotton, wool, denim)",
+  "patternType": "solid|stripes|checks|camo|graphic|floral|null",
+  "fitType": "slim fit|regular fit|relaxed fit|oversized fit|null",
+  "confidence": 0.0-1.0,
+  "fieldConfidences": {"category": 0.9, "primaryColor": 0.95, ...}
+}
+Output only valid JSON, no other text."""
+
+            image_part = {
+                "inline_data": {
+                    "mime_type": content_type,
+                    "data": base64.b64encode(data).decode(),
+                }
+            }
+            response = model.generate_content([prompt, image_part])
+            import json, re
+            text = response.text.strip()
+            text = re.sub(r'^```(?:json)?\s*', '', text, flags=re.MULTILINE)
+            text = re.sub(r'\s*```$', '', text, flags=re.MULTILINE)
+            attrs = json.loads(text)
+
+            low_conf_fields = [
+                k for k, v in attrs.get("fieldConfidences", {}).items()
+                if v < 0.6
+            ]
+            return VisionExtractResponse(
+                category=attrs.get("category", "top"),
+                primaryColor=attrs.get("primaryColor", "unknown"),
+                secondaryColor=attrs.get("secondaryColor"),
+                fabricType=attrs.get("fabricType", "unknown"),
+                patternType=attrs.get("patternType"),
+                fitType=attrs.get("fitType"),
+                confidence=attrs.get("confidence", 0.7),
+                lowConfidenceFields=low_conf_fields,
+            )
+        except Exception as e:
+            logger.error(f"[GarmentsRoute] Vision extraction failed: {e}")
+            raise HTTPException(status_code=503, detail="Vision service temporarily unavailable.")
+    else:
+        # Mock response for development
+        return VisionExtractResponse(
+            category="top",
+            primaryColor="navy",
+            secondaryColor=None,
+            fabricType="cotton",
+            patternType="solid",
+            fitType="regular fit",
+            confidence=0.85,
+            lowConfidenceFields=[],
+        )
+
+
+# ── POST /garments ─────────────────────────────────────────────────────────────
+@router.post("", status_code=status.HTTP_201_CREATED)
+async def create_garment(
+    body: GarmentCreate,
+    user_id: str = "demo-user",    # In prod, extract from JWT
+    db: AsyncSession = Depends(get_db),
+):
+    """Add a garment to the user's wardrobe."""
+    wardrobe = await _get_or_create_wardrobe(user_id, db)
+
+    garment = Garment(
+        garmentId=str(uuid.uuid4()),
+        wardrobeId=wardrobe.wardrobeId,
+        name=body.name,
+        category=body.category,
+        primaryColor=body.primaryColor,
+        secondaryColor=body.secondaryColor,
+        fabricType=body.fabricType,
+        patternType=body.patternType,
+        fitType=body.fitType,
+        styleTag=body.styleTag,
+        imageUrl=body.imageUrl,
+    )
+    db.add(garment)
+    await db.flush()
+
+    for tag in body.occasionTags:
+        db.add(GarmentOccasionTag(garmentId=garment.garmentId, tag=tag))
+    await db.flush()
+
+    # Async vector store update (within 10s SLA)
+    try:
+        garment_dict = {
+            "garmentId": garment.garmentId,
+            "name": garment.name,
+            "category": garment.category,
+            "primaryColor": garment.primaryColor,
+            "fabricType": garment.fabricType,
+            "fitType": garment.fitType or "",
+            "styleTag": garment.styleTag or "",
+            "occasionTags": body.occasionTags,
+        }
+        vs = get_vector_store()
+        embedding_id = vs.add_garment(garment_dict, user_id)
+        garment.embeddingId = embedding_id
+    except Exception as e:
+        logger.error(f"[GarmentsRoute] Vector store update failed for {garment.garmentId}: {e}")
+
+    await db.refresh(garment)
+    await db.refresh(garment, ["occasion_tags"])
+    return _garment_to_dict(garment)
+
+
+# ── GET /garments ──────────────────────────────────────────────────────────────
+@router.get("")
+async def list_garments(
+    user_id: str = "demo-user",
+    category: Optional[str] = None,
+    db: AsyncSession = Depends(get_db),
+):
+    """List all garments in the user's wardrobe with optional filters."""
+    wardrobe = await _get_or_create_wardrobe(user_id, db)
+
+    query = select(Garment).where(Garment.wardrobeId == wardrobe.wardrobeId)
+    if category:
+        query = query.where(Garment.category == category)
+
+    result = await db.execute(query)
+    garments = result.scalars().all()
+
+    garment_dicts = []
+    for g in garments:
+        await db.refresh(g, ["occasion_tags"])
+        garment_dicts.append(_garment_to_dict(g))
+
+    return {"garments": garment_dicts, "total": len(garment_dicts)}
+
+
+# ── GET /garments/{id} ────────────────────────────────────────────────────────
+@router.get("/{garment_id}")
+async def get_garment(
+    garment_id: str,
+    user_id: str = "demo-user",
+    db: AsyncSession = Depends(get_db),
+):
+    wardrobe = await _get_or_create_wardrobe(user_id, db)
+    result = await db.execute(
+        select(Garment).where(
+            Garment.garmentId == garment_id,
+            Garment.wardrobeId == wardrobe.wardrobeId,
+        )
+    )
+    garment = result.scalar_one_or_none()
+    if not garment:
+        raise HTTPException(status_code=404, detail="Garment not found")
+    await db.refresh(garment, ["occasion_tags"])
+    return _garment_to_dict(garment)
+
+
+# ── PUT /garments/{id} ────────────────────────────────────────────────────────
+@router.put("/{garment_id}")
+async def update_garment(
+    garment_id: str,
+    body: GarmentUpdate,
+    user_id: str = "demo-user",
+    db: AsyncSession = Depends(get_db),
+):
+    wardrobe = await _get_or_create_wardrobe(user_id, db)
+    result = await db.execute(
+        select(Garment).where(
+            Garment.garmentId == garment_id,
+            Garment.wardrobeId == wardrobe.wardrobeId,
+        )
+    )
+    garment = result.scalar_one_or_none()
+    if not garment:
+        raise HTTPException(status_code=404, detail="Garment not found")
+
+    update_data = body.model_dump(exclude_none=True)
+    occasion_tags = update_data.pop("occasionTags", None)
+
+    for field, value in update_data.items():
+        setattr(garment, field, value)
+
+    if occasion_tags is not None:
+        # Replace tags
+        result2 = await db.execute(
+            select(GarmentOccasionTag).where(GarmentOccasionTag.garmentId == garment_id)
+        )
+        for tag in result2.scalars().all():
+            await db.delete(tag)
+        for tag in occasion_tags:
+            db.add(GarmentOccasionTag(garmentId=garment_id, tag=tag))
+
+    await db.flush()
+
+    # Update vector store embedding
+    try:
+        await db.refresh(garment, ["occasion_tags"])
+        garment_dict = _garment_to_dict(garment)
+        vs = get_vector_store()
+        vs.update_garment(garment_dict, user_id)
+    except Exception as e:
+        logger.error(f"[GarmentsRoute] Vector store update failed: {e}")
+
+    await db.refresh(garment, ["occasion_tags"])
+    return _garment_to_dict(garment)
+
+
+# ── DELETE /garments/{id} ─────────────────────────────────────────────────────
+@router.delete("/{garment_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_garment(
+    garment_id: str,
+    user_id: str = "demo-user",
+    db: AsyncSession = Depends(get_db),
+):
+    wardrobe = await _get_or_create_wardrobe(user_id, db)
+    result = await db.execute(
+        select(Garment).where(
+            Garment.garmentId == garment_id,
+            Garment.wardrobeId == wardrobe.wardrobeId,
+        )
+    )
+    garment = result.scalar_one_or_none()
+    if not garment:
+        raise HTTPException(status_code=404, detail="Garment not found")
+
+    # Delete from vector store
+    try:
+        vs = get_vector_store()
+        vs.delete_garment(garment_id)
+    except Exception as e:
+        logger.error(f"[GarmentsRoute] Vector store delete failed: {e}")
+
+    await db.delete(garment)

@@ -1,0 +1,568 @@
+{
+  "version": "1.0.0",
+  "category": "scoring_engine",
+  "description": "Machine-readable lookup tables for the AI Wardrobe Stylist outfit scoring engine. Contains color pair compatibility, style-to-occasion mappings, footwear rules, pattern constraints, season-material mappings, fit combination rules, garment type taxonomy, and XGBoost feature scoring weights. This file is consumed directly by the Outfit_Scorer feature pipeline — do not use it for human-readable rule display.",
+  "last_updated": "2026-06-09",
+  "usage": "Load into the Outfit_Scorer feature extraction pipeline. Use scoring_weights to weight each sub-score before feeding into XGBoost. Use color_rules, footwear rules, pattern_rules, and fit_combination_rules to compute individual sub-scores.",
+
+  "color_rules": {
+    "neutral_colors": ["black", "white", "gray", "charcoal", "beige", "cream", "tan"],
+    "neutral_goes_with_any": true,
+
+    "good_pairs": [
+      ["navy", "white"],
+      ["navy", "beige"],
+      ["navy", "gray"],
+      ["navy", "light blue"],
+      ["black", "white"],
+      ["black", "gray"],
+      ["black", "red"],
+      ["black", "pink"],
+      ["black", "gold"],
+      ["white", "navy"],
+      ["white", "olive"],
+      ["white", "tan"],
+      ["white", "brown"],
+      ["olive", "brown"],
+      ["olive", "tan"],
+      ["olive", "beige"],
+      ["olive", "white"],
+      ["olive", "khaki"],
+      ["burgundy", "gray"],
+      ["burgundy", "navy"],
+      ["burgundy", "beige"],
+      ["burgundy", "cream"],
+      ["mustard", "navy"],
+      ["mustard", "brown"],
+      ["mustard", "olive"],
+      ["mustard", "gray"],
+      ["teal", "white"],
+      ["teal", "navy"],
+      ["teal", "gray"],
+      ["teal", "beige"],
+      ["maroon", "gray"],
+      ["maroon", "beige"],
+      ["maroon", "navy"],
+      ["lavender", "white"],
+      ["lavender", "gray"],
+      ["lavender", "navy"],
+      ["peach", "white"],
+      ["peach", "navy"],
+      ["peach", "brown"],
+      ["khaki", "white"],
+      ["khaki", "navy"],
+      ["khaki", "brown"],
+      ["forest green", "beige"],
+      ["forest green", "brown"],
+      ["forest green", "white"],
+      ["sky blue", "white"],
+      ["sky blue", "navy"],
+      ["sky blue", "gray"]
+    ],
+
+    "bad_pairs": [
+      ["brown", "black"],
+      ["navy", "black"],
+      ["red", "orange"],
+      ["purple", "green"],
+      ["yellow", "orange"],
+      ["pink", "orange"],
+      ["red", "pink"],
+      ["green", "red"],
+      ["blue", "green"],
+      ["purple", "brown"],
+      ["hot pink", "red"],
+      ["yellow", "white"],
+      ["gold", "silver"]
+    ]
+  },
+
+  "style_occasion_rules": {
+    "formal":               ["interview", "business meeting", "formal dinner", "office", "wedding"],
+    "semi formal":          ["wedding", "party", "date night", "formal dinner"],
+    "business casual":      ["office", "interview", "business meeting", "college"],
+    "smart casual":         ["office", "date night", "college", "party", "travel"],
+    "casual":               ["everyday", "college", "vacation", "travel", "festival", "date night"],
+    "streetwear":           ["everyday", "college", "festival", "party"],
+    "korean_fashion":       ["everyday", "college", "date night", "smart casual", "office"],
+    "techwear":             ["everyday", "outdoor", "travel"],
+    "contemporary_luxury":  ["smart casual", "date night", "formal dinner", "party", "office"],
+    "classic_menswear":     ["office", "business meeting", "smart casual", "formal dinner", "everyday"],
+    "athleisure":           ["gym", "running", "sports", "everyday", "travel"],
+    "sporty":               ["gym", "running", "sports", "beach"],
+    "minimalist":           ["everyday", "office", "travel", "date night"],
+    "old_money":            ["office", "formal dinner", "wedding", "date night"],
+    "preppy":               ["college", "office", "everyday", "date night"],
+    "bohemian":             ["festival", "vacation", "beach", "everyday"],
+    "boho":                 ["festival", "vacation", "beach", "everyday"],
+    "vintage":              ["party", "festival", "everyday", "date night"],
+    "retro":                ["party", "festival", "everyday"],
+    "grunge":               ["everyday", "festival", "college"],
+    "punk":                 ["everyday", "festival", "party"],
+    "gothic":               ["everyday", "party", "festival"],
+    "luxury":               ["formal dinner", "wedding", "party", "date night"],
+    "classic":              ["office", "formal dinner", "wedding", "everyday"],
+    "modern":               ["everyday", "office", "college", "travel"]
+  },
+
+  "footwear_style_rules": {
+    "formal":                ["formal shoes", "oxfords", "derbies", "loafers", "heels", "pumps", "monk strap shoes"],
+    "semi formal":           ["heels", "pumps", "loafers", "oxfords", "derbies", "wedges", "flats"],
+    "business casual":       ["loafers", "oxfords", "derbies", "monk strap shoes", "flats", "chelsea boots"],
+    "smart casual":          ["loafers", "chelsea boots", "sneakers", "flats", "mules", "low top sneakers"],
+    "casual":                ["sneakers", "canvas shoes", "sandals", "loafers", "flats", "low top sneakers", "mules", "slippers"],
+    "streetwear":            ["sneakers", "high top sneakers", "boots", "combat boots", "low top sneakers", "basketball shoes"],
+    "korean_fashion":        ["clean white sneakers", "minimal leather sneakers", "suede loafers", "derby shoes", "simple mules"],
+    "techwear":              ["trail runners", "lug sole boots", "waterproof technical sneakers", "military technical boots"],
+    "contemporary_luxury":   ["suede loafers", "leather moccasins", "derby shoes", "suede chelsea boots", "hand-welted leather shoes"],
+    "classic_menswear":      ["oxfords", "loafers", "derbies", "chelsea boots", "desert boots", "white bucks"],
+    "athleisure":            ["sneakers", "running shoes", "walking shoes", "low top sneakers"],
+    "sporty":                ["running shoes", "basketball shoes", "sneakers", "walking shoes"],
+    "bohemian":              ["sandals", "wedges", "flats", "boots", "hiking boots"],
+    "boho":                  ["sandals", "wedges", "flats", "boots"],
+    "vintage":               ["loafers", "canvas shoes", "flats", "boots", "oxfords"],
+    "grunge":                ["combat boots", "boots", "high top sneakers"],
+    "punk":                  ["combat boots", "boots", "high top sneakers"],
+    "gothic":                ["combat boots", "boots", "heels"],
+    "luxury":                ["heels", "pumps", "loafers", "oxfords", "formal shoes"],
+    "old_money":             ["loafers", "oxfords", "derbies", "heels", "flats"],
+    "preppy":                ["loafers", "canvas shoes", "sneakers", "oxfords", "flats"],
+    "minimalist":            ["sneakers", "loafers", "flats", "mules", "chelsea boots"],
+    "classic":               ["oxfords", "loafers", "heels", "flats", "derbies"],
+    "modern":                ["sneakers", "loafers", "chelsea boots", "flats", "mules"]
+  },
+
+  "footwear_occasion_rules": {
+    "office":           ["formal shoes", "oxfords", "derbies", "loafers", "heels", "flats", "monk strap shoes"],
+    "interview":        ["formal shoes", "oxfords", "derbies", "loafers", "heels", "pumps"],
+    "business meeting": ["formal shoes", "oxfords", "loafers", "heels", "pumps"],
+    "formal dinner":    ["formal shoes", "oxfords", "heels", "pumps", "derbies"],
+    "wedding":          ["formal shoes", "heels", "pumps", "oxfords", "flats", "wedges"],
+    "party":            ["heels", "pumps", "sneakers", "boots", "loafers", "wedges"],
+    "date night":       ["heels", "pumps", "loafers", "chelsea boots", "flats", "wedges"],
+    "college":          ["sneakers", "canvas shoes", "loafers", "flats", "boots"],
+    "everyday":         ["sneakers", "canvas shoes", "loafers", "flats", "slippers", "sandals"],
+    "vacation":         ["sandals", "sneakers", "flats", "wedges", "canvas shoes"],
+    "travel":           ["sneakers", "walking shoes", "loafers", "flats", "boots"],
+    "beach":            ["sandals", "flip flops"],
+    "gym":              ["running shoes", "sneakers", "walking shoes"],
+    "running":          ["running shoes", "sneakers"],
+    "sports":           ["running shoes", "basketball shoes", "sneakers"],
+    "festival":         ["boots", "sneakers", "sandals", "combat boots", "canvas shoes"],
+    "religious event":  ["formal shoes", "flats", "sandals", "loafers"],
+    "rainy season":     ["boots", "combat boots", "chelsea boots"]
+  },
+
+  "pattern_rules": {
+    "safe_with_any": ["solid"],
+    "pairs_with_solid_only": [
+      "striped", "vertical striped", "horizontal striped",
+      "checked", "plaid", "tartan", "gingham",
+      "floral", "paisley", "polka dot",
+      "camouflage", "animal print", "abstract print",
+      "graphic print", "tie dye", "geometric"
+    ],
+    "max_patterns_in_outfit": 2,
+    "note": "If one garment has a bold pattern, all others should be solid"
+  },
+
+  "season_material_rules": {
+    "summer":       ["cotton", "organic cotton", "linen", "rayon", "viscose", "jersey knit", "satin"],
+    "winter":       ["wool", "cashmere", "fleece", "velvet", "corduroy", "leather", "suede"],
+    "spring":       ["cotton", "organic cotton", "linen", "denim", "jersey knit", "rayon"],
+    "autumn":       ["denim", "wool", "corduroy", "leather", "suede", "cotton", "fleece"],
+    "rainy season": ["nylon", "polyester", "leather", "denim"],
+    "all season":   ["cotton", "denim", "polyester", "nylon", "jersey knit"]
+  },
+
+  "fit_combination_rules": {
+    "good_top_bottom_fit_pairs": [
+      ["oversized fit", "slim fit"],
+      ["oversized fit", "skinny fit"],
+      ["relaxed fit", "slim fit"],
+      ["relaxed fit", "skinny fit"],
+      ["slim fit", "slim fit"],
+      ["regular fit", "regular fit"],
+      ["regular fit", "slim fit"],
+      ["tailored fit", "slim fit"],
+      ["tailored fit", "regular fit"],
+      ["athletic fit", "slim fit"],
+      ["athletic fit", "regular fit"],
+      ["loose fit", "slim fit"],
+      ["loose fit", "skinny fit"]
+    ],
+    "bad_top_bottom_fit_pairs": [
+      ["oversized fit", "oversized fit"],
+      ["oversized fit", "wide fit"],
+      ["loose fit", "wide fit"],
+      ["loose fit", "oversized fit"]
+    ],
+    "rule": "Avoid volume on both top and bottom simultaneously"
+  },
+
+  "garment_type_combination_rules": {
+    "tops": [
+      "t-shirt", "crew neck t-shirt", "v-neck t-shirt", "oversized t-shirt",
+      "graphic t-shirt", "polo shirt", "dress shirt", "oxford shirt",
+      "flannel shirt", "linen shirt", "hawaiian shirt", "denim shirt",
+      "kurta", "henley shirt", "tank top", "camisole", "crop top",
+      "blouse", "tunic", "sweatshirt", "hoodie", "zip hoodie",
+      "sweater", "cardigan", "turtleneck"
+    ],
+    "outerwear": [
+      "vest", "waistcoat", "jacket", "denim jacket", "bomber jacket",
+      "leather jacket", "biker jacket", "field jacket", "windbreaker",
+      "parka", "trench coat", "overcoat", "raincoat", "blazer",
+      "sport coat", "cape", "poncho", "nehru jacket"
+    ],
+    "bottoms": [
+      "jeans", "skinny jeans", "slim jeans", "straight jeans",
+      "relaxed jeans", "wide leg jeans", "cargo pants", "chinos",
+      "trousers", "dress pants", "joggers", "sweatpants",
+      "track pants", "leggings", "palazzo pants", "culottes",
+      "shorts", "denim shorts", "cargo shorts", "bermuda shorts",
+      "mini skirt", "midi skirt", "maxi skirt", "pleated skirt",
+      "pencil skirt", "a-line skirt", "denim skirt", "dhoti", "lungi"
+    ],
+    "full_outfits": [
+      "mini dress", "midi dress", "maxi dress", "wrap dress",
+      "shirt dress", "bodycon dress", "slip dress",
+      "cocktail dress", "evening gown", "sundress",
+      "saree", "lehenga", "salwar kameez", "anarkali", "kurti", "sherwani"
+    ],
+    "outfit_structure_rules": {
+      "standard_outfit": "1 top + 1 bottom + 1 footwear",
+      "layered_outfit":  "1 top + 1 outerwear + 1 bottom + 1 footwear",
+      "full_outfit":     "1 full_outfit item + 1 footwear",
+      "note": "Full outfit items (dresses, sarees) should not be paired with additional tops or bottoms"
+    }
+  },
+
+  "style_garment_type_rules": {
+    "formal": {
+      "tops":    ["dress shirt", "oxford shirt", "blouse", "turtleneck"],
+      "bottoms": ["trousers", "dress pants", "pencil skirt", "midi skirt"],
+      "outer":   ["blazer", "overcoat", "waistcoat", "trench coat"]
+    },
+    "business casual": {
+      "tops":    ["polo shirt", "dress shirt", "oxford shirt", "blouse", "turtleneck", "sweater"],
+      "bottoms": ["chinos", "trousers", "dress pants", "midi skirt", "a-line skirt"],
+      "outer":   ["blazer", "sport coat", "cardigan"]
+    },
+    "smart casual": {
+      "tops":    ["polo shirt", "oxford shirt", "turtleneck", "sweater", "linen shirt", "henley shirt"],
+      "bottoms": ["chinos", "slim jeans", "straight jeans", "trousers"],
+      "outer":   ["blazer", "bomber jacket", "denim jacket", "cardigan", "field jacket"]
+    },
+    "casual": {
+      "tops":    ["t-shirt", "crew neck t-shirt", "henley shirt", "polo shirt", "linen shirt", "hoodie", "sweatshirt"],
+      "bottoms": ["jeans", "chinos", "shorts", "joggers", "leggings"],
+      "outer":   ["denim jacket", "bomber jacket", "cardigan", "windbreaker"]
+    },
+    "streetwear": {
+      "tops":    ["graphic t-shirt", "oversized t-shirt", "hoodie", "sweatshirt", "tank top"],
+      "bottoms": ["cargo pants", "joggers", "wide leg jeans", "track pants", "sweatpants"],
+      "outer":   ["bomber jacket", "windbreaker", "parka", "denim jacket", "varsity jacket"]
+    },
+    "korean_fashion": {
+      "tops":    ["t-shirt", "oversized t-shirt", "turtleneck", "fine knit sweater", "linen shirt", "mock-neck tee", "crop top"],
+      "bottoms": ["wide leg trousers", "wide leg jeans", "straight jeans", "relaxed slacks", "wide shorts"],
+      "outer":   ["overshirt", "cropped jacket", "structured blazer", "oversized coat", "boxy bomber"]
+    },
+    "techwear": {
+      "tops":    ["technical t-shirt", "merino base layer", "fleece pullover", "technical hoodie"],
+      "bottoms": ["cargo pants", "technical joggers", "technical shorts", "slim technical pants"],
+      "outer":   ["gore-tex shell", "softshell jacket", "insulated jacket", "technical windbreaker", "modular jacket"]
+    },
+    "contemporary_luxury": {
+      "tops":    ["cashmere crewneck", "cashmere turtleneck", "silk shirt", "fine merino polo", "linen shirt"],
+      "bottoms": ["flannel trousers", "wide linen trousers", "slim chinos", "silk trousers", "pleated trousers"],
+      "outer":   ["unstructured blazer", "cashmere sport coat", "suede bomber", "double-face wool overcoat", "linen blazer"]
+    },
+    "classic_menswear": {
+      "tops":    ["oxford shirt", "dress shirt", "polo shirt", "turtleneck", "v-neck sweater", "cardigan"],
+      "bottoms": ["chinos", "trousers", "flannel trousers", "jeans", "dress pants"],
+      "outer":   ["blazer", "trench coat", "overcoat", "bomber jacket", "field jacket"]
+    },
+    "athleisure": {
+      "tops":    ["tank top", "crop top", "sweatshirt", "hoodie", "zip hoodie", "technical t-shirt"],
+      "bottoms": ["leggings", "joggers", "track pants", "shorts"],
+      "outer":   ["windbreaker", "zip hoodie", "track jacket"]
+    },
+    "bohemian": {
+      "tops":    ["blouse", "tunic", "crop top", "camisole", "linen shirt", "kurta"],
+      "bottoms": ["maxi skirt", "palazzo pants", "culottes", "wide leg jeans"],
+      "outer":   ["cardigan", "vest", "cape", "poncho"]
+    },
+    "minimalist": {
+      "tops":    ["plain t-shirt", "turtleneck", "oxford shirt", "fine knit sweater"],
+      "bottoms": ["slim trousers", "straight jeans", "chinos", "wide trousers"],
+      "outer":   ["minimal blazer", "clean overcoat", "unstructured jacket"]
+    },
+    "old_money": {
+      "tops":    ["oxford shirt", "polo shirt", "turtleneck", "fine knit sweater", "linen shirt"],
+      "bottoms": ["chinos", "flannel trousers", "slim trousers", "dress pants"],
+      "outer":   ["blazer", "sport coat", "trench coat", "overcoat"]
+    },
+    "preppy": {
+      "tops":    ["polo shirt", "oxford shirt", "cable knit sweater", "v-neck sweater", "button-down shirt"],
+      "bottoms": ["chinos", "shorts", "slim jeans", "corduroy trousers"],
+      "outer":   ["blazer", "denim jacket", "windbreaker", "puffer vest"]
+    }
+  },
+
+  "fabric_compatibility_rules": {
+    "good_fabric_pairs": [
+      ["cotton", "linen"],
+      ["cotton", "denim"],
+      ["cotton", "wool"],
+      ["cotton", "jersey knit"],
+      ["linen", "cotton"],
+      ["linen", "suede"],
+      ["linen", "leather"],
+      ["wool", "cashmere"],
+      ["wool", "cotton"],
+      ["wool", "flannel"],
+      ["wool", "corduroy"],
+      ["cashmere", "wool"],
+      ["cashmere", "silk"],
+      ["cashmere", "flannel"],
+      ["silk", "cashmere"],
+      ["silk", "wool"],
+      ["suede", "wool"],
+      ["suede", "cotton"],
+      ["suede", "denim"],
+      ["leather", "cotton"],
+      ["leather", "denim"],
+      ["leather", "wool"],
+      ["denim", "cotton"],
+      ["denim", "leather"],
+      ["denim", "wool"],
+      ["flannel", "denim"],
+      ["flannel", "cotton"],
+      ["corduroy", "cotton"],
+      ["corduroy", "wool"],
+      ["fleece", "nylon"],
+      ["fleece", "polyester"],
+      ["nylon", "polyester"],
+      ["nylon", "fleece"],
+      ["gore-tex", "nylon"],
+      ["gore-tex", "fleece"],
+      ["merino wool", "nylon"],
+      ["merino wool", "cashmere"]
+    ],
+    "bad_fabric_pairs": [
+      ["silk", "nylon"],
+      ["silk", "polyester"],
+      ["cashmere", "nylon"],
+      ["cashmere", "polyester"],
+      ["silk", "fleece"],
+      ["velvet", "nylon"],
+      ["velvet", "polyester"],
+      ["satin", "denim"],
+      ["satin", "flannel"],
+      ["lace", "denim"],
+      ["lace", "leather"]
+    ],
+    "formality_fabric_map": {
+      "formal":          ["wool", "cashmere", "silk", "flannel", "tweed"],
+      "smart_casual":    ["cotton", "linen", "wool", "suede", "corduroy"],
+      "casual":          ["cotton", "denim", "jersey knit", "fleece", "linen"],
+      "streetwear":      ["cotton", "jersey knit", "fleece", "nylon", "denim"],
+      "techwear":        ["gore-tex", "nylon", "polyester", "merino wool", "schoeller"],
+      "luxury_casual":   ["cashmere", "silk", "vicuna", "fine merino", "suede", "double-face wool"]
+    },
+    "texture_combination_rules": [
+      "Matte + matte: safe — both fabrics share visual weight",
+      "Matte + subtle sheen: excellent — adds depth without conflict",
+      "High sheen + high sheen: avoid — silk + satin creates visual noise",
+      "Rough + smooth: good — tweed jacket + smooth trousers is classic",
+      "Coarse + fine: inner to outer — finer layers go closer to the body",
+      "Technical + traditional: avoid mixing technical fabrics with luxury natural fabrics"
+    ]
+  },
+
+  "garment_category_balance_rules": {
+    "required_categories_per_outfit": ["top", "bottom", "footwear"],
+    "optional_categories": ["outerwear", "accessory"],
+    "valid_outfit_structures": [
+      { "structure": "top + bottom + footwear",                    "score": 100, "label": "standard"          },
+      { "structure": "top + outerwear + bottom + footwear",        "score": 100, "label": "layered"            },
+      { "structure": "full_outfit + footwear",                     "score": 100, "label": "full_piece"         },
+      { "structure": "top + bottom + footwear + accessory",        "score": 100, "label": "accessorised"       },
+      { "structure": "top + bottom",                               "score":  60, "label": "missing_footwear"   },
+      { "structure": "top + footwear",                             "score":  40, "label": "missing_bottom"     },
+      { "structure": "bottom + footwear",                          "score":  40, "label": "missing_top"        },
+      { "structure": "outerwear_only + footwear",                  "score":  50, "label": "incomplete_layering"}
+    ],
+    "category_conflict_rules": [
+      "Do not include two bottoms in a scored outfit",
+      "Do not include two full_outfit items",
+      "Full_outfit items (dress, saree, sherwani) cancel all separate tops and bottoms",
+      "Maximum one outerwear layer per outfit in scoring",
+      "Maximum two footwear items disqualifies an outfit"
+    ],
+    "balance_score_formula": "sum(category_presence_scores) / required_category_count * 100"
+  },
+
+  "feature_vector_schema": {
+    "description": "Defines the exact feature vector fed to XGBoost for outfit scoring. All values are numeric 0-100 except confidence_score (0-1).",
+    "version": "1.0.0",
+    "features": [
+      { "name": "color_compatibility_score",   "type": "float", "range": [0, 100], "weight": 0.30, "source": "color_rules.good_pairs / bad_pairs"             },
+      { "name": "fabric_compatibility_score",  "type": "float", "range": [0, 100], "weight": 0.15, "source": "fabric_compatibility_rules.good_fabric_pairs"    },
+      { "name": "style_occasion_match_score",  "type": "float", "range": [0, 100], "weight": 0.20, "source": "style_occasion_rules"                            },
+      { "name": "footwear_match_score",        "type": "float", "range": [0, 100], "weight": 0.15, "source": "footwear_style_rules + footwear_occasion_rules"   },
+      { "name": "pattern_compatibility_score", "type": "float", "range": [0, 100], "weight": 0.08, "source": "pattern_rules"                                   },
+      { "name": "fit_combination_score",       "type": "float", "range": [0, 100], "weight": 0.07, "source": "fit_combination_rules"                           },
+      { "name": "garment_category_balance",    "type": "float", "range": [0, 100], "weight": 0.05, "source": "garment_category_balance_rules"                  }
+    ],
+    "output": {
+      "compatibility_score": { "type": "int",   "range": [0, 100], "description": "Weighted sum of all feature scores, rounded to integer" },
+      "confidence_score":    { "type": "float", "range": [0, 1],   "description": "Model confidence — based on training data density near this feature vector" }
+    },
+    "scoring_math": "compatibility_score = round( sum(feature_value[i] * weight[i]) for i in features )",
+    "invalid_score_condition": "If any required feature (color, fabric, style_occasion, footwear, garment_balance) = null → return score=-1, confidence=0"
+  },
+
+  "occasion_canonical_labels": {
+    "description": "Canonical occasion keys used throughout the system. UI selector, style_occasion_rules, and footwear_occasion_rules must all use these exact labels.",
+    "labels": [
+      "casual", "formal", "business casual", "smart casual",
+      "outdoor", "sport", "gym", "travel", "date night",
+      "party", "wedding", "college", "everyday", "beach",
+      "festival", "vacation", "office", "interview"
+    ],
+    "ui_primary_occasions": ["casual", "formal", "business casual", "smart casual", "outdoor", "sport"],
+    "occasion_formality_rank": {
+      "beach":           1,
+      "gym":             1,
+      "sport":           2,
+      "casual":          3,
+      "everyday":        3,
+      "festival":        3,
+      "vacation":        3,
+      "college":         4,
+      "outdoor":         4,
+      "travel":          4,
+      "smart casual":    5,
+      "date night":      5,
+      "party":           5,
+      "business casual": 6,
+      "office":          6,
+      "interview":       7,
+      "wedding":         8,
+      "formal":          9
+    }
+  },
+
+  "xgboost_training_examples": {
+    "description": "Labeled outfit examples for XGBoost training. Each example has a feature vector and a ground_truth_score validated against the Rule Corpus.",
+    "version": "1.0.0",
+    "examples": [
+      {
+        "id": "TRAIN-001",
+        "outfit": "Navy blazer + white oxford shirt + gray flannel trousers + brown suede loafers",
+        "occasion": "smart casual",
+        "features": { "color_compatibility_score": 95, "fabric_compatibility_score": 90, "style_occasion_match_score": 95, "footwear_match_score": 95, "pattern_compatibility_score": 100, "fit_combination_score": 90, "garment_category_balance": 100 },
+        "ground_truth_score": 95,
+        "rules_satisfied": ["CM003", "CM009", "CM024", "CM025"],
+        "label": "positive"
+      },
+      {
+        "id": "TRAIN-002",
+        "outfit": "White oversized tee + black slim jeans + white Air Force 1",
+        "occasion": "casual",
+        "features": { "color_compatibility_score": 90, "fabric_compatibility_score": 85, "style_occasion_match_score": 90, "footwear_match_score": 90, "pattern_compatibility_score": 100, "fit_combination_score": 95, "garment_category_balance": 100 },
+        "ground_truth_score": 92,
+        "rules_satisfied": ["SW001", "SW002", "SW033"],
+        "label": "positive"
+      },
+      {
+        "id": "TRAIN-003",
+        "outfit": "Cream fine-gauge knit + wide beige trousers + suede loafers",
+        "occasion": "smart casual",
+        "features": { "color_compatibility_score": 95, "fabric_compatibility_score": 92, "style_occasion_match_score": 90, "footwear_match_score": 90, "pattern_compatibility_score": 100, "fit_combination_score": 85, "garment_category_balance": 100 },
+        "ground_truth_score": 92,
+        "rules_satisfied": ["KF001", "KF004", "KF016", "KF024"],
+        "label": "positive"
+      },
+      {
+        "id": "TRAIN-004",
+        "outfit": "GORE-TEX shell + merino base + cargo pants + trail runners",
+        "occasion": "outdoor",
+        "features": { "color_compatibility_score": 88, "fabric_compatibility_score": 95, "style_occasion_match_score": 95, "footwear_match_score": 92, "pattern_compatibility_score": 100, "fit_combination_score": 90, "garment_category_balance": 100 },
+        "ground_truth_score": 93,
+        "rules_satisfied": ["TW001", "TW003", "TW004", "TW026"],
+        "label": "positive"
+      },
+      {
+        "id": "TRAIN-005",
+        "outfit": "Cashmere crewneck + tailored flannel trousers + suede loafers",
+        "occasion": "smart casual",
+        "features": { "color_compatibility_score": 92, "fabric_compatibility_score": 96, "style_occasion_match_score": 92, "footwear_match_score": 95, "pattern_compatibility_score": 100, "fit_combination_score": 90, "garment_category_balance": 100 },
+        "ground_truth_score": 94,
+        "rules_satisfied": ["LX001", "LX003", "LX016", "LX031"],
+        "label": "positive"
+      },
+      {
+        "id": "TRAIN-006",
+        "outfit": "Bright orange hoodie + wide orange joggers + orange sneakers",
+        "occasion": "casual",
+        "features": { "color_compatibility_score": 20, "fabric_compatibility_score": 80, "style_occasion_match_score": 70, "footwear_match_score": 75, "pattern_compatibility_score": 100, "fit_combination_score": 30, "garment_category_balance": 100 },
+        "ground_truth_score": 38,
+        "rules_satisfied": [],
+        "rules_violated": ["SW002", "SW016", "CM004"],
+        "label": "negative"
+      },
+      {
+        "id": "TRAIN-007",
+        "outfit": "Navy suit jacket + brown cargo pants + flip flops",
+        "occasion": "office",
+        "features": { "color_compatibility_score": 40, "fabric_compatibility_score": 30, "style_occasion_match_score": 10, "footwear_match_score": 5, "pattern_compatibility_score": 100, "fit_combination_score": 40, "garment_category_balance": 100 },
+        "ground_truth_score": 18,
+        "rules_satisfied": [],
+        "rules_violated": ["CM006", "CM007", "CM026", "CM027"],
+        "label": "negative"
+      },
+      {
+        "id": "TRAIN-008",
+        "outfit": "Graphic tee + plaid shirt (open) + black slim jeans + white sneaker",
+        "occasion": "casual",
+        "features": { "color_compatibility_score": 70, "fabric_compatibility_score": 82, "style_occasion_match_score": 85, "footwear_match_score": 85, "pattern_compatibility_score": 55, "fit_combination_score": 88, "garment_category_balance": 100 },
+        "ground_truth_score": 74,
+        "rules_satisfied": ["SW005", "SW022"],
+        "rules_violated": ["SW006"],
+        "label": "medium"
+      },
+      {
+        "id": "TRAIN-009",
+        "outfit": "White linen shirt + stone wide trousers + tan suede loafers",
+        "occasion": "smart casual",
+        "features": { "color_compatibility_score": 94, "fabric_compatibility_score": 93, "style_occasion_match_score": 90, "footwear_match_score": 92, "pattern_compatibility_score": 100, "fit_combination_score": 88, "garment_category_balance": 100 },
+        "ground_truth_score": 93,
+        "rules_satisfied": ["KF004", "KF009", "KF024", "LX011"],
+        "label": "positive"
+      },
+      {
+        "id": "TRAIN-010",
+        "outfit": "Black technical jacket + black cargo pants + black trail runners",
+        "occasion": "everyday",
+        "features": { "color_compatibility_score": 92, "fabric_compatibility_score": 90, "style_occasion_match_score": 88, "footwear_match_score": 92, "pattern_compatibility_score": 100, "fit_combination_score": 88, "garment_category_balance": 100 },
+        "ground_truth_score": 91,
+        "rules_satisfied": ["TW010", "TW016", "TW026"],
+        "label": "positive"
+      }
+    ]
+  },
+
+  "scoring_weights": {
+    "color_compatibility":    0.30,
+    "fabric_compatibility":   0.15,
+    "style_occasion_match":   0.20,
+    "footwear_match":         0.15,
+    "pattern_compatibility":  0.08,
+    "fit_combination":        0.07,
+    "garment_category_balance": 0.05
+  }
+}

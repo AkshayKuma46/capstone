@@ -1,0 +1,131 @@
+{
+  "version": "1.2.0",
+  "description": "Master index of all fashion rulebook and pipeline files.",
+  "last_updated": "2026-06-09",
+
+  "pipeline_files": [
+    {
+      "file": "detectionV3.py",
+      "role": "Vision Layer",
+      "description": "CLIP-based garment attribute extractor. Runs per-category CLIP inference, builds structured garment objects, flags low-confidence fields. Output feeds into training_pipeline.py.",
+      "inputs": "Garment photo (JPEG/PNG)",
+      "outputs": "Structured garment object: { garment_type, color, fabric, pattern, fit, style, occasion, category, confidence_scores }"
+    },
+    {
+      "file": "training_pipeline.py",
+      "role": "XGBoost Training Layer",
+      "description": "Generates 543 synthetic labeled outfit examples, trains XGBoost regressor (score 0-100) and classifier (bad/medium/good), evaluates with cross-validation, saves models.",
+      "inputs": "rules.json (scoring tables)",
+      "outputs": "models/xgb_regressor.pkl, models/xgb_classifier.pkl, models/model_metadata.json"
+    },
+    {
+      "file": "full_pipeline_runner.py",
+      "role": "End-to-End Runner",
+      "description": "Runs training_pipeline.py + detectionV3.py together. Upload photos → CLIP extracts attributes → XGBoost scores outfit → saves result to wardrobe_db/. Links Req1 + Req4 of requirements.md.",
+      "inputs": "Garment photos + occasion string",
+      "outputs": "Compatibility score (0-100), Confidence score (0-1), wardrobe_db/outfit_{ts}.json"
+    },
+    {
+      "file": "HOW_TO_RUN_V3.md",
+      "role": "Documentation",
+      "description": "Step-by-step instructions for running detectionV3.py in Google Colab."
+    }
+  ],
+
+  "files": [
+    {
+      "file": "fashion_rulebook.json",
+      "category": "classic_menswear",
+      "description": "Core menswear rules: color theory, fit, proportion, garment knowledge, outfit combinations, style systems (Ivy, Prep, Americana, Military, Workwear), timeless principles",
+      "parts": ["color_rules", "fit_proportion_rules", "garment_knowledge", "outfit_combination_rules", "style_systems", "timeless_principles", "master_rulebook"],
+      "rule_count": 110,
+      "sources": ["Dressing the Man", "A Dictionary of Color Combinations", "Permanent Style", "Icons of Men's Style", "Ametora"]
+    },
+    {
+      "file": "rules.json",
+      "category": "scoring_engine",
+      "description": "Machine-readable lookup tables for the XGBoost scoring pipeline. Contains: color pairs, fabric compatibility, garment category balance, feature vector schema, occasion canonical labels, XGBoost training examples, footwear rules, pattern rules, season-material rules, fit combination rules, garment type taxonomy, scoring weights.",
+      "parts": ["color_rules", "fabric_compatibility_rules", "garment_category_balance_rules", "feature_vector_schema", "occasion_canonical_labels", "xgboost_training_examples", "style_occasion_rules", "footwear_style_rules", "footwear_occasion_rules", "pattern_rules", "season_material_rules", "fit_combination_rules", "garment_type_combination_rules", "style_garment_type_rules", "scoring_weights"],
+      "rule_count": "N/A (lookup tables + training examples)",
+      "training_examples": 10,
+      "sources": ["Compiled from style conventions, color theory, and Rule Corpus"]
+    },
+    {
+      "file": "rulebook_streetwear.json",
+      "category": "streetwear",
+      "description": "Streetwear principles: oversized fit, sneaker coordination, graphic balance, logo placement, layering systems, color palettes, proportions, statement pieces, hype vs timeless",
+      "parts": ["core_principles", "outfit_formulas"],
+      "rule_count": 15,
+      "formula_count": 10,
+      "sources": ["This Is Not a T-Shirt", "The Incomplete", "Out of the Box"]
+    },
+    {
+      "file": "rulebook_korean.json",
+      "category": "korean_fashion",
+      "description": "Korean fashion principles: wide-fit silhouettes, cropped layering, tonal dressing, soft color palettes, modern minimalism, overshirt layering, Korean smart casual rules",
+      "parts": ["core_principles", "outfit_formulas"],
+      "rule_count": 11,
+      "formula_count": 10,
+      "sources": ["K-Fashion: Wearing Contemporary Korea", "Seoul Fashion City", "Musinsa Editorial Archives", "Seoul Fashion Week Collections"]
+    },
+    {
+      "file": "rulebook_techwear.json",
+      "category": "techwear",
+      "description": "Techwear principles: functional layering (base-mid-shell), technical fabrics, color system, silhouette rules, pocket design, weather-adaptive construction, modular systems",
+      "parts": ["core_principles", "layering_guide", "outfit_formulas"],
+      "rule_count": 10,
+      "formula_count": 5,
+      "sources": ["Acronym Archives", "System Magazine", "Veilance Collections", "Nike ACG References"]
+    },
+    {
+      "file": "rulebook_luxury.json",
+      "category": "contemporary_luxury",
+      "description": "Luxury fashion principles: quiet luxury, fabric hierarchy, texture layering, neutral palette construction, sprezzatura, relaxed tailoring, luxury casualwear, investment piece logic",
+      "parts": ["core_principles", "outfit_formulas"],
+      "rule_count": 10,
+      "formula_count": 5,
+      "sources": ["The Italian Gentleman", "Sprezzatura", "Tom Ford", "Loro Piana References", "Brunello Cucinelli References"]
+    },
+    {
+      "file": "outfit_formulas.json",
+      "category": "outfit_formulas",
+      "description": "50 outfit formulas per category. Each formula includes: occasion, season, why it works. Categories: streetwear, korean_fashion, techwear, contemporary_luxury.",
+      "formula_count": {
+        "streetwear": 50,
+        "korean_fashion": 50,
+        "techwear": 50,
+        "contemporary_luxury": 50,
+        "total": 200
+      },
+      "sources": ["Compiled from all style category sources"]
+    },
+    {
+      "file": "style_identification.json",
+      "category": "style_identification",
+      "description": "Rules for identifying style category from observable characteristics: silhouette, fabric, footwear, layering, color palette, accessories. Now includes classic_menswear signature. Decision tree extended to 10 steps covering all 5 categories.",
+      "parts": ["style_signatures", "identification_decision_tree"],
+      "style_categories_covered": ["classic_menswear", "streetwear", "korean_fashion", "techwear", "contemporary_luxury"],
+      "decision_tree_steps": 10,
+      "sources": ["Compiled from all style category sources"]
+    },
+    {
+      "file": "master_rulebook.json",
+      "category": "master_rulebook",
+      "description": "510 actionable rules across 5 style categories: classic_menswear (CM, 110 rules), streetwear (SW, 100), korean_fashion (KF, 100), techwear (TW, 100), contemporary_luxury (LX, 100).",
+      "rule_counts": {
+        "classic_menswear": 110,
+        "streetwear": 100,
+        "korean_fashion": 100,
+        "techwear": 100,
+        "contemporary_luxury": 100,
+        "total": 510
+      },
+      "sources": ["Compiled from all style category sources"]
+    }
+  ],
+
+  "total_rules": 510,
+  "total_formulas": 200,
+  "categories": ["classic_menswear", "streetwear", "korean_fashion", "techwear", "contemporary_luxury"],
+  "usage_note": "For the XGBoost scoring pipeline, load rules.json — it now contains the feature vector schema, fabric compatibility tables, garment balance rules, and labeled training examples. For style identification, load style_identification.json first."
+}

@@ -1,0 +1,156 @@
+{
+  "version": "1.0.0",
+  "category": "style_identification",
+  "description": "Rules for identifying the style category of an outfit based on observable characteristics.",
+
+  "style_signatures": {
+
+    "classic_menswear": {
+      "silhouette": "Proportional and balanced. Fitted but not tight. Jacket shoulders precise, trouser break clean. No extreme volumes — no oversized, no wide-wide.",
+      "fabrics": ["oxford cloth", "cotton", "wool", "flannel", "chino twill", "denim", "corduroy", "linen"],
+      "footwear": ["loafers", "penny loafers", "white bucks", "desert boots", "oxfords", "derbies", "chelsea boots"],
+      "layering": "Purposeful and formality-driven: shirt under blazer, knitwear over shirt, trench over suit. Never casual stacking.",
+      "color_palette": ["navy", "white", "gray", "khaki", "burgundy", "olive", "tan", "cream", "charcoal"],
+      "accessories": ["leather belt matching shoes", "simple watch", "pocket square (formal)", "minimal jewelry"],
+      "distinguishing_features": [
+        "Shoulder seam sits exactly at the shoulder bone",
+        "Collar always present — oxford shirt, polo, or dress shirt",
+        "Heritage garments as anchors: oxford shirt, chinos, blazer, loafers",
+        "Fit is the primary signal — not brand or logo",
+        "Outfit is occasion-appropriate above all else",
+        "No visible logos — style communicates through garment and fit"
+      ]
+    },
+
+    "streetwear": {
+      "silhouette": "Oversized top + slim or tapered bottom, OR boxy wide top + wide bottom (Korean-streetwear hybrid). Strong vertical contrast between top and bottom volumes.",
+      "fabrics": ["heavyweight cotton", "French terry", "nylon", "ripstop", "denim", "fleece", "jersey"],
+      "footwear": ["high-top sneakers", "low-top sneakers", "Jordan", "Nike Dunk", "Air Force 1", "New Balance", "Adidas", "chunky sneakers", "trail runners (techwear adjacent)"],
+      "layering": "Visible layering: hoodie under jacket, flannel open over tee. Layers are often mismatched in brand or material.",
+      "color_palette": ["black", "white", "gray", "washed tones", "bold color blocks", "graphic prints", "camo"],
+      "accessories": ["snapback cap", "fitted cap", "crossbody bag", "beanie", "chain", "sunglasses"],
+      "distinguishing_features": [
+        "Visible brand logos (Supreme, Palace, Nike, Off-White)",
+        "Graphic tees as statement pieces",
+        "Sneakers chosen first, outfit built around them",
+        "Athletic or sport-origin garments in non-sport context",
+        "Cargo pockets present on pants"
+      ]
+    },
+
+    "korean_fashion": {
+      "silhouette": "Wide or relaxed bottom + fitted or cropped top. OR oversized structured top + wide bottom. Clean, deliberate proportions. Volume is controlled and intentional.",
+      "fabrics": ["fine cotton", "linen", "linen blend", "lightweight wool", "fine gauge knit", "silk blend", "rayon"],
+      "footwear": ["minimal white sneakers", "Common Projects style sneakers", "suede loafers", "clean derby shoes", "simple mules"],
+      "layering": "Minimal layering — maximum two visible layers. Overshirt over plain tee. Structured coat over thin knit. Never heavy or bulky.",
+      "color_palette": ["muted tones", "dusty rose", "sage green", "slate blue", "beige", "cream", "stone", "ivory", "off-white", "charcoal"],
+      "accessories": ["minimal crossbody bag", "small tote", "no cap or bucket hat only", "subtle jewelry"],
+      "distinguishing_features": [
+        "Muted, desaturated colors — nothing fully saturated",
+        "Tonal dressing — all warm or all cool temperature tones",
+        "Wide trousers are standard, not exceptional",
+        "Cropped jackets paired with high-waist wide pants",
+        "No visible logos or branding",
+        "Clean, uncluttered silhouette"
+      ]
+    },
+
+    "techwear": {
+      "silhouette": "Articulated, tapered, or modular. Functional pockets visible on multiple garments. Layered but each layer has a specific function. Never soft or draped.",
+      "fabrics": ["GORE-TEX", "nylon ripstop", "Schoeller", "Dyneema", "stretch woven", "polyester technical", "DWR-treated fabrics"],
+      "footwear": ["trail runners (Salomon XT-6, Nike ACG)", "lug-sole boots", "waterproof technical sneakers", "military-style technical boots"],
+      "layering": "Three-layer functional system: base (moisture-wick) + mid (insulation) + shell (weather protection). Each layer is visually distinct in function.",
+      "color_palette": ["all black", "black + gray", "black + olive", "black + stone", "coyote brown + black"],
+      "accessories": ["chest rig", "modular hip bag", "waist bag", "MOLLE-compatible attachments", "technical backpack"],
+      "distinguishing_features": [
+        "Functional hardware — every zipper, buckle, and strap serves a purpose",
+        "Pockets on jackets, pants, and bags in unusual placements (chest, thigh, forearm)",
+        "Weatherproof or water-resistant materials",
+        "Muted, tactical color palette — no bright colors",
+        "Trail runners or technical boots as footwear",
+        "Modular or attachment-compatible garments"
+      ]
+    },
+
+    "contemporary_luxury": {
+      "silhouette": "Relaxed but precisely cut. Unstructured tailoring with natural drape. Soft shoulder, clean silhouette. No extreme proportions.",
+      "fabrics": ["cashmere", "vicuña", "fine merino", "silk", "double-face wool", "suede", "linen (premium)", "flannel"],
+      "footwear": ["suede loafers", "leather moccasins", "leather derby shoes", "suede chelsea boots", "hand-welted leather shoes"],
+      "layering": "Refined and temperature-appropriate layering — fine turtleneck under sport coat, silk scarf under overcoat. Never bulky.",
+      "color_palette": ["stone", "ecru", "ivory", "sand", "taupe", "slate gray", "navy", "charcoal", "burgundy (winter accent)", "pale blue (summer accent)"],
+      "accessories": ["no visible logos", "subtle watch", "leather belt (same tone as shoes)", "fine leather bag (not logoed)"],
+      "distinguishing_features": [
+        "No visible brand logos or markings",
+        "Extraordinary fabric quality — cashmere, suede, silk",
+        "Precisely fitted but relaxed, not tight",
+        "Neutral palette — colors are restrained",
+        "Texture is the primary visual interest",
+        "Footwear is leather, suede, or fine materials — never athletic",
+        "Garments appear simple but feel exceptional"
+      ]
+    }
+  },
+
+  "identification_decision_tree": [
+    {
+      "step": 1,
+      "question": "Are any garments made from GORE-TEX, nylon ripstop, or technical weather-resistant fabrics?",
+      "yes": "Likely TECHWEAR — proceed to step 2T",
+      "no": "Proceed to step 2"
+    },
+    {
+      "step": "2T",
+      "question": "Is the color palette dark/tactical (black, olive, stone, gray)?",
+      "yes": "TECHWEAR confirmed",
+      "no": "May be performance athleisure, not techwear"
+    },
+    {
+      "step": 2,
+      "question": "Are visible brand logos present (Supreme, Palace, Off-White, Nike etc)?",
+      "yes": "Likely STREETWEAR — proceed to step 3S",
+      "no": "Proceed to step 3"
+    },
+    {
+      "step": "3S",
+      "question": "Are sneakers the dominant footwear and are proportions oversized-top/slim-bottom?",
+      "yes": "STREETWEAR confirmed",
+      "no": "May be casual or smart-casual with branding"
+    },
+    {
+      "step": 3,
+      "question": "Are the trousers wide-leg or relaxed, and is the color palette muted/desaturated?",
+      "yes": "Likely KOREAN FASHION — proceed to step 4K",
+      "no": "Proceed to step 4"
+    },
+    {
+      "step": "4K",
+      "question": "Is the footwear minimal (clean white sneakers, suede loafers) with no visible logos?",
+      "yes": "KOREAN FASHION confirmed",
+      "no": "May be casual wide-leg dressing, not specifically Korean fashion"
+    },
+    {
+      "step": 4,
+      "question": "Is the fabric cashmere, fine merino, silk, suede, or double-face wool?",
+      "yes": "Likely CONTEMPORARY LUXURY — proceed to step 5L",
+      "no": "Proceed to step 5"
+    },
+    {
+      "step": "5L",
+      "question": "Is the silhouette relaxed and unstructured with no visible logos?",
+      "yes": "CONTEMPORARY LUXURY confirmed",
+      "no": "May be luxury formal (different category)"
+    },
+    {
+      "step": 5,
+      "question": "Are heritage garments present (oxford shirt, chinos, blazer, loafers) with precise fit and neutral colors?",
+      "yes": "Likely CLASSIC MENSWEAR — proceed to step 6CM",
+      "no": "Other style category or mixed"
+    },
+    {
+      "step": "6CM",
+      "question": "Is the outfit occasion-appropriate and free of visible logos, graphic prints, or technical hardware?",
+      "yes": "CLASSIC MENSWEAR confirmed",
+      "no": "Mixed style or casual — check individual garment categories"
+    }
+  ]
+}

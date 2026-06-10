@@ -1,0 +1,619 @@
+{
+  "version": "1.0.0",
+  "category": "classic_menswear",
+  "description": "Core classic menswear knowledge base. Contains color theory, fit and proportion rules, garment histories and pairings, proven outfit combinations, style family systems (Ivy, Prep, Americana, Military, Workwear), timeless principles, and a 110-rule master rulebook. Extracted from foundational menswear literature.",
+  "last_updated": "2026-06-09",
+  "source_books": [
+    "Dressing the Man — Alan Flusser",
+    "A Dictionary of Color Combinations — Sanzo Wada",
+    "Permanent Style Presents: The Style Guide",
+    "Icons of Men's Style — Josh Sims",
+    "Ametora — W. David Marx"
+  ],
+
+  "part1_color_rules": {
+
+    "harmony_principles": [
+      {
+        "rule_name": "Neutral Foundation",
+        "description": "Build every outfit on at least one neutral: navy, black, white, gray, beige, tan, cream, or khaki.",
+        "why_it_works": "Neutrals absorb color without clashing and provide visual stability.",
+        "when_to_use": "Always — as base for trousers, jacket, or shirt.",
+        "when_to_avoid": "Avoid all-neutral when you want personality or visual interest.",
+        "examples": ["Navy trousers + white shirt", "Gray trousers + beige jacket", "Black jeans + white tee"]
+      },
+      {
+        "rule_name": "Three-Color Maximum",
+        "description": "Limit a full outfit to three colors maximum.",
+        "why_it_works": "More than three colors fragments the eye and makes the outfit look accidental.",
+        "when_to_use": "All outfits, especially smart casual and formal.",
+        "when_to_avoid": "Festival or expressive streetwear contexts may break this.",
+        "examples": ["Navy + white + brown", "Gray + burgundy + white", "Olive + tan + cream"]
+      },
+      {
+        "rule_name": "60-30-10 Color Distribution",
+        "description": "60% dominant color, 30% secondary color, 10% accent color.",
+        "why_it_works": "Creates visual hierarchy without chaos.",
+        "when_to_use": "Smart casual, business casual, and formal outfits.",
+        "when_to_avoid": "Casual/streetwear where rules are more fluid.",
+        "examples": ["Navy (60%) trousers + white (30%) shirt + burgundy (10%) pocket square"]
+      },
+      {
+        "rule_name": "Analogous Harmony",
+        "description": "Colors adjacent on the color wheel work together: blue + teal + green, or red + orange + brown.",
+        "why_it_works": "Adjacent colors share undertones, creating a cohesive look.",
+        "when_to_use": "When wearing multiple non-neutral colors.",
+        "when_to_avoid": "When you want high contrast.",
+        "examples": ["Olive shirt + tan chinos + brown boots", "Navy jacket + teal shirt + gray trousers"]
+      },
+      {
+        "rule_name": "Complementary Contrast",
+        "description": "Colors opposite on the wheel create strong, intentional contrast: navy + mustard, burgundy + olive, purple + orange.",
+        "why_it_works": "Opposing hues make each other appear more vivid.",
+        "when_to_use": "When you want a bold, deliberate look.",
+        "when_to_avoid": "Formal or conservative contexts.",
+        "examples": ["Navy jacket + mustard trousers", "Burgundy shirt + olive trousers"]
+      },
+      {
+        "rule_name": "Tonal Dressing (Monochromatic)",
+        "description": "Wear different shades of the same color family head to toe.",
+        "why_it_works": "Creates a clean, elongated silhouette and appears deliberate.",
+        "when_to_use": "When you want a modern, minimal look.",
+        "when_to_avoid": "When tones clash within the same family (e.g., two different navies that don't match).",
+        "examples": ["Light gray shirt + mid gray trousers + charcoal shoes", "Cream shirt + tan chinos + brown boots"]
+      }
+    ],
+
+    "neutral_combinations": [
+      { "pair": ["navy", "white"],   "formality": "versatile", "note": "The most reliable combination in menswear" },
+      { "pair": ["navy", "gray"],    "formality": "smart casual to formal" },
+      { "pair": ["navy", "beige"],   "formality": "smart casual to business casual" },
+      { "pair": ["black", "white"],  "formality": "versatile", "note": "High contrast, always sharp" },
+      { "pair": ["gray", "white"],   "formality": "versatile" },
+      { "pair": ["charcoal", "white"], "formality": "formal to smart casual" },
+      { "pair": ["beige", "brown"],  "formality": "smart casual to casual" },
+      { "pair": ["tan", "white"],    "formality": "casual to smart casual" },
+      { "pair": ["cream", "navy"],   "formality": "smart casual" },
+      { "pair": ["khaki", "white"],  "formality": "casual" },
+      { "pair": ["olive", "tan"],    "formality": "casual to smart casual" },
+      { "pair": ["olive", "white"],  "formality": "casual" }
+    ],
+
+    "accent_color_rules": [
+      { "base": "navy",   "accent": ["burgundy", "mustard", "white", "orange", "gold"] },
+      { "base": "gray",   "accent": ["burgundy", "navy", "red", "pink", "teal"] },
+      { "base": "black",  "accent": ["white", "red", "gold", "green"] },
+      { "base": "beige",  "accent": ["navy", "burgundy", "olive", "teal"] },
+      { "base": "white",  "accent": ["navy", "red", "olive", "black", "teal"] },
+      { "base": "olive",  "accent": ["burgundy", "mustard", "cream", "tan"] }
+    ],
+
+    "colors_that_clash": [
+      { "pair": ["brown", "black"],   "reason": "Both are dark base colors that compete" },
+      { "pair": ["navy", "black"],    "reason": "Both are dark base colors that muddy each other" },
+      { "pair": ["red", "orange"],    "reason": "Too close in hue, creates visual noise" },
+      { "pair": ["purple", "green"],  "reason": "Complementary clash without intention" },
+      { "pair": ["yellow", "orange"], "reason": "Analogous but too similar in energy" },
+      { "pair": ["pink", "red"],      "reason": "Too similar in hue family without tonal separation" },
+      { "pair": ["hot pink", "orange"], "reason": "Aggressive clash" },
+      { "pair": ["gold", "silver"],   "reason": "Metallic tones compete" }
+    ],
+
+    "formal_color_rules": [
+      "Stick to navy, charcoal, black, white, and gray for formal occasions",
+      "Avoid bright colors in formal business or black-tie settings",
+      "A white shirt is the most versatile formal shirt color",
+      "Light blue is the only acceptable color alternative to white in formal settings",
+      "Dark tie should contrast with light shirt; light tie with dark shirt"
+    ],
+
+    "casual_color_rules": [
+      "Casual contexts allow earth tones: olive, tan, rust, mustard, terracotta",
+      "Streetwear permits bold color blocking if limited to two tones",
+      "Denim acts as a neutral — it pairs with almost everything"
+    ],
+
+    "seasonal_palettes": {
+      "summer":  ["white", "light blue", "sky blue", "peach", "mint green", "cream", "yellow", "pink"],
+      "winter":  ["charcoal", "navy", "black", "burgundy", "forest green", "maroon", "gray"],
+      "spring":  ["light blue", "mint green", "lavender", "peach", "white", "beige", "pink"],
+      "autumn":  ["olive", "tan", "brown", "mustard", "burgundy", "rust", "orange", "khaki"]
+    }
+  },
+
+  "part2_fit_proportion_rules": {
+
+    "shirt_fit_rules": [
+      {
+        "rule_name": "Shoulder Seam Position",
+        "description": "The shirt shoulder seam must sit exactly at the shoulder bone edge — not hanging over the arm, not pulled inward.",
+        "why_it_works": "The shoulder is the structural foundation of any upper garment. A misaligned shoulder makes everything else look wrong.",
+        "examples": ["If seam hangs 1 inch past shoulder = too large", "If seam pulls toward neck = too small"]
+      },
+      {
+        "rule_name": "Shirt Collar Gap",
+        "description": "When buttoned at the top, you should be able to fit two fingers comfortably between collar and neck.",
+        "why_it_works": "Too tight restricts movement and looks uncomfortable; too loose looks sloppy.",
+        "examples": ["One finger too tight for comfort", "Four fingers = collar too wide"]
+      },
+      {
+        "rule_name": "Shirt Length",
+        "description": "Untucked: shirt hem should fall mid-crotch level. Tucked: long enough to stay tucked through full range of motion.",
+        "why_it_works": "Too short untucked looks abbreviated; too long looks like a dress.",
+        "examples": ["Oxford shirt untucked should end around hip pocket level"]
+      },
+      {
+        "rule_name": "Sleeve Length (Dress Shirt)",
+        "description": "Half inch of shirt cuff must show below jacket sleeve.",
+        "why_it_works": "Shows intentionality and polish; a detail that signals careful dressing.",
+        "when_to_use": "Formal and business contexts with a jacket.",
+        "examples": ["Navy jacket + white shirt with 0.5 inch cuff showing"]
+      }
+    ],
+
+    "jacket_fit_rules": [
+      {
+        "rule_name": "Jacket Shoulder Fit",
+        "description": "Jacket shoulders must be perfectly aligned to shoulder bone. No divots, no shoulder pad overhang.",
+        "why_it_works": "The shoulder is the most expensive alteration — if it doesn't fit here, no tailor can fully fix it.",
+        "examples": ["A ripple at the top of the sleeve cap = wrong shoulder width"]
+      },
+      {
+        "rule_name": "Jacket Chest Buttoning",
+        "description": "When the jacket is buttoned, there should be no X-shaped pulling at the button.",
+        "why_it_works": "X-shaped pull means the jacket is too tight across the chest.",
+        "examples": ["Always unbutton jacket when sitting to prevent pull"]
+      },
+      {
+        "rule_name": "Jacket Sleeve Length",
+        "description": "Jacket sleeve should end at the wrist bone, showing 0.5 inch of shirt cuff.",
+        "why_it_works": "The cuff detail finishes the arm line and signals precision.",
+        "examples": ["Navy blazer with white shirt — small white cuff always visible"]
+      },
+      {
+        "rule_name": "Jacket Length",
+        "description": "Jacket hem should cover the seat of your trousers and your knuckles when arms hang naturally.",
+        "why_it_works": "Correct length maintains visual balance between upper and lower body.",
+        "examples": ["A too-short jacket makes legs look short; too long makes torso look long"]
+      }
+    ],
+
+    "trouser_fit_rules": [
+      {
+        "rule_name": "Trouser Break",
+        "description": "Full break = fabric pools on shoe. Half break = slight fold at shoe. No break = hem above shoe top.",
+        "why_it_works": "Break affects the formality and modernity of the silhouette.",
+        "when_to_use": "No break or half break for modern/slim fits; full break for classic formal.",
+        "examples": ["Slim chinos with no break look modern", "Wide-leg trousers with full break look classic"]
+      },
+      {
+        "rule_name": "Trouser Waist Fit",
+        "description": "Trousers should sit at natural waist without a belt to hold them up.",
+        "why_it_works": "A belt should be decorative, not structural. If needed to hold up trousers, they're too large.",
+        "examples": ["Chinos that sag without a belt = wrong size"]
+      },
+      {
+        "rule_name": "Thigh Room",
+        "description": "Slim fit: fabric touches thigh lightly. Regular: light drape. Relaxed: visible drape.",
+        "why_it_works": "Thigh fit determines overall silhouette and movement comfort.",
+        "examples": ["Skinny jeans hug thigh completely", "Relaxed chinos drape naturally"]
+      }
+    ],
+
+    "visual_balance_rules": [
+      {
+        "rule_name": "Volume Balance",
+        "description": "One fitted item + one relaxed item. Never oversized top + oversized bottom.",
+        "why_it_works": "Volume on both top and bottom loses all silhouette definition.",
+        "examples": ["Oversized hoodie + slim jeans", "Wide-leg trousers + fitted turtleneck"]
+      },
+      {
+        "rule_name": "Proportion for Short Men",
+        "description": "Avoid long jackets, long shorts, or wide breaks on trousers. Keep proportions tight.",
+        "why_it_works": "Long vertical lines are cut by wide horizontal breaks — shortening visual height.",
+        "examples": ["Cropped jackets, no-break trousers, and slim cuts elongate shorter frames"]
+      },
+      {
+        "rule_name": "Proportion for Tall Men",
+        "description": "Tall men can carry longer jackets, wider trousers, and more volume.",
+        "why_it_works": "Height gives room to absorb extra fabric without losing structure.",
+        "examples": ["Wide-leg trousers and longer overcoats look intentional on tall frames"]
+      }
+    ]
+  },
+
+  "part3_garment_knowledge": {
+    "oxford_shirt": {
+      "purpose": "Casual smart shirt — the most versatile shirt in menswear",
+      "history": "Originated at Oxford University in the 1800s, adopted by Ivy League students in America",
+      "formality_level": "Casual to smart casual",
+      "seasonal_suitability": ["spring", "summer", "autumn"],
+      "typical_pairings": ["chinos", "jeans", "navy blazer", "sneakers", "loafers"],
+      "typical_mistakes": ["Wearing with a formal suit", "Too stiff a collar", "Buttoning all the way up without a tie"]
+    },
+    "denim_jacket": {
+      "purpose": "Casual layering piece — functions as a light outerwear option",
+      "history": "Evolved from Levi's workwear in the 1880s, became a youth culture symbol in the 1950s-80s",
+      "formality_level": "Casual to smart casual",
+      "seasonal_suitability": ["spring", "summer", "autumn"],
+      "typical_pairings": ["white tee", "plain t-shirt", "chinos", "sneakers", "boots"],
+      "typical_mistakes": ["Denim on denim (same wash)", "Pairing with formal trousers", "Wearing oversized when outfit is already loose"]
+    },
+    "chinos": {
+      "purpose": "The bridge between formal trousers and casual jeans",
+      "history": "Military origin (British India, 1840s), adopted into American Ivy style in the 1950s",
+      "formality_level": "Smart casual to business casual",
+      "seasonal_suitability": ["spring", "summer", "autumn"],
+      "typical_pairings": ["oxford shirt", "polo shirt", "blazer", "loafers", "sneakers", "boots"],
+      "typical_mistakes": ["Too baggy a fit", "Pairing with very formal shirt and tie", "Wrong break length"]
+    },
+    "jeans": {
+      "purpose": "Casual bottom — the most democratic garment in modern dressing",
+      "history": "Levi Strauss workwear patent 1873, became fashion item in the 1950s through James Dean",
+      "formality_level": "Casual to smart casual (dark wash only)",
+      "seasonal_suitability": ["all season"],
+      "typical_pairings": ["t-shirt", "oxford shirt", "denim jacket (different wash)", "sneakers", "boots", "loafers"],
+      "typical_mistakes": ["Light wash jeans in smart casual context", "Pairing with blazer and light wash", "Distressed jeans in professional settings"]
+    },
+    "polo_shirt": {
+      "purpose": "Sport-casual shirt that bridges athleisure and smart casual",
+      "history": "René Lacoste invented it for tennis in 1926, adopted into preppy American style in the 1950s",
+      "formality_level": "Casual to smart casual",
+      "seasonal_suitability": ["spring", "summer"],
+      "typical_pairings": ["chinos", "shorts", "loafers", "sneakers", "navy trousers"],
+      "typical_mistakes": ["Popped collar (outdated)", "Too tight across chest", "Pairing with formal trousers"]
+    },
+    "loafers": {
+      "purpose": "Slip-on shoe that bridges casual and smart casual effortlessly",
+      "history": "Norwegian fishermen's shoe adopted by American prep culture in the 1930s-50s",
+      "formality_level": "Smart casual to business casual",
+      "seasonal_suitability": ["spring", "summer", "autumn"],
+      "typical_pairings": ["chinos", "trousers", "jeans (slim)", "oxford shirt", "polo shirt"],
+      "typical_mistakes": ["Wearing with athletic clothing", "Wearing with thick socks (penny loafers need no-show socks or bare ankle)"]
+    },
+    "boots": {
+      "purpose": "Versatile footwear with heritage roots — adds ruggedness and edge",
+      "history": "Military and workwear origins; Chelsea boot popularized in 1960s London",
+      "formality_level": "Casual to smart casual (Chelsea boots reach business casual)",
+      "seasonal_suitability": ["autumn", "winter", "spring"],
+      "typical_pairings": ["jeans", "chinos", "slim trousers", "flannel shirt", "leather jacket"],
+      "typical_mistakes": ["Pairing chunky work boots with tailored trousers", "Wearing chelsea boots with shorts"]
+    },
+    "trench_coat": {
+      "purpose": "Classic outerwear that elevates any outfit beneath it",
+      "history": "Burberry created it for WWI British officers in 1914; became a fashion icon post-war",
+      "formality_level": "Smart casual to formal",
+      "seasonal_suitability": ["spring", "autumn", "rainy season"],
+      "typical_pairings": ["suit", "blazer", "smart casual outfits", "oxford shoes", "chelsea boots"],
+      "typical_mistakes": ["Pairing with very casual outfits", "Too short a length", "Wrong belt knot"]
+    },
+    "bomber_jacket": {
+      "purpose": "Military-heritage casual outerwear with clean, versatile silhouette",
+      "history": "US Air Force MA-1 flight jacket, adopted into streetwear and fashion in the 1980s-90s",
+      "formality_level": "Casual to smart casual",
+      "seasonal_suitability": ["spring", "autumn"],
+      "typical_pairings": ["jeans", "chinos", "slim trousers", "plain t-shirt", "oxford shirt", "sneakers", "boots"],
+      "typical_mistakes": ["Wearing with formal trousers", "Too large a fit", "Pairing with other loud statement pieces"]
+    },
+    "blazer": {
+      "purpose": "The single most versatile tailored garment — dresses up or down",
+      "history": "Originated in British boating culture (1820s), evolved into a wardrobe staple through Ivy League influence",
+      "formality_level": "Smart casual to business casual to semi-formal",
+      "seasonal_suitability": ["spring", "autumn", "winter"],
+      "typical_pairings": ["oxford shirt", "polo shirt", "turtleneck", "chinos", "dark jeans", "loafers", "oxford shoes"],
+      "typical_mistakes": ["Wrong shoulder fit", "Matching it too perfectly (becomes a suit)", "Pairing with casual trainers in formal context"]
+    },
+    "knitwear": {
+      "purpose": "Layering piece that adds warmth, texture, and depth",
+      "formality_level": "Casual to smart casual (fine-gauge wool reaches business casual)",
+      "seasonal_suitability": ["autumn", "winter", "spring"],
+      "types": ["crew neck sweater", "v-neck sweater", "turtleneck", "cardigan"],
+      "typical_pairings": {
+        "crew_neck": ["collared shirt underneath", "chinos", "dark jeans"],
+        "v_neck":    ["shirt with visible collar", "chinos", "trousers"],
+        "turtleneck": ["blazer or overcoat over it", "tailored trousers"],
+        "cardigan":  ["oxford shirt underneath", "jeans", "chinos"]
+      },
+      "typical_mistakes": ["Pilling fabric signals poor quality", "V-neck too deep", "Oversized knitwear with baggy trousers"]
+    }
+  },
+
+  "part4_outfit_combination_rules": [
+    {
+      "combination": "Oxford shirt + chinos",
+      "why_it_works": "Both garments have the same level of formality and casualness — they were made for each other.",
+      "occasion": ["college", "everyday", "date night", "smart casual events"],
+      "formality_level": "smart casual",
+      "seasonal_suitability": ["spring", "summer", "autumn"],
+      "footwear": ["loafers", "sneakers", "desert boots", "white leather sneakers"],
+      "notes": "Roll sleeves slightly for a relaxed feel. Tuck in for smarter occasions."
+    },
+    {
+      "combination": "Denim jacket + white tee + dark jeans + boots",
+      "why_it_works": "Classic American heritage look. The contrast between the denim jacket and dark jeans works because the washes are different.",
+      "occasion": ["everyday", "casual outings", "festival", "travel"],
+      "formality_level": "casual",
+      "seasonal_suitability": ["spring", "autumn"],
+      "footwear": ["boots", "chelsea boots", "white sneakers"],
+      "notes": "Never match the wash of jacket and jeans — always use different indigo tones."
+    },
+    {
+      "combination": "Navy blazer + gray trousers + white shirt",
+      "why_it_works": "The navy/gray/white trio is the most reliable combination in menswear. Each color occupies a different tone level.",
+      "occasion": ["office", "business casual", "smart events", "date night", "interview"],
+      "formality_level": "business casual to smart formal",
+      "seasonal_suitability": ["all season"],
+      "footwear": ["oxfords", "loafers", "derbies"],
+      "notes": "Add a pocket square for formal occasions. Remove tie for smart casual."
+    },
+    {
+      "combination": "Polo shirt + chinos + loafers",
+      "why_it_works": "A preppy formula that has never failed — all three items share the same casual-smart register.",
+      "occasion": ["everyday", "smart casual", "college", "outdoor events", "weekend"],
+      "formality_level": "smart casual",
+      "seasonal_suitability": ["spring", "summer"],
+      "footwear": ["loafers", "boat shoes", "white sneakers"],
+      "notes": "Tuck polo into chinos for smarter look. Keep colors in the same tonal family."
+    },
+    {
+      "combination": "Turtleneck + tailored trousers + loafers",
+      "why_it_works": "Turtleneck replaces shirt and tie simultaneously — elegant and modern.",
+      "occasion": ["smart casual", "date night", "office (creative)", "formal dinner (casual)"],
+      "formality_level": "smart casual to semi-formal",
+      "seasonal_suitability": ["autumn", "winter"],
+      "footwear": ["loafers", "chelsea boots", "oxfords"],
+      "notes": "Stick to fine-gauge wool or cashmere for smarter occasions. Chunky knit = more casual."
+    },
+    {
+      "combination": "Bomber jacket + slim jeans + clean white sneakers",
+      "why_it_works": "All three items sit in the same casual-contemporary register. The silhouette is balanced: fitted jacket, slim bottom, minimal shoe.",
+      "occasion": ["everyday", "college", "casual night out", "travel"],
+      "formality_level": "casual to smart casual",
+      "seasonal_suitability": ["spring", "autumn"],
+      "footwear": ["white leather sneakers", "low top sneakers"],
+      "notes": "Keep colors simple — the combination is enough. One muted tone and two neutrals."
+    },
+    {
+      "combination": "Trench coat + suit + oxford shoes",
+      "why_it_works": "The trench coat's heritage and length complement the suit perfectly. Both items were designed for formal urban wear.",
+      "occasion": ["office", "business meeting", "formal dinner", "interview"],
+      "formality_level": "formal to business formal",
+      "seasonal_suitability": ["autumn", "spring", "rainy season"],
+      "footwear": ["oxfords", "derbies"],
+      "notes": "Belt the trench coat — leaving it unbuttoned looks unfinished."
+    }
+  ],
+
+  "part5_style_systems": {
+    "ivy": {
+      "core_philosophy": "Relaxed American collegiate elegance — dressed up but never trying too hard.",
+      "signature_garments": ["oxford shirt", "chinos", "blazer", "polo shirt", "v-neck sweater", "loafers", "desert boots"],
+      "signature_colors": ["navy", "white", "gray", "khaki", "burgundy", "green"],
+      "signature_footwear": ["penny loafers", "white bucks", "desert boots", "boat shoes"],
+      "typical_outfit_formulas": [
+        "Oxford shirt + khaki chinos + penny loafers",
+        "Polo shirt + navy chinos + white sneakers",
+        "V-neck sweater + oxford shirt + gray flannel trousers + loafers"
+      ]
+    },
+    "prep": {
+      "core_philosophy": "East Coast American upper-class aesthetics — polished, heritage, never flashy.",
+      "signature_garments": ["polo shirt", "chinos", "blazer", "oxford shirt", "boat shoes", "cable-knit sweater"],
+      "signature_colors": ["navy", "white", "red", "green", "yellow", "pink", "sky blue"],
+      "signature_footwear": ["boat shoes", "penny loafers", "white bucks", "clean sneakers"],
+      "typical_outfit_formulas": [
+        "Polo shirt + chinos + boat shoes",
+        "Blazer + oxford shirt + chinos + loafers",
+        "Cable-knit sweater + collared shirt + chinos + loafers"
+      ]
+    },
+    "americana_heritage": {
+      "core_philosophy": "Workwear and utility roots — honest, durable, functional clothing with character.",
+      "signature_garments": ["flannel shirt", "denim jacket", "chore coat", "jeans", "work boots", "chambray shirt"],
+      "signature_colors": ["indigo", "tan", "brown", "olive", "red", "white", "gray"],
+      "signature_footwear": ["work boots", "hiking boots", "white sneakers", "combat boots"],
+      "typical_outfit_formulas": [
+        "Flannel shirt + raw denim jeans + work boots",
+        "Chambray shirt + khaki chinos + desert boots",
+        "Denim jacket + white tee + dark jeans + boots"
+      ]
+    },
+    "military_inspired": {
+      "core_philosophy": "Structured, utilitarian dressing with purpose-built garments repurposed for civilian wear.",
+      "signature_garments": ["field jacket", "parka", "cargo pants", "trench coat", "bomber jacket", "combat boots"],
+      "signature_colors": ["olive", "khaki", "navy", "gray", "black", "camouflage"],
+      "signature_footwear": ["combat boots", "boots", "lug sole boots"],
+      "typical_outfit_formulas": [
+        "Field jacket + white tee + cargo pants + boots",
+        "Bomber jacket + slim jeans + sneakers",
+        "Parka + turtleneck + trousers + boots"
+      ]
+    },
+    "workwear": {
+      "core_philosophy": "Durable, functional clothing elevated through quality materials and fit.",
+      "signature_garments": ["chore coat", "denim jacket", "flannel shirt", "jeans", "work boots", "overshirt"],
+      "signature_colors": ["indigo", "tan", "olive", "brown", "black", "white"],
+      "signature_footwear": ["work boots", "hiking boots", "combat boots"],
+      "typical_outfit_formulas": [
+        "Chore coat + plain tee + jeans + work boots",
+        "Overshirt + white tee + cargo pants + boots"
+      ]
+    }
+  },
+
+  "part6_timeless_principles": [
+    {
+      "principle": "Fit matters more than brand",
+      "explanation": "A well-fitted garment from a budget brand always looks better than a poorly fitted luxury piece. Fit is the first thing the eye registers.",
+      "source_books": ["Dressing the Man"]
+    },
+    {
+      "principle": "Simplicity ages better than trends",
+      "explanation": "Trend-driven clothing looks dated within 2-3 years. Simple, well-constructed basics remain relevant for decades.",
+      "source_books": ["Permanent Style", "Icons of Men's Style"]
+    },
+    {
+      "principle": "Color harmony creates visual balance",
+      "explanation": "Clothes are not seen in isolation. Every color interacts with the one next to it. Understanding this interaction is the foundation of dressing well.",
+      "source_books": ["A Dictionary of Color Combinations", "Dressing the Man"]
+    },
+    {
+      "principle": "Clothing should match context",
+      "explanation": "The best outfit is the one appropriate for the occasion. Overdressing and underdressing are both mistakes.",
+      "source_books": ["Dressing the Man", "Permanent Style"]
+    },
+    {
+      "principle": "Buy less, buy better",
+      "explanation": "A wardrobe of 20 high-quality, versatile items will serve you better than 100 mediocre pieces.",
+      "source_books": ["Permanent Style", "Icons of Men's Style"]
+    },
+    {
+      "principle": "The shoulder is the foundation of tailoring",
+      "explanation": "Every other dimension of a jacket flows from the shoulder fit. It is also the hardest to alter. Always buy for the shoulder first.",
+      "source_books": ["Dressing the Man"]
+    },
+    {
+      "principle": "Neutrals are the backbone of a wardrobe",
+      "explanation": "Navy, gray, white, beige, and black are interchangeable and combinable. Building around these maximizes outfit combinations.",
+      "source_books": ["Dressing the Man", "Permanent Style"]
+    },
+    {
+      "principle": "Texture adds interest without color risk",
+      "explanation": "When unsure about color combinations, introduce texture: tweed, knit, corduroy, suede. Texture variation within the same color family is always safe.",
+      "source_books": ["Dressing the Man", "Permanent Style"]
+    },
+    {
+      "principle": "One statement piece per outfit",
+      "explanation": "If you wear something bold — a patterned shirt, a bright jacket, an unusual shoe — keep everything else simple. Let one piece speak.",
+      "source_books": ["Permanent Style", "Dressing the Man"]
+    },
+    {
+      "principle": "Heritage garments earn their longevity",
+      "explanation": "Garments with long histories (oxford shirts, denim, trench coats, loafers) remain in style because they solved real problems and were refined over generations.",
+      "source_books": ["Icons of Men's Style", "Ametora"]
+    },
+    {
+      "principle": "Style is learned, not innate",
+      "explanation": "Dressing well is a skill developed through observation, study, and practice — not something you are born with.",
+      "source_books": ["Ametora"]
+    },
+    {
+      "principle": "American style was built on appropriation and refinement",
+      "explanation": "American menswear absorbed British, Italian, and workwear traditions and refined them into relaxed, democratic forms.",
+      "source_books": ["Ametora"]
+    }
+  ],
+
+  "part7_master_rulebook": [
+    "Rule 1: Fit matters more than brand or price.",
+    "Rule 2: The shoulder seam of any jacket or shirt must sit exactly at the shoulder bone.",
+    "Rule 3: Build every outfit around at least one neutral color.",
+    "Rule 4: Limit any outfit to a maximum of three colors.",
+    "Rule 5: Follow the 60-30-10 rule: 60% dominant, 30% secondary, 10% accent.",
+    "Rule 6: Never pair navy and black in the same outfit.",
+    "Rule 7: Never pair brown and black in the same outfit.",
+    "Rule 8: White is the most versatile shirt color in any wardrobe.",
+    "Rule 9: Navy is the most versatile trouser and jacket color in any wardrobe.",
+    "Rule 10: One bold pattern in an outfit is enough — everything else should be solid.",
+    "Rule 11: Stripes pair only with solids, never with other patterns.",
+    "Rule 12: Checks and plaids pair only with solids.",
+    "Rule 13: Denim acts as a neutral — it pairs with almost any color.",
+    "Rule 14: Never match denim jacket and denim jeans of the same wash.",
+    "Rule 15: Volume balance is essential — if the top is oversized, the bottom must be slim.",
+    "Rule 16: Never wear oversized top and oversized bottom simultaneously.",
+    "Rule 17: Dress for the occasion first, personal style second.",
+    "Rule 18: Overdressing is always preferable to underdressing in ambiguous situations.",
+    "Rule 19: A well-fitted inexpensive suit beats a poorly-fitted expensive one.",
+    "Rule 20: The collar point length should be proportional to tie width and lapel width.",
+    "Rule 21: Shirt cuff must show 0.5 inch below jacket sleeve in formal contexts.",
+    "Rule 22: Trouser break should be no break or half break for modern slim fits.",
+    "Rule 23: Trousers should sit at the natural waist without a belt to hold them up.",
+    "Rule 24: Shoes should be darker than or the same tone as trousers — never lighter.",
+    "Rule 25: Match belt color to shoe color in formal contexts.",
+    "Rule 26: Sneakers are not acceptable footwear at interviews, formal dinners, or weddings.",
+    "Rule 27: Flip flops are beach-only footwear.",
+    "Rule 28: Loafers are the most versatile smart-casual shoe.",
+    "Rule 29: Chelsea boots are the most versatile smart-casual boot.",
+    "Rule 30: Oxford shoes are the most formal shoe type.",
+    "Rule 31: Blazers can be dressed up with trousers and down with dark jeans.",
+    "Rule 32: A navy blazer is the single most versatile outer garment in menswear.",
+    "Rule 33: A blazer should never be mistaken for the jacket of a suit.",
+    "Rule 34: Polo shirts are not appropriate for formal business settings.",
+    "Rule 35: Oxford shirts are appropriate from casual to smart-casual only.",
+    "Rule 36: Dress shirts are appropriate from smart-casual to formal.",
+    "Rule 37: Graphic t-shirts are casual garments and should not be worn with tailoring.",
+    "Rule 38: Turtlenecks can replace a shirt and tie in semi-formal settings.",
+    "Rule 39: A white t-shirt under an open-collar dress shirt is always acceptable.",
+    "Rule 40: Roll shirt sleeves to the elbow to signal relaxed intent.",
+    "Rule 41: Knitwear adds texture without color complexity.",
+    "Rule 42: V-neck sweaters should always show a collar beneath them.",
+    "Rule 43: Cardigans layer over collared shirts for a smart-casual result.",
+    "Rule 44: Turtleneck + blazer is a timeless alternative to shirt + tie.",
+    "Rule 45: Trench coats elevate any outfit worn beneath them.",
+    "Rule 46: Bomber jackets belong in casual and smart-casual outfits only.",
+    "Rule 47: Parka is casual outerwear and should not be worn over formal attire.",
+    "Rule 48: Field jackets pair best with jeans, chinos, and casual trousers.",
+    "Rule 49: Overcoats are the most elegant form of outerwear.",
+    "Rule 50: Chinos are the bridge between jeans and formal trousers.",
+    "Rule 51: Cargo pants are casual garments — avoid with tailored or smart pieces.",
+    "Rule 52: Joggers and sweatpants belong in athleisure and gym contexts only.",
+    "Rule 53: Wide-leg trousers require a fitted top to balance silhouette.",
+    "Rule 54: Slim trousers pair with both fitted and slightly relaxed tops.",
+    "Rule 55: Shorts are casual and season-specific — avoid in autumn and winter.",
+    "Rule 56: Bermuda shorts are the most versatile short length for smart casual.",
+    "Rule 57: Linen is the ideal summer fabric — breathable and textured.",
+    "Rule 58: Wool is the most versatile cold-weather fabric.",
+    "Rule 59: Cashmere signals quality without effort.",
+    "Rule 60: Denim is an all-season fabric at the casual end of the spectrum.",
+    "Rule 61: Leather and suede belong in autumn and winter primarily.",
+    "Rule 62: Polyester and nylon are functional but signal lower quality in tailoring contexts.",
+    "Rule 63: Cotton is the most universal casual fabric.",
+    "Rule 64: Silk and satin are formal fabrics — avoid in casual settings.",
+    "Rule 65: Earth tones work year-round but peak in autumn.",
+    "Rule 66: Pastels are spring and summer colors.",
+    "Rule 67: Deep tones — burgundy, forest green, navy — are autumn and winter colors.",
+    "Rule 68: White and cream are summer and spring staples but can work year-round.",
+    "Rule 69: Black is appropriate year-round but is most natural in formal and winter contexts.",
+    "Rule 70: Mustard and olive are versatile earthy tones that pair with navy, brown, and gray.",
+    "Rule 71: Burgundy pairs with navy, gray, beige, and cream.",
+    "Rule 72: Teal pairs with navy, gray, white, and beige.",
+    "Rule 73: Red is an accent color — use sparingly.",
+    "Rule 74: Gold hardware and gold tones pair with warm colors; silver with cool.",
+    "Rule 75: Monochromatic outfits (same color family) look intentional and modern.",
+    "Rule 76: Tonal dressing requires different shades of the same hue — not the exact same tone.",
+    "Rule 77: One statement piece per outfit — let it breathe.",
+    "Rule 78: Clothes should fit your current body, not the body you plan to have.",
+    "Rule 79: Quality shoes and quality outerwear are the highest return investments in a wardrobe.",
+    "Rule 80: Occasion always dictates the formality ceiling of an outfit.",
+    "Rule 81: Smart casual is not an excuse to wear whatever you like — it has its own rules.",
+    "Rule 82: Business casual requires no denim, no graphic tees, no athletic wear.",
+    "Rule 83: Formal occasions require dark shoes, no exposed denim, and structured outerwear.",
+    "Rule 84: Beach and gym wear must not cross into any other occasion category.",
+    "Rule 85: Religious events require modest, clean, and occasion-appropriate clothing.",
+    "Rule 86: Heritage garments (oxford shirts, chinos, loafers) are always safe choices.",
+    "Rule 87: Simplicity always ages better than trend-driven complexity.",
+    "Rule 88: A well-maintained wardrobe of 20 pieces beats a cluttered wardrobe of 100.",
+    "Rule 89: Texture adds visual depth without introducing color risk.",
+    "Rule 90: Mixing textures within the same color family is always safe.",
+    "Rule 91: Pattern scale matters — a large check and a small stripe can coexist if separated by a solid.",
+    "Rule 92: The Ivy formula (oxford shirt + chinos + loafers) is the most reliable casual outfit in menswear.",
+    "Rule 93: The navy blazer formula (blazer + gray trousers + white shirt) is the most reliable smart-casual outfit.",
+    "Rule 94: The Americana formula (white tee + dark jeans + boots) is the most reliable casual outfit.",
+    "Rule 95: Dressing well is a learnable skill — it improves with observation and practice.",
+    "Rule 96: Study what works, not just what you like.",
+    "Rule 97: Personal style is built on mastered basics, not avant-garde experiments.",
+    "Rule 98: The best dressed men look effortless because they have internalized the rules.",
+    "Rule 99: Always consider the full silhouette, not individual garments.",
+    "Rule 100: The purpose of clothing is to serve the person wearing it — not the other way around.",
+    "Rule 101: Occasion, color, fit, and proportion — master these four and everything else follows.",
+    "Rule 102: When in doubt, wear navy, white, and well-fitted basics.",
+    "Rule 103: Your shoes are the first thing people notice and the last thing you should compromise on.",
+    "Rule 104: Clothes communicate context — wear what sends the right message for where you are going.",
+    "Rule 105: Ivy and prep style families share the same DNA: oxford cloth, chinos, loafers, and blazers.",
+    "Rule 106: Military-inspired garments (bombers, parkas, field jackets) belong in casual registers only.",
+    "Rule 107: Workwear and heritage garments earn credibility through age and patina — buy quality and wear it.",
+    "Rule 108: American style is democratic — it works for every body type when the fit is correct.",
+    "Rule 109: Never sacrifice comfort entirely for aesthetics — discomfort affects posture and confidence.",
+    "Rule 110: A great outfit starts with clean, well-maintained, properly stored garments."
+  ]
+}

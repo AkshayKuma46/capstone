@@ -1,0 +1,185 @@
+{
+  "version": "1.0.0",
+  "category": "techwear",
+  "sources": [
+    "Acronym Archives (Errolson Hugh)",
+    "System Magazine — Errolson Hugh Features",
+    "Veilance Collections",
+    "Nike ACG References",
+    "Technical Apparel Design Sources"
+  ],
+
+  "core_principles": [
+
+    {
+      "rule_name": "Functional Layering System (Shell-Mid-Base)",
+      "description": "Techwear is built in three functional layers: Base (moisture-wicking, against skin), Mid (insulating, thermal regulation), Shell (weather-protective outer layer). Each layer must perform a function, not just look good.",
+      "why_it_works": "Functional layering was developed for outdoor and military performance. Techwear borrows this system and makes it aesthetic — every piece earns its place through utility.",
+      "when_to_use": "All techwear outfits, especially for cold or wet weather.",
+      "when_to_avoid": "Summer — single shell or light mid-layer only.",
+      "outfit_examples": [
+        "Moisture-wick base tee + Veilance Mionn insulated jacket (mid) + Acronym J1A-GT shell (outer)",
+        "Merino base + fleece mid-layer + waterproof hardshell + technical cargo pants"
+      ]
+    },
+
+    {
+      "rule_name": "Utility-First Design Principle",
+      "description": "Every garment in a techwear outfit should have a functional reason for being worn — pockets, weather resistance, mobility stretch, or modular attachment points.",
+      "why_it_works": "Techwear is a philosophy, not just an aesthetic. Wearing it correctly means every choice has functional reasoning. This gives the style integrity.",
+      "when_to_use": "When selecting techwear pieces — ask 'what does this garment do?'",
+      "when_to_avoid": "Techwear aesthetic applied to non-functional garments loses its meaning.",
+      "outfit_examples": [
+        "Jacket with MOLLE webbing + modular chest rig + cargo pants with zippered thigh pockets",
+        "Waterproof shell with sealed seams + articulated knee cargo pants + waterproof trail runners"
+      ]
+    },
+
+    {
+      "rule_name": "Technical Fabric Compatibility",
+      "description": "Techwear uses technical fabrics: GORE-TEX, Schoeller, Dyneema, nylon ripstop, stretch woven, Pertex. These fabrics should not be mixed with traditional casual fabrics (heavy cotton, denim) in the same outfit.",
+      "why_it_works": "Technical fabrics have a distinctive texture and sheen that reads as cohesive with each other but conflicts with raw denim or heavy cotton.",
+      "when_to_use": "Full techwear outfits — keep fabrics in the technical family.",
+      "when_to_avoid": "Mixing techwear shells with raw denim jeans creates a visual and conceptual inconsistency.",
+      "outfit_examples": [
+        "GORE-TEX shell + nylon cargo pants + waterproof technical sneakers",
+        "Schoeller stretch jacket + technical joggers + trail runners"
+      ]
+    },
+
+    {
+      "rule_name": "Techwear Color System (Monochrome + Tactical)",
+      "description": "Techwear palettes are: all-black, black + gray, black + olive, black + stone, or coyote brown + black. Avoid bright colors except for intentional safety-orange or hi-vis accents.",
+      "why_it_works": "The dark monochromatic palette references military and field operations. It also creates visual cohesion across disparate technical garments.",
+      "when_to_use": "All techwear outfits.",
+      "when_to_avoid": "Bright consumer colors break the system — they belong in athleisure, not techwear.",
+      "outfit_examples": [
+        "All-black: shell + cargo pants + black technical sneakers",
+        "Black shell + stone gray mid-layer + olive cargo pants + black boots"
+      ]
+    },
+
+    {
+      "rule_name": "Techwear Silhouette: Articulated and Tapered",
+      "description": "Techwear silhouettes are articulated (designed for movement — pre-bent elbows, gusseted crotches) and either tapered toward the ankle or modularly adjustable.",
+      "why_it_works": "Articulated design means the garment looks natural when moving, not pulling or restricting. Tapered ankles allow the silhouette to terminate cleanly at technical footwear.",
+      "when_to_use": "When selecting techwear bottoms — always check for ankle taper or adjustment.",
+      "when_to_avoid": "Wide-leg or palazzo cuts are not techwear — they lack articulatory design.",
+      "outfit_examples": [
+        "Acronym P10-DS pants (articulated, tapered) + lace-up technical boots",
+        "Nike ACG cargo pants + Salomon XT-6 trail runners"
+      ]
+    },
+
+    {
+      "rule_name": "Pocket and Storage Design Rule",
+      "description": "Techwear outfits should carry storage — cargo pockets, chest rigs, hip packs, or modular bags. Storage should be accessible with one hand and not restrict movement.",
+      "why_it_works": "Storage is a functional pillar of techwear. It eliminates the need for a traditional bag and keeps the silhouette lean while maintaining utility.",
+      "when_to_use": "Building any techwear outfit.",
+      "when_to_avoid": "Excessive storage (too many bags, too many rigs) becomes cluttered. One storage solution per outfit.",
+      "outfit_examples": [
+        "Shell + cargo pants + waist bag = complete storage system",
+        "Chest rig over technical jacket + slim cargo pants = top-heavy storage balanced by slim base"
+      ]
+    },
+
+    {
+      "rule_name": "Weather-Adaptive Outfit Construction",
+      "description": "Design the techwear outfit for the actual weather conditions — not for aesthetics alone. Add or remove layers based on temperature and precipitation.",
+      "why_it_works": "Techwear earns its credibility through function. Wearing a full GORE-TEX shell on a dry warm day, or going without weather protection in rain, contradicts the system.",
+      "when_to_use": "When building a techwear outfit — check weather first.",
+      "when_to_avoid": "Wearing weather gear in non-weather conditions is allowed aesthetically, but the garment selection should still be purposeful.",
+      "outfit_examples": [
+        "Rain: GORE-TEX shell + sealed seam pants + waterproof boots (full weather system)",
+        "Mild: Technical overshirt + stretch cargo pants + trail runners (light system)"
+      ]
+    },
+
+    {
+      "rule_name": "Modular Clothing System",
+      "description": "Techwear garments should connect, attach, or layer into each other. Acronym's modular system (jackets that zip onto pants, bags that attach to shells) is the gold standard.",
+      "why_it_works": "Modularity reduces bulk and creates a unified, architecturally coherent silhouette. Each attachment point serves a purpose.",
+      "when_to_use": "When investing in techwear — prioritize modular-compatible pieces from the same system.",
+      "when_to_avoid": "Mixing modular systems from different brands often creates incompatible attachment points.",
+      "outfit_examples": [
+        "Acronym jacket (with integrated chest rig) + compatible Acronym pants = modular system",
+        "Veilance Annex jacket + removable liner + compatible base = temperature-adaptive modular look"
+      ]
+    },
+
+    {
+      "rule_name": "Techwear Footwear Rule",
+      "description": "Techwear footwear is technical: trail runners (Salomon XT-6, Nike ACG), waterproof boots, technical sneakers with chunky lug soles. Clean casual sneakers or leather shoes do not belong.",
+      "why_it_works": "Technical footwear completes the functional logic of techwear — it handles terrain, weather, and movement the way technical clothing does.",
+      "when_to_use": "All techwear outfits.",
+      "when_to_avoid": "Clean white sneakers, leather loafers, or dress boots break the techwear language.",
+      "outfit_examples": [
+        "Full techwear outfit + Salomon XT-6 (trail runner with lug sole)",
+        "Urban techwear + Nike ACG Mountain Fly (technical mid boot)"
+      ]
+    },
+
+    {
+      "rule_name": "Performance Over Decoration",
+      "description": "Zippers, buckles, velcro, and hardware in techwear must be functional — not decorative. Garments with purely decorative hardware that serves no function are not techwear.",
+      "why_it_works": "When every element is functional, the aesthetic cohesion is earned. Decorative hardware that mimics techwear without function is a visual lie.",
+      "when_to_use": "When evaluating or selecting techwear pieces.",
+      "when_to_avoid": "Fast-fashion 'techwear aesthetic' pieces that have non-functional zippers and plastic D-rings.",
+      "outfit_examples": [
+        "Acronym jacket — every zipper opens a ventilation, pocket, or modular attachment",
+        "Veilance Composite SL jacket — minimal hardware, maximum function"
+      ]
+    }
+  ],
+
+  "layering_guide": {
+    "base_layer": {
+      "purpose": "Moisture management — wicks sweat away from skin",
+      "materials": ["merino wool", "polyester mesh", "nylon"],
+      "examples": ["Outlier Ultrafine Merino Tee", "Nike Dri-FIT base tee", "Patagonia Capilene"]
+    },
+    "mid_layer": {
+      "purpose": "Thermal insulation — traps body heat",
+      "materials": ["fleece", "down", "synthetic insulation (PrimaLoft)"],
+      "examples": ["Veilance Mionn insulated hoodie", "Patagonia R1 fleece", "Arc'teryx Atom LT"]
+    },
+    "shell_layer": {
+      "purpose": "Weather protection — blocks wind, rain, snow",
+      "materials": ["GORE-TEX", "Pertex Shield", "eVent", "nylon ripstop DWR-treated"],
+      "examples": ["Acronym J1A-GT", "Veilance Combine SL", "Arc'teryx Beta LT"]
+    }
+  },
+
+  "outfit_formulas": [
+    {
+      "formula": "GORE-TEX Shell + Merino Base + Technical Cargo Pants + Waterproof Trail Runners",
+      "occasion": "Rainy urban commute, outdoor urban",
+      "season": "Autumn, winter, rainy season",
+      "why_it_works": "Full weather-sealed system. Every layer serves a function. Cargo pants provide storage. Trail runners handle wet terrain."
+    },
+    {
+      "formula": "Technical Overshirt + Plain Base Tee + Slim Cargo Pants + Salomon XT-6",
+      "occasion": "Everyday urban techwear, casual",
+      "season": "Spring, autumn",
+      "why_it_works": "Lightweight system for mild weather. Overshirt provides light wind and abrasion protection. XT-6 adds rugged technical sole."
+    },
+    {
+      "formula": "Insulated Mid-Layer + Modular Chest Rig + Technical Joggers + Trail Runners",
+      "occasion": "Cold casual, outdoor urban",
+      "season": "Winter, late autumn",
+      "why_it_works": "Mid-layer as outer garment in dry cold. Chest rig replaces bag for clean silhouette. Joggers with technical fabric taper cleanly into trail runners."
+    },
+    {
+      "formula": "Waterproof Hardshell + Fleece Mid + Sealed Seam Pants + Lug-Sole Boots",
+      "occasion": "Serious weather, outdoor urban, travel",
+      "season": "Winter, heavy rain",
+      "why_it_works": "Maximum weather protection. Every layer is weather-specific. Lug-sole boots provide traction in wet and icy conditions."
+    },
+    {
+      "formula": "Technical Jacket (Minimal) + Black Base Tee + Black Cargo Pants + Black Trail Runner",
+      "occasion": "Urban stealth techwear, everyday",
+      "season": "All season (adjust layers)",
+      "why_it_works": "All-black monochrome is the definitive techwear aesthetic statement. Minimal jacket is the outer layer. Everything else recedes into a unified dark silhouette."
+    }
+  ]
+}
