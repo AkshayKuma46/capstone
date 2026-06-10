@@ -22,41 +22,53 @@ export default function CollectionsPage({ page, setPage }) {
 
   return (
     <>
-      <div className="top-nav">
-        <span className="logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>✦ AWS</span>
-        <div className="nav-links">
-          <button className={`nav-link ${page === 'wardrobe' ? 'active' : ''}`} onClick={() => setPage('wardrobe')}>Wardrobe</button>
-          <button className={`nav-link ${page === 'recommend' ? 'active' : ''}`} onClick={() => setPage('recommend')}>Recommended</button>
-          <button className={`nav-link ${page === 'collections' ? 'active' : ''}`} onClick={() => setPage('collections')}>Saved</button>
-        </div>
-        <div style={{ width: 60 }} />
-      </div>
+      <header className="app-header">
+        <h1 className="header-logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>AI Wardrobe Stylist</h1>
+        <p className="header-tagline">Curating intelligent style recommendations.</p>
+      </header>
       <div className="page" style={{ paddingTop: 16 }}>
+        <h2 className="section-heading">Your Lookbook</h2>
+        <p className="section-subheading">Curated ensembles and seasonal style edits</p>
+
         {collections.length === 0 ? (
           <div className="empty-state">
             <span className="empty-icon">🔖</span>
-            <h3>No saved collections yet</h3>
-            <p>Find outfits in Recommend and save them here.</p>
+            <h3>No saved lookbooks yet</h3>
+            <p>Curate outfits in Recommend and save them here.</p>
           </div>
         ) : (
-          <div className="collection-list">
-            {collections.map(col => (
-              <div
-                key={col.collectionId}
-                className="collection-row"
-                onClick={() => setSelectedCollection(col.collectionId)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={e => e.key === 'Enter' && setSelectedCollection(col.collectionId)}
-                aria-label={`Open collection ${col.name}`}
-              >
-                <div>
-                  <div className="collection-name">{col.name}</div>
-                  <div className="collection-count">{col.outfits.length} outfit{col.outfits.length !== 1 ? 's' : ''}</div>
+          <div className="lookbook-grid">
+            {collections.map(col => {
+              const firstOutfit = col.outfits[0];
+              const firstGarmentId = firstOutfit?.garmentIds[0];
+              const firstGarment = garments.find(g => g.garmentId === firstGarmentId);
+              const coverUrl = firstGarment?.imageUrl;
+
+              return (
+                <div
+                  key={col.collectionId}
+                  className="lookbook-card"
+                  onClick={() => setSelectedCollection(col.collectionId)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={e => e.key === 'Enter' && setSelectedCollection(col.collectionId)}
+                  aria-label={`Open lookbook ${col.name}`}
+                >
+                  <div className="lookbook-cover-container">
+                    {coverUrl ? (
+                      <img src={coverUrl} alt={col.name} className="lookbook-cover" />
+                    ) : (
+                      <div className="lookbook-cover-placeholder">📖</div>
+                    )}
+                    <span className="lookbook-badge">{col.outfits.length} looks</span>
+                  </div>
+                  <div className="lookbook-info">
+                    <div className="lookbook-name">{col.name}</div>
+                    <div className="lookbook-date">{col.createdAt || 'Lookbook'}</div>
+                  </div>
                 </div>
-                <span className="collection-arrow">›</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

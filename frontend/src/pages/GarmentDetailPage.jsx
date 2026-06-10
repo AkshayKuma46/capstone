@@ -4,7 +4,7 @@ import GarmentColorBlock from '../components/GarmentColorBlock';
 import { CATEGORIES, FABRICS, PATTERNS, FIT_TYPES, COLORS, ALL_OCCASIONS, COLOR_MAP } from '../data/mockData';
 
 export default function GarmentDetailPage({ garmentId, setPage }) {
-  const { garments, updateGarment, deleteGarment } = useWardrobe();
+  const { garments, updateGarment, deleteGarment, collections } = useWardrobe();
   const garment = garments.find(g => g.garmentId === garmentId);
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState(garment || {});
@@ -81,7 +81,18 @@ export default function GarmentDetailPage({ garmentId, setPage }) {
               onCancel={() => setEditing(false)}
             />
           ) : (
-            <ViewDetails garment={garment} hex={hex} />
+            <ViewDetails 
+              garment={garment} 
+              hex={hex} 
+              featuredOutfits={(collections || []).reduce((acc, col) => {
+                (col.outfits || []).forEach(o => {
+                  if (o.garmentIds?.includes(garmentId)) {
+                    acc.push(col.name);
+                  }
+                });
+                return acc;
+              }, [])} 
+            />
           )}
         </div>
       </div>
@@ -103,12 +114,16 @@ export default function GarmentDetailPage({ garmentId, setPage }) {
   );
 }
 
-function ViewDetails({ garment, hex }) {
+function ViewDetails({ garment, hex, featuredOutfits }) {
   const rows = [
     { label: 'Category', value: garment.category },
-    { label: 'Primary Color', value: <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span className="color-dot" style={{ background: hex }} />{garment.primaryColor}</span> },
-    garment.secondaryColor && { label: 'Secondary Color', value: garment.secondaryColor },
-    { label: 'Fabric', value: garment.fabricType },
+    { label: 'Color Palette', value: (
+      <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <span className="color-dot" style={{ background: hex }} />
+        {garment.primaryColor} {garment.secondaryColor ? `· ${garment.secondaryColor}` : ''}
+      </span>
+    )},
+    { label: 'Fabric Composition', value: garment.fabricType },
     garment.patternType && { label: 'Pattern', value: garment.patternType },
     garment.fitType && { label: 'Fit', value: garment.fitType },
     { label: 'Added', value: garment.createdAt },
@@ -122,14 +137,28 @@ function ViewDetails({ garment, hex }) {
           <span className="value">{row.value}</span>
         </div>
       ))}
-      <div style={{ paddingTop: 12 }}>
-        <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 8 }}>OCCASIONS</p>
+      <div style={{ paddingTop: 16 }}>
+        <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 8, letterSpacing: '0.08em', textTransform: 'uppercase' }}>RECOMMENDED OCCASIONS</p>
         <div className="tag-list">
           {garment.occasionTags.map(tag => (
             <span key={tag} className="tag selected" style={{ cursor: 'default' }}>{tag}</span>
           ))}
         </div>
       </div>
+
+      {featuredOutfits && featuredOutfits.length > 0 && (
+        <div style={{ paddingTop: 20, borderTop: '1px solid var(--border)', marginTop: 16 }}>
+          <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 10, letterSpacing: '0.08em', textTransform: 'uppercase' }}>FEATURED IN</p>
+          <ul style={{ listStyleType: 'none', paddingLeft: 0, color: 'var(--text)', fontSize: 14 }}>
+            {Array.from(new Set(featuredOutfits)).map((name, idx) => (
+              <li key={idx} style={{ marginBottom: 6, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--primary)', display: 'inline-block' }} />
+                {name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </>
   );
 }

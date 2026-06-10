@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/garments", tags=["garments"])
 
 MAX_IMAGE_BYTES = 5 * 1024 * 1024   # 5 MB
-ALLOWED_MIME = {"image/jpeg", "image/png"}
+ALLOWED_MIME = {"image/jpeg", "image/png", "image/jpg", "image/webp"}
 
 
 # ── Helper: ensure wardrobe exists ────────────────────────────────────────────
@@ -170,23 +170,37 @@ async def create_garment(
     """Add a garment to the user's wardrobe."""
     wardrobe = await _get_or_create_wardrobe(user_id, db)
 
+    # Normalize inputs to lowercase/trimmed to match database enums
+    category_lower = body.category.strip().lower() if body.category else None
+    primary_color_lower = body.primaryColor.strip().lower() if body.primaryColor else None
+    
+    secondary_color_lower = body.secondaryColor.strip().lower() if body.secondaryColor else None
+    if secondary_color_lower == "":
+        secondary_color_lower = None
+
+    fit_type_lower = body.fitType.strip().lower() if body.fitType else None
+    if fit_type_lower == "":
+        fit_type_lower = None
+
+    occasion_tags_lower = [t.strip().lower() for t in body.occasionTags if t.strip()]
+
     garment = Garment(
         garmentId=str(uuid.uuid4()),
         wardrobeId=wardrobe.wardrobeId,
         name=body.name,
-        category=body.category,
-        primaryColor=body.primaryColor,
-        secondaryColor=body.secondaryColor,
+        category=category_lower,
+        primaryColor=primary_color_lower,
+        secondaryColor=secondary_color_lower,
         fabricType=body.fabricType,
         patternType=body.patternType,
-        fitType=body.fitType,
+        fitType=fit_type_lower,
         styleTag=body.styleTag,
         imageUrl=body.imageUrl,
     )
     db.add(garment)
     await db.flush()
 
-    for tag in body.occasionTags:
+    for tag in occasion_tags_lower:
         db.add(GarmentOccasionTag(garmentId=garment.garmentId, tag=tag))
     await db.flush()
 
@@ -200,7 +214,7 @@ async def create_garment(
             "fabricType": garment.fabricType,
             "fitType": garment.fitType or "",
             "styleTag": garment.styleTag or "",
-            "occasionTags": body.occasionTags,
+            "occasionTags": occasion_tags_lower,
         }
         vs = get_vector_store()
         embedding_id = vs.add_garment(garment_dict, user_id)
@@ -282,6 +296,16 @@ async def update_garment(
     occasion_tags = update_data.pop("occasionTags", None)
 
     for field, value in update_data.items():
+        if field == "category" and isinstance(value, str):
+            value = value.strip().lower()
+        elif field == "fitType" and isinstance(value, str):
+            value = value.strip().lower()
+            if value == "":
+                value = None
+        elif field in ("primaryColor", "secondaryColor") and isinstance(value, str):
+            value = value.strip().lower()
+            if value == "":
+                value = None
         setattr(garment, field, value)
 
     if occasion_tags is not None:
@@ -292,7 +316,8 @@ async def update_garment(
         for tag in result2.scalars().all():
             await db.delete(tag)
         for tag in occasion_tags:
-            db.add(GarmentOccasionTag(garmentId=garment_id, tag=tag))
+            if tag.strip():
+                db.add(GarmentOccasionTag(garmentId=garment_id, tag=tag.strip().lower()))
 
     await db.flush()
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { WardrobeProvider } from './context/WardrobeContext';
+import BottomNav from './components/BottomNav';
 import Toast from './components/Toast';
 import WardrobePage from './pages/WardrobePage';
 import UploadPage from './pages/UploadPage';
@@ -28,9 +29,20 @@ function AppContent() {
     }
   }
 
+  const showBottomNav = ['wardrobe', 'upload', 'recommend', 'collections'].includes(page);
+
   return (
     <div className="app">
       {renderPage()}
+      {showBottomNav && (
+        <BottomNav
+          page={page}
+          setPage={p => {
+            setPage(p);
+            setSelectedGarmentId(null);
+          }}
+        />
+      )}
       <Toast />
     </div>
   );

@@ -20,7 +20,7 @@ from .database import Base
 GARMENT_CATEGORIES = ["top", "bottom", "outerwear", "footwear", "accessory", "full_outfit"]
 OCCASION_TAGS = [
     "casual", "formal", "business casual", "outdoor", "sport",
-    "date night", "travel", "festival", "wedding", "everyday"
+    "date night", "travel", "festival", "wedding", "everyday", "party"
 ]
 FIT_TYPES = [
     "slim fit", "regular fit", "relaxed fit", "oversized fit",

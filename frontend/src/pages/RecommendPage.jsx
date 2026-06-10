@@ -64,30 +64,22 @@ export default function RecommendPage({ page, setPage }) {
 
   return (
     <>
-      <div className="top-nav">
-        <span className="logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>✦ AWS</span>
-        <div className="nav-links">
-          <button className={`nav-link ${page === 'wardrobe' ? 'active' : ''}`} onClick={() => setPage('wardrobe')}>Wardrobe</button>
-          <button className={`nav-link ${page === 'recommend' ? 'active' : ''}`} onClick={() => setPage('recommend')}>Recommended</button>
-          <button className={`nav-link ${page === 'collections' ? 'active' : ''}`} onClick={() => setPage('collections')}>Saved</button>
-        </div>
-        {selectedOccasion && !loading && outfits.length > 0 ? (
-          <button className="nav-action" onClick={handleRefresh} aria-label="Refresh outfits">↻</button>
-        ) : (
-          <div style={{ width: 60 }} />
-        )}
-      </div>
+      <header className="app-header">
+        <h1 className="header-logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>AI Wardrobe Stylist</h1>
+        <p className="header-tagline">Curating intelligent style recommendations.</p>
+      </header>
 
       <div className="page" style={{ paddingTop: 16 }}>
-        {/* Occasion grid — always visible */}
-        {!loading && outfits.length === 0 && (
+        {/* Occasion grid — visible only when no occasion is selected */}
+        {!selectedOccasion && !loading && (
           <>
-            <p style={{ padding: '0 16px 12px', fontSize: 18, fontWeight: 700 }}>What's the occasion?</p>
+            <h2 className="section-heading">Today's Recommendations</h2>
+            <p className="section-subheading">Select an occasion to consult your stylist</p>
             <div className="occasion-grid">
               {OCCASIONS.map(occ => (
                 <button
                   key={occ.id}
-                  className={`occasion-tile ${selectedOccasion?.id === occ.id ? 'selected' : ''}`}
+                  className="occasion-tile"
                   onClick={() => handleOccasionSelect(occ)}
                   aria-label={`Select ${occ.label} occasion`}
                 >
@@ -115,33 +107,39 @@ export default function RecommendPage({ page, setPage }) {
         )}
 
         {/* Results */}
-        {!loading && outfits.length > 0 && (
+        {selectedOccasion && !loading && (
           <>
             <div style={{ padding: '4px 16px 8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-                {outfits.length} outfit{outfits.length !== 1 ? 's' : ''} for <strong style={{ color: 'var(--text)' }}>{selectedOccasion.label}</strong>
-              </p>
               <button className="btn-ghost" style={{ fontSize: 13 }} onClick={() => { setOutfits([]); setSelectedOccasion(null); }}>
-                ← Back
+                ← Select Occasion
               </button>
+              {outfits.length > 0 && (
+                <button className="btn-ghost" style={{ fontSize: 13 }} onClick={handleRefresh}>
+                  Generate Alternatives ↻
+                </button>
+              )}
             </div>
-            <div className="outfit-cards">
-              {outfits.map((outfit, idx) => (
-                <OutfitCard
-                  key={outfit.outfitId}
-                  outfit={outfit}
-                  rank={idx + 1}
-                  garments={garments}
-                  onSave={() => setSaveModal(outfit)}
-                />
-              ))}
-            </div>
-            {outfits.length === 0 && (
+
+            {outfits.length > 0 ? (
+              <div className="outfit-cards">
+                {outfits.map((outfit, idx) => (
+                  <OutfitCard
+                    key={outfit.outfitId}
+                    outfit={outfit}
+                    rank={idx + 1}
+                    garments={garments}
+                    onSave={() => setSaveModal(outfit)}
+                  />
+                ))}
+              </div>
+            ) : (
               <div className="empty-state">
                 <span className="empty-icon">👗</span>
-                <h3>No outfits found</h3>
-                <p>Try adding more garments or selecting a different occasion.</p>
-                <button className="btn-primary" onClick={() => setPage('upload')}>Add Garments</button>
+                <h3>No outfits found for {selectedOccasion.label}</h3>
+                <p>Try tagging some garments in your wardrobe as "{selectedOccasion.label}" or upload new ones.</p>
+                <button className="btn-primary" onClick={() => setPage('upload')}>
+                  Add Garments
+                </button>
               </div>
             )}
           </>
@@ -203,22 +201,25 @@ function OutfitCard({ outfit, rank, garments: allGarments, onSave }) {
           {outfitGarments.map(g => g.name).join(' · ')}
         </p>
 
-        {/* Score bar */}
-        <div className="score-bar-row">
-          <div className="score-bar-wrap">
-            <div className={`score-bar-fill ${scoreClass}`} style={{ width: `${score}%` }} />
-          </div>
-          <span className="score-label" style={{ color: scoreClass === 'high' ? 'var(--score-high)' : scoreClass === 'mid' ? 'var(--score-mid)' : 'var(--score-low)' }}>
-            {score}%
-          </span>
+        {/* Stylist Notes */}
+        <div className="stylist-notes-section">
+          <h4 className="stylist-section-title">Stylist Notes</h4>
+          <p className="outfit-explanation">"{outfit.explanation}"</p>
         </div>
 
-        {/* LLM explanation */}
-        <p className="outfit-explanation">"{outfit.explanation}"</p>
+        {/* Why it works */}
+        <div className="why-it-works-section">
+          <h4 className="stylist-section-title">Why It Works</h4>
+          <ul className="why-list">
+            <li><strong>Color Harmony:</strong> Excellent color coordination between upper and lower garments.</li>
+            <li><strong>Proportions:</strong> The silhouette and proportions create a balanced appearance.</li>
+            <li><strong>Suitability:</strong> Highly suitable choice for maintaining a refined {outfit.occasion || 'everyday'} style.</li>
+          </ul>
+        </div>
 
         {/* Save button */}
-        <button className="save-outfit-btn" onClick={onSave} aria-label="Save outfit to collection">
-          ♡ Save to Collection
+        <button className="save-outfit-btn" onClick={onSave} aria-label="Save look to lookbook">
+          ♡ Save Look
         </button>
       </div>
     </div>
@@ -230,25 +231,25 @@ function SaveModal({ outfit, onClose, onSave }) {
   const [error, setError] = useState('');
 
   function handleSave() {
-    if (!name.trim()) { setError('Collection name is required'); return; }
+    if (!name.trim()) { setError('Lookbook name is required'); return; }
     if (name.length > 50) { setError('Name must be 50 characters or less'); return; }
     onSave(name.trim());
   }
 
   return (
-    <div className="modal-overlay" role="dialog" aria-modal="true" aria-label="Save outfit">
+    <div className="modal-overlay" role="dialog" aria-modal="true" aria-label="Save look">
       <div className="modal">
-        <h3>Save Outfit</h3>
+        <h3>Save to Lookbook</h3>
         <div className="form-group">
-          <label className="form-label">Collection name</label>
+          <label className="form-label">Lookbook Name</label>
           <input
             className={`form-input ${error ? 'warn' : ''}`}
             value={name}
             maxLength={50}
             onChange={e => { setName(e.target.value); setError(''); }}
-            placeholder="e.g. My Office Looks"
+            placeholder="e.g. Weekend Lookbook"
             autoFocus
-            aria-label="Collection name"
+            aria-label="Lookbook name"
             onKeyDown={e => e.key === 'Enter' && handleSave()}
           />
           <div className={`char-count ${name.length > 50 ? 'over' : ''}`}>{name.length}/50</div>

@@ -84,6 +84,7 @@ export default function UploadPage({ setPage }) {
         patternType: attrs.patternType || '',
         fitType: attrs.fitType || '',
         occasionTags: ['casual', 'everyday'],
+        imageUrl: attrs.imageUrl || '',
       });
       setLowConfidenceFields(attrs.lowConfidenceFields || []);
       setStep('review');
@@ -99,6 +100,7 @@ export default function UploadPage({ setPage }) {
         patternType: '',
         fitType: '',
         occasionTags: [],
+        imageUrl: '',
       });
       setLowConfidenceFields([]);
       setUploadError('Vision extraction failed. Entering manual details.');
@@ -130,7 +132,7 @@ export default function UploadPage({ setPage }) {
       setFormErrors(errors);
       return;
     }
-    addGarment({ ...form, imageUrl: imagePreview });
+    addGarment({ ...form, imageUrl: form.imageUrl || imagePreview });
     setPage('wardrobe');
   }
 
@@ -147,14 +149,14 @@ export default function UploadPage({ setPage }) {
   if (step === 'select') {
     return (
       <>
-        <div className="top-nav">
-          <button className="nav-back" onClick={() => setPage('wardrobe')} aria-label="Back">
-            ← Back
-          </button>
-          <span className="nav-title">Add Garment</span>
-          <div style={{ width: 60 }} />
-        </div>
+        <header className="app-header">
+          <h1 className="header-logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>AI Wardrobe Stylist</h1>
+          <p className="header-tagline">Curating intelligent style recommendations.</p>
+        </header>
         <div className="page" style={{ paddingTop: 16 }}>
+          <h2 className="section-heading">Add a New Garment</h2>
+          <p className="section-subheading">Upload a garment to enrich your wardrobe collection</p>
+
           <div
             className={`upload-dropzone ${dragOver ? 'drag-over' : ''}`}
             onDragOver={e => { e.preventDefault(); setDragOver(true); }}
@@ -166,7 +168,7 @@ export default function UploadPage({ setPage }) {
             onKeyDown={e => e.key === 'Enter' && fileRef.current?.click()}
             aria-label="Upload garment photo"
           >
-            <div className="upload-icon">📷</div>
+            <div className="upload-icon">📸</div>
             <h3>Upload Photo</h3>
             <p>Drag and drop or click to browse</p>
             <p style={{ marginTop: 4 }}>JPEG / PNG only · Max 5 MB</p>
@@ -196,18 +198,17 @@ export default function UploadPage({ setPage }) {
   if (step === 'processing') {
     return (
       <>
-        <div className="top-nav">
-          <button className="nav-back" onClick={() => setStep('select')} aria-label="Back">← Back</button>
-          <span className="nav-title">Add Garment</span>
-          <div style={{ width: 60 }} />
-        </div>
+        <header className="app-header">
+          <h1 className="header-logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>AI Wardrobe Stylist</h1>
+          <p className="header-tagline">Curating intelligent style recommendations.</p>
+        </header>
         <div className="page">
           {imagePreview && (
             <img src={imagePreview} alt="Uploaded garment" style={{ width: '100%', maxHeight: 280, objectFit: 'cover' }} />
           )}
           <div className="processing-state">
             <div className="spinner" aria-label="Processing" />
-            <p style={{ fontWeight: 600 }}>Analysing garment...</p>
+            <p style={{ fontWeight: 600 }}>Analyzing garment...</p>
             <div style={{ width: '100%', maxWidth: 320 }}>
               <div className="progress-wrap">
                 <div className="progress-bar" style={{ width: `${progress}%` }} />
@@ -215,7 +216,7 @@ export default function UploadPage({ setPage }) {
               <p style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center' }}>{progress}%</p>
             </div>
             <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>
-              {progress < 40 ? 'Identifying garment type...' : progress < 80 ? 'Extracting colors and fabric...' : 'Finalising...'}
+              {progress < 40 ? 'Analyzing fabric...' : progress < 80 ? 'Identifying silhouette...' : 'Detecting styling attributes...'}
             </p>
           </div>
         </div>

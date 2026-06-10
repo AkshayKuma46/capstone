@@ -30,18 +30,10 @@ export default function WardrobePage({ page, setPage, setSelectedGarmentId }) {
 
   return (
     <>
-      {/* Top Nav */}
-      <div className="top-nav">
-        <span className="logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>✦ AWS</span>
-        <div className="nav-links">
-          <button className={`nav-link ${page === 'wardrobe' ? 'active' : ''}`} onClick={() => setPage('wardrobe')}>Wardrobe</button>
-          <button className={`nav-link ${page === 'recommend' ? 'active' : ''}`} onClick={() => setPage('recommend')}>Recommended</button>
-          <button className={`nav-link ${page === 'collections' ? 'active' : ''}`} onClick={() => setPage('collections')}>Saved</button>
-        </div>
-        <button className="nav-action" onClick={() => setPage('upload')} aria-label="Add garment">
-          + Add
-        </button>
-      </div>
+      <header className="app-header">
+        <h1 className="header-logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>AI Wardrobe Stylist</h1>
+        <p className="header-tagline">Curating intelligent style recommendations.</p>
+      </header>
 
       <div className="page">
         {/* Filter bar */}
