@@ -12,6 +12,8 @@ const MOCK_EXTRACTION = {
   lowConfidenceFields: ['patternType'],
 };
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 export default function UploadPage({ setPage }) {
   const { addGarment } = useWardrobe();
   const [step, setStep] = useState('select'); // select | processing | review | manual
@@ -62,7 +64,7 @@ export default function UploadPage({ setPage }) {
       const formData = new FormData();
       formData.append('file', file);
 
-      const res = await fetch('http://localhost:8000/garments/extract-from-image', {
+      const res = await fetch(`${API_BASE}/garments/extract-from-image`, {
         method: 'POST',
         body: formData
       });

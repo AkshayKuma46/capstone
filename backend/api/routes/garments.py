@@ -47,7 +47,15 @@ async def _get_or_create_wardrobe(user_id: str, db: AsyncSession) -> Wardrobe:
     return wardrobe
 
 
-def _garment_to_dict(garment: Garment) -> dict:
+def _garment_to_dict(garment: Garment, request: Optional[Request] = None) -> dict:
+    img = garment.imageUrl
+    if img and ("localhost:8000" in img or img.startswith("/")):
+        path = img.split("localhost:8000")[-1] if "localhost:8000" in img else img
+        if request:
+            base = str(request.base_url).rstrip("/")
+            img = f"{base}{path}"
+        else:
+            img = f"http://localhost:8000{path}"
     return {
         "garmentId": garment.garmentId,
         "wardrobeId": garment.wardrobeId,
@@ -60,7 +68,7 @@ def _garment_to_dict(garment: Garment) -> dict:
         "fitType": garment.fitType,
         "styleTag": garment.styleTag,
         "occasionTags": [t.tag for t in garment.occasion_tags],
-        "imageUrl": garment.imageUrl,
+        "imageUrl": img,
         "embeddingId": garment.embeddingId,
         "createdAt": garment.createdAt.isoformat(),
         "updatedAt": garment.updatedAt.isoformat(),
@@ -164,6 +172,7 @@ Output only valid JSON, no other text."""
 @router.post("", status_code=status.HTTP_201_CREATED)
 async def create_garment(
     body: GarmentCreate,
+    request: Request,
     user_id: str = "demo-user",    # In prod, extract from JWT
     db: AsyncSession = Depends(get_db),
 ):
@@ -224,12 +233,13 @@ async def create_garment(
 
     await db.refresh(garment)
     await db.refresh(garment, ["occasion_tags"])
-    return _garment_to_dict(garment)
+    return _garment_to_dict(garment, request)
 
 
 # ── GET /garments ──────────────────────────────────────────────────────────────
 @router.get("")
 async def list_garments(
+    request: Request,
     user_id: str = "demo-user",
     category: Optional[str] = None,
     db: AsyncSession = Depends(get_db),
@@ -247,7 +257,7 @@ async def list_garments(
     garment_dicts = []
     for g in garments:
         await db.refresh(g, ["occasion_tags"])
-        garment_dicts.append(_garment_to_dict(g))
+        garment_dicts.append(_garment_to_dict(g, request))
 
     return {"garments": garment_dicts, "total": len(garment_dicts)}
 
@@ -256,6 +266,7 @@ async def list_garments(
 @router.get("/{garment_id}")
 async def get_garment(
     garment_id: str,
+    request: Request,
     user_id: str = "demo-user",
     db: AsyncSession = Depends(get_db),
 ):
@@ -270,7 +281,7 @@ async def get_garment(
     if not garment:
         raise HTTPException(status_code=404, detail="Garment not found")
     await db.refresh(garment, ["occasion_tags"])
-    return _garment_to_dict(garment)
+    return _garment_to_dict(garment, request)
 
 
 # ── PUT /garments/{id} ────────────────────────────────────────────────────────
@@ -278,6 +289,7 @@ async def get_garment(
 async def update_garment(
     garment_id: str,
     body: GarmentUpdate,
+    request: Request,
     user_id: str = "demo-user",
     db: AsyncSession = Depends(get_db),
 ):
@@ -324,14 +336,14 @@ async def update_garment(
     # Update vector store embedding
     try:
         await db.refresh(garment, ["occasion_tags"])
-        garment_dict = _garment_to_dict(garment)
+        garment_dict = _garment_to_dict(garment, request)
         vs = get_vector_store()
         vs.update_garment(garment_dict, user_id)
     except Exception as e:
         logger.error(f"[GarmentsRoute] Vector store update failed: {e}")
 
     await db.refresh(garment, ["occasion_tags"])
-    return _garment_to_dict(garment)
+    return _garment_to_dict(garment, request)
 
 
 # ── DELETE /garments/{id} ─────────────────────────────────────────────────────

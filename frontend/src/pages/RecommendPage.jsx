@@ -3,6 +3,8 @@ import { useWardrobe } from '../context/WardrobeContext';
 import { OCCASIONS, COLOR_MAP } from '../data/mockData';
 import GarmentColorBlock from '../components/GarmentColorBlock';
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 export default function RecommendPage({ page, setPage }) {
   const { garments, saveOutfitToCollection, showToast } = useWardrobe();
   const [selectedOccasion, setSelectedOccasion] = useState(null);
@@ -16,7 +18,7 @@ export default function RecommendPage({ page, setPage }) {
     setLoading(true);
     setOutfits([]);
     try {
-      const res = await fetch('http://localhost:8000/recommend', {
+      const res = await fetch(`${API_BASE}/recommend`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

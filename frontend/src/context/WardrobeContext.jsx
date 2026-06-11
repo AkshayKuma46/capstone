@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const WardrobeContext = createContext(null);
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 export function WardrobeProvider({ children }) {
   const [garments, setGarments] = useState([]);
@@ -32,7 +33,7 @@ export function WardrobeProvider({ children }) {
 
   async function fetchGarments() {
     try {
-      const res = await fetch('http://localhost:8000/garments?user_id=demo-user');
+      const res = await fetch(`${API_BASE}/garments?user_id=demo-user`);
       if (!res.ok) throw new Error('Failed to fetch garments');
       const data = await res.json();
       setGarments(data.garments || []);
@@ -43,7 +44,7 @@ export function WardrobeProvider({ children }) {
 
   async function fetchCollections() {
     try {
-      const res = await fetch('http://localhost:8000/outfits?user_id=demo-user');
+      const res = await fetch(`${API_BASE}/outfits?user_id=demo-user`);
       if (!res.ok) throw new Error('Failed to fetch outfits');
       const data = await res.json();
       setCollections(groupOutfitsIntoCollections(data.outfits || []));
@@ -59,7 +60,7 @@ export function WardrobeProvider({ children }) {
 
   async function addGarment(garment) {
     try {
-      const response = await fetch('http://localhost:8000/garments?user_id=demo-user', {
+      const response = await fetch(`${API_BASE}/garments?user_id=demo-user`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -88,7 +89,7 @@ export function WardrobeProvider({ children }) {
 
   async function updateGarment(garmentId, updates) {
     try {
-      const response = await fetch(`http://localhost:8000/garments/${garmentId}?user_id=demo-user`, {
+      const response = await fetch(`${API_BASE}/garments/${garmentId}?user_id=demo-user`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -116,7 +117,7 @@ export function WardrobeProvider({ children }) {
 
   async function deleteGarment(garmentId) {
     try {
-      const response = await fetch(`http://localhost:8000/garments/${garmentId}?user_id=demo-user`, {
+      const response = await fetch(`${API_BASE}/garments/${garmentId}?user_id=demo-user`, {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Failed to delete garment');
@@ -130,7 +131,7 @@ export function WardrobeProvider({ children }) {
 
   async function saveOutfitToCollection(outfit, collectionName) {
     try {
-      const response = await fetch('http://localhost:8000/outfits?user_id=demo-user', {
+      const response = await fetch(`${API_BASE}/outfits?user_id=demo-user`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

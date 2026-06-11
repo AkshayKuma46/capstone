@@ -36,7 +36,7 @@ GEMINI_EMBEDDING_MODEL: str = "models/text-embedding-004"
 # ── Paths ─────────────────────────────────────────────────────────────────────
 RULE_CORPUS_DIR: Path = Path(os.getenv("RULE_CORPUS_DIR", str(ROOT_DIR / "data")))
 MODELS_DIR: Path = Path(os.getenv("MODELS_DIR", str(ROOT_DIR / "models")))
-DATA_DIR: Path = ROOT_DIR / "data"
+DATA_DIR: Path = Path(os.getenv("DATA_DIR", str(ROOT_DIR / "data")))
 UPLOADS_DIR: Path = DATA_DIR / "uploads"
 
 # Ensure directories exist
