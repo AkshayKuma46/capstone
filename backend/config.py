@@ -39,11 +39,33 @@ MODELS_DIR: Path = Path(os.getenv("MODELS_DIR", str(ROOT_DIR / "models")))
 DATA_DIR: Path = Path(os.getenv("DATA_DIR", str(ROOT_DIR / "data")))
 UPLOADS_DIR: Path = DATA_DIR / "uploads"
 
-# Ensure directories exist
-CHROMA_PERSIST_DIR.mkdir(parents=True, exist_ok=True)
-MODELS_DIR.mkdir(parents=True, exist_ok=True)
-DATA_DIR.mkdir(parents=True, exist_ok=True)
-UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
+# Ensure directories exist (with fallbacks if environment variables point to unwritable paths like /data on Free Tier)
+try:
+    CHROMA_PERSIST_DIR.mkdir(parents=True, exist_ok=True)
+except (PermissionError, OSError):
+    CHROMA_PERSIST_DIR = ROOT_DIR / "chroma_db"
+    CHROMA_PERSIST_DIR.mkdir(parents=True, exist_ok=True)
+
+try:
+    MODELS_DIR.mkdir(parents=True, exist_ok=True)
+except (PermissionError, OSError):
+    MODELS_DIR = ROOT_DIR / "models"
+    MODELS_DIR.mkdir(parents=True, exist_ok=True)
+
+try:
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+except (PermissionError, OSError):
+    DATA_DIR = ROOT_DIR / "data"
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+UPLOADS_DIR = DATA_DIR / "uploads"
+try:
+    UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
+except (PermissionError, OSError):
+    DATA_DIR = ROOT_DIR / "data"
+    UPLOADS_DIR = DATA_DIR / "uploads"
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── Retrieval ─────────────────────────────────────────────────────────────────
 RAG_DEFAULT_K: int = 5
