@@ -49,8 +49,9 @@ async def _get_or_create_wardrobe(user_id: str, db: AsyncSession) -> Wardrobe:
 
 def _garment_to_dict(garment: Garment, request: Optional[Request] = None) -> dict:
     img = garment.imageUrl
-    if img and ("localhost:8000" in img or img.startswith("/")):
-        path = img.split("localhost:8000")[-1] if "localhost:8000" in img else img
+    if img and "/static/uploads/" in img:
+        filename = img.split("/static/uploads/")[-1]
+        path = f"/static/uploads/{filename}"
         if request:
             base = str(request.base_url).rstrip("/")
             img = f"{base}{path}"
@@ -152,7 +153,17 @@ Output only valid JSON, no other text."""
             )
         except Exception as e:
             logger.error(f"[GarmentsRoute] Vision extraction failed: {e}")
-            raise HTTPException(status_code=503, detail="Vision service temporarily unavailable.")
+            return VisionExtractResponse(
+                category="top",
+                primaryColor="unknown",
+                secondaryColor=None,
+                fabricType="unknown",
+                patternType=None,
+                fitType=None,
+                confidence=0.0,
+                lowConfidenceFields=["category", "primaryColor", "fabricType"],
+                imageUrl=image_url,
+            )
     else:
         # Mock response for development
         return VisionExtractResponse(

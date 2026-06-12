@@ -116,16 +116,16 @@ export default function GarmentDetailPage({ garmentId, setPage }) {
 
 function ViewDetails({ garment, hex, featuredOutfits }) {
   const rows = [
-    { label: 'Category', value: garment.category },
+    { label: 'Category', value: capitalize(garment.category) },
     { label: 'Color Palette', value: (
       <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
         <span className="color-dot" style={{ background: hex }} />
-        {garment.primaryColor} {garment.secondaryColor ? `· ${garment.secondaryColor}` : ''}
+        {capitalize(garment.primaryColor)} {garment.secondaryColor ? `· ${capitalize(garment.secondaryColor)}` : ''}
       </span>
     )},
-    { label: 'Fabric Composition', value: garment.fabricType },
-    garment.patternType && { label: 'Pattern', value: garment.patternType },
-    garment.fitType && { label: 'Fit', value: garment.fitType },
+    { label: 'Fabric Composition', value: capitalize(garment.fabricType) },
+    garment.patternType && { label: 'Pattern', value: capitalize(garment.patternType) },
+    garment.fitType && { label: 'Fit', value: capitalize(garment.fitType) },
     { label: 'Added', value: garment.createdAt },
   ].filter(Boolean);
 
@@ -182,7 +182,7 @@ function EditForm({ form, setForm, toggleOccasion, onSave, onCancel }) {
         <div className="form-group" key={field}>
           <label className="form-label">{label}</label>
           <select className="form-select" value={form[field] || ''} onChange={e => setForm(p => ({ ...p, [field]: e.target.value }))}>
-            {options.map(opt => <option key={opt} value={opt}>{opt || `Select ${label}`}</option>)}
+            {options.map(opt => <option key={opt} value={opt}>{opt ? capitalize(opt) : `Select ${label}`}</option>)}
           </select>
         </div>
       ))}
@@ -205,4 +205,9 @@ function EditForm({ form, setForm, toggleOccasion, onSave, onCancel }) {
       </div>
     </div>
   );
+}
+
+function capitalize(str) {
+  if (!str) return '';
+  return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 }

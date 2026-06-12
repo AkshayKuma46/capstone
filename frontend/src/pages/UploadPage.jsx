@@ -78,11 +78,13 @@ export default function UploadPage({ setPage }) {
 
       const attrs = await res.json();
       setForm({
-        name: `${capitalize(attrs.primaryColor)} ${capitalize(attrs.category)}`,
-        category: attrs.category,
-        primaryColor: attrs.primaryColor,
+        name: attrs.primaryColor && attrs.primaryColor !== 'unknown'
+          ? `${capitalize(attrs.primaryColor)} ${capitalize(attrs.category)}`
+          : '',
+        category: attrs.category || '',
+        primaryColor: attrs.primaryColor === 'unknown' ? '' : (attrs.primaryColor || ''),
         secondaryColor: attrs.secondaryColor || '',
-        fabricType: attrs.fabricType,
+        fabricType: attrs.fabricType === 'unknown' ? '' : (attrs.fabricType || ''),
         patternType: attrs.patternType || '',
         fitType: attrs.fitType || '',
         occasionTags: ['casual', 'everyday'],
@@ -386,5 +388,5 @@ function FormSelect({ label, required, field, options, form, setForm, errors, lo
 
 function capitalize(str) {
   if (!str) return '';
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 }

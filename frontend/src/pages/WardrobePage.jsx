@@ -45,7 +45,7 @@ export default function WardrobePage({ page, setPage, setSelectedGarmentId }) {
             aria-label="Filter by category"
           >
             {CATEGORY_OPTIONS.map(o => (
-              <option key={o} value={o}>{o === 'All' ? 'Category' : o}</option>
+              <option key={o} value={o}>{o === 'All' ? 'Category' : capitalize(o)}</option>
             ))}
           </select>
 
@@ -56,7 +56,7 @@ export default function WardrobePage({ page, setPage, setSelectedGarmentId }) {
             aria-label="Filter by color"
           >
             {COLOR_OPTIONS.map(o => (
-              <option key={o} value={o}>{o === 'All' ? 'Color' : o}</option>
+              <option key={o} value={o}>{o === 'All' ? 'Color' : capitalize(o)}</option>
             ))}
           </select>
 
@@ -67,7 +67,7 @@ export default function WardrobePage({ page, setPage, setSelectedGarmentId }) {
             aria-label="Filter by occasion"
           >
             {OCCASION_OPTIONS.map(o => (
-              <option key={o} value={o}>{o === 'All' ? 'Occasion' : o}</option>
+              <option key={o} value={o}>{o === 'All' ? 'Occasion' : capitalize(o)}</option>
             ))}
           </select>
 
@@ -124,12 +124,17 @@ function GarmentCard({ garment, onClick }) {
       )}
       <div className="garment-info">
         <div className="garment-name" title={garment.name}>{garment.name}</div>
-        <div className="garment-category">{garment.category}</div>
+        <div className="garment-category">{capitalize(garment.category)}</div>
         <div className="garment-color-label">
           <span className="color-dot" style={{ background: hex }} />
-          {garment.primaryColor}
+          {capitalize(garment.primaryColor)}
         </div>
       </div>
     </div>
   );
+}
+
+function capitalize(str) {
+  if (!str) return '';
+  return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 }

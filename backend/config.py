@@ -20,6 +20,31 @@ DATABASE_URL: str = os.getenv(
     "DATABASE_URL", "sqlite+aiosqlite:///./wardrobe.db"
 )
 
+# ── Safe Database URL Check ──
+if "sqlite" in DATABASE_URL:
+    clean_url = DATABASE_URL.replace("sqlite+aiosqlite://", "").replace("sqlite://", "")
+    if clean_url.startswith("//"):
+        path_str = clean_url[1:]
+    elif clean_url.startswith("/"):
+        path_str = clean_url[1:]
+    else:
+        path_str = clean_url
+    
+    db_path = Path(path_str)
+    db_dir = db_path.parent
+    
+    try:
+        if not db_dir.exists():
+            db_dir.mkdir(parents=True, exist_ok=True)
+        # Test writeability
+        test_file = db_dir / ".db_write_test"
+        test_file.touch()
+        test_file.unlink()
+    except (PermissionError, OSError):
+        fallback_path = ROOT_DIR / "wardrobe.db"
+        DATABASE_URL = f"sqlite+aiosqlite:///{fallback_path.as_posix()}"
+
+
 # ── Vector Store ──────────────────────────────────────────────────────────────
 VECTOR_STORE_BACKEND: str = os.getenv("VECTOR_STORE_BACKEND", "chroma")
 CHROMA_PERSIST_DIR: Path = Path(
@@ -84,8 +109,8 @@ CHAT_HISTORY_WINDOW: int = 5       # last N user-assistant pairs sent to LLM
 
 # ── LLM ──────────────────────────────────────────────────────────────────────
 LLM_TIMEOUT_SECONDS: int = 8
-LLM_MODEL: str = "gemini-1.5-flash"
-VISION_MODEL: str = "gemini-1.5-flash"
+LLM_MODEL: str = "gemini-2.5-flash"
+VISION_MODEL: str = "gemini-2.5-flash"
 
 # ── Retraining ────────────────────────────────────────────────────────────────
 RETRAIN_MAX_SCORE_DELTA: float = 10.0   # alert if mean deviation > this

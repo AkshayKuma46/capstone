@@ -32,9 +32,9 @@ export const OCCASIONS = [
 ];
 
 export const CATEGORIES = ['top', 'bottom', 'outerwear', 'footwear', 'accessory', 'full_outfit'];
-export const FABRICS = ['Cotton', 'Wool', 'Linen', 'Polyester', 'Denim', 'Silk', 'Leather', 'Cashmere', 'Synthetic'];
-export const PATTERNS = ['Solid', 'Striped', 'Checked', 'Floral', 'Plaid', 'Abstract', 'Printed'];
-export const FIT_TYPES = ['Slim Fit', 'Regular Fit', 'Relaxed Fit', 'Oversized Fit', 'Tailored Fit', 'Skinny Fit', 'Athletic Fit'];
+export const FABRICS = ['cotton', 'wool', 'linen', 'polyester', 'denim', 'silk', 'leather', 'cashmere', 'synthetic'];
+export const PATTERNS = ['solid', 'striped', 'checked', 'floral', 'plaid', 'abstract', 'printed'];
+export const FIT_TYPES = ['slim fit', 'regular fit', 'relaxed fit', 'oversized fit', 'tailored fit', 'skinny fit', 'athletic fit'];
 export const COLORS = Object.keys(COLOR_MAP);
 export const ALL_OCCASIONS = OCCASIONS.map(o => o.id);
 
