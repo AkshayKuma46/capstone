@@ -31,7 +31,7 @@ if (!PUBLISHABLE_KEY) {
             <strong style={{ display: 'block', marginBottom: '8px' }}>How to resolve:</strong>
             <ol style={{ marginLeft: '16px' }}>
               <li style={{ marginBottom: '8px' }}>
-                Go to your <strong>Vercel Settings</strong> -> <strong>Environment Variables</strong>.
+                Go to your <strong>Vercel Settings</strong> &rarr; <strong>Environment Variables</strong>.
               </li>
               <li style={{ marginBottom: '8px' }}>
                 Add <code>VITE_CLERK_PUBLISHABLE_KEY</code> with your Clerk publishable key.
