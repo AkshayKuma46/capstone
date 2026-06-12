@@ -217,7 +217,7 @@ def extract(
     output_dir: Path,
     corpus_version: str,
     api_key: str = "",
-    gemini_model: str = "gemini-1.5-flash",
+    gemini_model: str = "gemini-2.5-flash",
 ) -> tuple[Path, ExtractionJob]:
     """
     Extract styling rules from cleaned text and produce a versioned Rule_Corpus.
