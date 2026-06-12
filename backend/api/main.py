@@ -46,6 +46,13 @@ async def lifespan(app: FastAPI):
     await init_db()
     logger.info("[Startup] Database ready")
 
+    # ── DB seed ───────────────────────────────────────────────────────────────
+    logger.info("[Startup] Seeding database if empty...")
+    from db.database import AsyncSessionLocal
+    async with AsyncSessionLocal() as session:
+        from db.seed import seed_demo_data
+        await seed_demo_data(session)
+
     # ── Scorer init ───────────────────────────────────────────────────────────
     logger.info("[Startup] Loading Outfit_Scorer...")
     from ml.outfit_scorer import OutfitScorerModel
