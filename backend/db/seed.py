@@ -204,15 +204,7 @@ DEMO_GARMENTS = [
 ]
 
 async def seed_demo_data(db: AsyncSession):
-    """Seed demo garments if the database is empty."""
-    # Check if there are already any garments
-    result = await db.execute(select(Garment))
-    if result.scalars().first():
-        logger.info("[Database] Garments already exist, skipping seeding.")
-        return
-
-    logger.info("[Database] Seeding 15 sample demo garments...")
-
+    """Seed demo garments if missing."""
     # Ensure demo-user exists
     user_result = await db.execute(select(User).where(User.userId == "demo-user"))
     user = user_result.scalar_one_or_none()
@@ -229,7 +221,19 @@ async def seed_demo_data(db: AsyncSession):
         db.add(wardrobe)
         await db.flush()
 
-    for item in DEMO_GARMENTS:
+    # Check which demo garments already exist
+    result = await db.execute(select(Garment.garmentId))
+    existing_ids = set(result.scalars().all())
+
+    to_seed = [item for item in DEMO_GARMENTS if item["garmentId"] not in existing_ids]
+
+    if not to_seed:
+        logger.info("[Database] All demo garments already exist, skipping seeding.")
+        return
+
+    logger.info(f"[Database] Seeding {len(to_seed)} missing demo garments...")
+
+    for item in to_seed:
         garment = Garment(
             garmentId=item["garmentId"],
             wardrobeId=wardrobe.wardrobeId,
