@@ -123,6 +123,7 @@ class ChatMessageOut(BaseModel):
 
 # ── Vision ────────────────────────────────────────────────────────────────────
 class VisionExtractResponse(BaseModel):
+    name: Optional[str] = None
     category: str
     primaryColor: str
     secondaryColor: Optional[str]

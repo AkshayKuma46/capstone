@@ -112,6 +112,7 @@ async def extract_from_image(request: Request, file: UploadFile = File(...)):
 
             prompt = """Analyze this clothing image and extract attributes as JSON:
 {
+  "name": "specific descriptive name (e.g. Beige Hoodie, Black Slim Jeans, Navy Cashmere Sweater)",
   "category": "top|bottom|outerwear|footwear|accessory|full_outfit",
   "primaryColor": "color name",
   "secondaryColor": "color name or null",
@@ -141,6 +142,7 @@ Output only valid JSON, no other text."""
                 if v < 0.6
             ]
             return VisionExtractResponse(
+                name=attrs.get("name"),
                 category=attrs.get("category", "top"),
                 primaryColor=attrs.get("primaryColor", "unknown"),
                 secondaryColor=attrs.get("secondaryColor"),
@@ -153,7 +155,13 @@ Output only valid JSON, no other text."""
             )
         except Exception as e:
             logger.error(f"[GarmentsRoute] Vision extraction failed: {e}")
+            filename_stem = Path(file.filename).stem if file.filename else ""
+            if filename_stem and filename_stem not in ("file", "confusion_matrix", "score_distribution", "image"):
+                fallback_name = filename_stem.replace('_', ' ').replace('-', ' ').title()
+            else:
+                fallback_name = "New Garment"
             return VisionExtractResponse(
+                name=fallback_name,
                 category="top",
                 primaryColor="unknown",
                 secondaryColor=None,
@@ -166,7 +174,13 @@ Output only valid JSON, no other text."""
             )
     else:
         # Mock response for development
+        filename_stem = Path(file.filename).stem if file.filename else ""
+        if filename_stem and filename_stem not in ("file", "confusion_matrix", "score_distribution", "image"):
+            mock_name = filename_stem.replace('_', ' ').replace('-', ' ').title()
+        else:
+            mock_name = "Navy Blazer"
         return VisionExtractResponse(
+            name=mock_name,
             category="top",
             primaryColor="navy",
             secondaryColor=None,

@@ -78,9 +78,9 @@ export default function UploadPage({ setPage }) {
 
       const attrs = await res.json();
       setForm({
-        name: attrs.primaryColor && attrs.primaryColor !== 'unknown'
+        name: attrs.name || (attrs.primaryColor && attrs.primaryColor !== 'unknown'
           ? `${capitalize(attrs.primaryColor)} ${capitalize(attrs.category)}`
-          : '',
+          : ''),
         category: attrs.category || '',
         primaryColor: attrs.primaryColor === 'unknown' ? '' : (attrs.primaryColor || ''),
         secondaryColor: attrs.secondaryColor || '',
