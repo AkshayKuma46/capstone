@@ -1,7 +1,10 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const WardrobeContext = createContext(null);
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE = import.meta.env.VITE_API_URL || 
+  (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:8000'
+    : 'https://capstone-esne.onrender.com');
 
 export function WardrobeProvider({ children }) {
   const [garments, setGarments] = useState([]);
