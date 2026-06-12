@@ -261,6 +261,85 @@ async def create_garment(
     return _garment_to_dict(garment, request)
 
 
+# ── POST /garments/seed ────────────────────────────────────────────────────────
+@router.post("/seed", status_code=status.HTTP_201_CREATED)
+async def seed_user_wardrobe(
+    request: Request,
+    user_id: str,
+    db: AsyncSession = Depends(get_db),
+):
+    """Seed the user's wardrobe with the 15 default demo garments, generating unique IDs."""
+    from db.seed import DEMO_GARMENTS
+    
+    wardrobe = await _get_or_create_wardrobe(user_id, db)
+    
+    # Check if the wardrobe already has garments to avoid duplicate seeding
+    result = await db.execute(
+        select(Garment).where(Garment.wardrobeId == wardrobe.wardrobeId)
+    )
+    existing_garments = result.scalars().all()
+    if existing_garments:
+        garment_dicts = []
+        for g in existing_garments:
+            await db.refresh(g, ["occasion_tags"])
+            garment_dicts.append(_garment_to_dict(g, request))
+        return {"garments": garment_dicts, "total": len(garment_dicts), "seeded": False}
+
+    seeded_garments = []
+    for item in DEMO_GARMENTS:
+        new_id = str(uuid.uuid4())
+        
+        # Keep relative path for uploads, or preserve external URL
+        image_url = item["imageUrl"]
+        if "static/uploads/" in image_url:
+            filename = image_url.split("static/uploads/")[-1]
+            image_url = f"/static/uploads/{filename}"
+
+        garment = Garment(
+            garmentId=new_id,
+            wardrobeId=wardrobe.wardrobeId,
+            name=item["name"],
+            category=item["category"],
+            primaryColor=item["primaryColor"],
+            secondaryColor=item["secondaryColor"],
+            fabricType=item["fabricType"],
+            patternType=item["patternType"],
+            fitType=item["fitType"],
+            styleTag=item["styleTag"],
+            imageUrl=image_url,
+        )
+        db.add(garment)
+        await db.flush()
+
+        for tag in item["occasionTags"]:
+            db.add(GarmentOccasionTag(garmentId=garment.garmentId, tag=tag))
+        await db.flush()
+
+        # Update vector store
+        try:
+            from vector_store.store import get_vector_store
+            garment_dict = {
+                "garmentId": garment.garmentId,
+                "name": garment.name,
+                "category": garment.category,
+                "primaryColor": garment.primaryColor,
+                "fabricType": garment.fabricType,
+                "fitType": garment.fitType or "",
+                "styleTag": garment.styleTag or "",
+                "occasionTags": item["occasionTags"],
+            }
+            vs = get_vector_store()
+            vs.add_garment(garment_dict, user_id)
+        except Exception as e:
+            logger.error(f"[GarmentsRoute] Seeding vector store failed for {garment.garmentId}: {e}")
+
+        await db.refresh(garment, ["occasion_tags"])
+        seeded_garments.append(_garment_to_dict(garment, request))
+
+    await db.commit()
+    return {"garments": seeded_garments, "total": len(seeded_garments), "seeded": True}
+
+
 # ── GET /garments ──────────────────────────────────────────────────────────────
 @router.get("")
 async def list_garments(

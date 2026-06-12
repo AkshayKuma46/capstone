@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useWardrobe } from '../context/WardrobeContext';
 import GarmentColorBlock from '../components/GarmentColorBlock';
+import Header from '../components/Header';
 
 export default function CollectionsPage({ page, setPage }) {
   const { collections, renameCollection, deleteCollection, garments } = useWardrobe();
@@ -22,10 +23,7 @@ export default function CollectionsPage({ page, setPage }) {
 
   return (
     <>
-      <header className="app-header">
-        <h1 className="header-logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>AI Wardrobe Stylist</h1>
-        <p className="header-tagline">Curating intelligent style recommendations.</p>
-      </header>
+      <Header setPage={setPage} />
       <div className="page" style={{ paddingTop: 16 }}>
         <h2 className="section-heading">Your Lookbook</h2>
         <p className="section-subheading">Curated ensembles and seasonal style edits</p>

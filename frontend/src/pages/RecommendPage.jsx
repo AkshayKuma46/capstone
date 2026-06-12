@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useWardrobe } from '../context/WardrobeContext';
 import { OCCASIONS, COLOR_MAP } from '../data/mockData';
 import GarmentColorBlock from '../components/GarmentColorBlock';
+import Header from '../components/Header';
+import { useUser } from '@clerk/clerk-react';
 
 const API_BASE = import.meta.env.VITE_API_URL || 
   (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
@@ -10,6 +12,7 @@ const API_BASE = import.meta.env.VITE_API_URL ||
 
 export default function RecommendPage({ page, setPage }) {
   const { garments, saveOutfitToCollection, showToast } = useWardrobe();
+  const { user } = useUser();
   const [selectedOccasion, setSelectedOccasion] = useState(null);
   const [loading, setLoading] = useState(false);
   const [outfits, setOutfits] = useState([]);
@@ -25,7 +28,7 @@ export default function RecommendPage({ page, setPage }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId: 'demo-user',
+          userId: user?.id || 'demo-user',
           occasion: occ.id,
           k: 5
         })
@@ -69,10 +72,7 @@ export default function RecommendPage({ page, setPage }) {
 
   return (
     <>
-      <header className="app-header">
-        <h1 className="header-logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>AI Wardrobe Stylist</h1>
-        <p className="header-tagline">Curating intelligent style recommendations.</p>
-      </header>
+      <Header setPage={setPage} />
 
       <div className="page" style={{ paddingTop: 16 }}>
         {/* Occasion grid — visible only when no occasion is selected */}

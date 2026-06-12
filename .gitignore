@@ -35,3 +35,7 @@ Thumbs.db
 
 # Notebook checkpoints
 .ipynb_checkpoints/
+
+# User uploads & chroma database
+data/uploads/
+chroma_db/

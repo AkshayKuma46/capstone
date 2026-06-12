@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { useWardrobe } from '../context/WardrobeContext';
 import { CATEGORIES, FABRICS, PATTERNS, FIT_TYPES, COLORS, ALL_OCCASIONS } from '../data/mockData';
+import Header from '../components/Header';
 
 const MOCK_EXTRACTION = {
   category: 'outerwear',
@@ -156,10 +157,7 @@ export default function UploadPage({ setPage }) {
   if (step === 'select') {
     return (
       <>
-        <header className="app-header">
-          <h1 className="header-logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>AI Wardrobe Stylist</h1>
-          <p className="header-tagline">Curating intelligent style recommendations.</p>
-        </header>
+        <Header setPage={setPage} />
         <div className="page" style={{ paddingTop: 16 }}>
           <h2 className="section-heading">Add a New Garment</h2>
           <p className="section-subheading">Upload a garment to enrich your wardrobe collection</p>
@@ -205,10 +203,7 @@ export default function UploadPage({ setPage }) {
   if (step === 'processing') {
     return (
       <>
-        <header className="app-header">
-          <h1 className="header-logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>AI Wardrobe Stylist</h1>
-          <p className="header-tagline">Curating intelligent style recommendations.</p>
-        </header>
+        <Header setPage={setPage} />
         <div className="page">
           {imagePreview && (
             <img src={imagePreview} alt="Uploaded garment" style={{ width: '100%', maxHeight: 280, objectFit: 'cover' }} />

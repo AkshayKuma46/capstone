@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useUser } from '@clerk/clerk-react';
 
 const WardrobeContext = createContext(null);
 const API_BASE = import.meta.env.VITE_API_URL || 
@@ -7,6 +8,9 @@ const API_BASE = import.meta.env.VITE_API_URL ||
     : 'https://capstone-esne.onrender.com');
 
 export function WardrobeProvider({ children }) {
+  const { user } = useUser();
+  const userId = user?.id || 'demo-user';
+
   const [garments, setGarments] = useState([]);
   const [collections, setCollections] = useState([]);
   const [toast, setToast] = useState(null);
@@ -36,7 +40,7 @@ export function WardrobeProvider({ children }) {
 
   async function fetchGarments() {
     try {
-      const res = await fetch(`${API_BASE}/garments?user_id=demo-user`);
+      const res = await fetch(`${API_BASE}/garments?user_id=${userId}`);
       if (!res.ok) throw new Error('Failed to fetch garments');
       const data = await res.json();
       setGarments(data.garments || []);
@@ -47,7 +51,7 @@ export function WardrobeProvider({ children }) {
 
   async function fetchCollections() {
     try {
-      const res = await fetch(`${API_BASE}/outfits?user_id=demo-user`);
+      const res = await fetch(`${API_BASE}/outfits?user_id=${userId}`);
       if (!res.ok) throw new Error('Failed to fetch outfits');
       const data = await res.json();
       setCollections(groupOutfitsIntoCollections(data.outfits || []));
@@ -59,11 +63,11 @@ export function WardrobeProvider({ children }) {
   useEffect(() => {
     fetchGarments();
     fetchCollections();
-  }, []);
+  }, [userId]);
 
   async function addGarment(garment) {
     try {
-      const response = await fetch(`${API_BASE}/garments?user_id=demo-user`, {
+      const response = await fetch(`${API_BASE}/garments?user_id=${userId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -92,7 +96,7 @@ export function WardrobeProvider({ children }) {
 
   async function updateGarment(garmentId, updates) {
     try {
-      const response = await fetch(`${API_BASE}/garments/${garmentId}?user_id=demo-user`, {
+      const response = await fetch(`${API_BASE}/garments/${garmentId}?user_id=${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -120,7 +124,7 @@ export function WardrobeProvider({ children }) {
 
   async function deleteGarment(garmentId) {
     try {
-      const response = await fetch(`${API_BASE}/garments/${garmentId}?user_id=demo-user`, {
+      const response = await fetch(`${API_BASE}/garments/${garmentId}?user_id=${userId}`, {
         method: 'DELETE',
       });
       if (!response.ok) throw new Error('Failed to delete garment');
@@ -134,7 +138,7 @@ export function WardrobeProvider({ children }) {
 
   async function saveOutfitToCollection(outfit, collectionName) {
     try {
-      const response = await fetch(`${API_BASE}/outfits?user_id=demo-user`, {
+      const response = await fetch(`${API_BASE}/outfits?user_id=${userId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -168,6 +172,21 @@ export function WardrobeProvider({ children }) {
     showToast('Collection deleted');
   }
 
+  async function seedWardrobe() {
+    try {
+      const response = await fetch(`${API_BASE}/garments/seed?user_id=${userId}`, {
+        method: 'POST',
+      });
+      if (!response.ok) throw new Error('Failed to seed wardrobe');
+      const data = await response.json();
+      setGarments(data.garments || []);
+      showToast('Sample wardrobe loaded successfully ✓');
+    } catch (err) {
+      console.error(err);
+      showToast('Failed to load sample wardrobe', 'error');
+    }
+  }
+
   return (
     <WardrobeContext.Provider value={{
       garments,
@@ -180,6 +199,7 @@ export function WardrobeProvider({ children }) {
       renameCollection,
       deleteCollection,
       showToast,
+      seedWardrobe,
     }}>
       {children}
     </WardrobeContext.Provider>

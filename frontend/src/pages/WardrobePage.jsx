@@ -2,13 +2,21 @@ import { useState } from 'react';
 import { useWardrobe } from '../context/WardrobeContext';
 import GarmentColorBlock from '../components/GarmentColorBlock';
 import { COLOR_MAP } from '../data/mockData';
+import Header from '../components/Header';
 
 const CATEGORY_OPTIONS = ['All', 'top', 'bottom', 'outerwear', 'footwear', 'accessory', 'full_outfit'];
 const COLOR_OPTIONS = ['All', ...Object.keys(COLOR_MAP)];
 const OCCASION_OPTIONS = ['All', 'casual', 'business casual', 'formal', 'outdoor', 'sport', 'date night', 'travel', 'wedding', 'festival', 'party'];
 
 export default function WardrobePage({ page, setPage, setSelectedGarmentId }) {
-  const { garments } = useWardrobe();
+  const { garments, seedWardrobe } = useWardrobe();
+  const [seeding, setSeeding] = useState(false);
+
+  async function handleSeed() {
+    setSeeding(true);
+    await seedWardrobe();
+    setSeeding(false);
+  }
   const [filterCategory, setFilterCategory] = useState('All');
   const [filterColor, setFilterColor] = useState('All');
   const [filterOccasion, setFilterOccasion] = useState('All');
@@ -30,10 +38,7 @@ export default function WardrobePage({ page, setPage, setSelectedGarmentId }) {
 
   return (
     <>
-      <header className="app-header">
-        <h1 className="header-logo" onClick={() => setPage('wardrobe')} style={{ cursor: 'pointer' }}>AI Wardrobe Stylist</h1>
-        <p className="header-tagline">Curating intelligent style recommendations.</p>
-      </header>
+      <Header setPage={setPage} />
 
       <div className="page">
         {/* Filter bar */}
@@ -81,10 +86,15 @@ export default function WardrobePage({ page, setPage, setSelectedGarmentId }) {
           <div className="empty-state">
             <span className="empty-icon">👔</span>
             <h3>Your wardrobe is empty</h3>
-            <p>Upload your first garment to get started</p>
-            <button className="btn-primary" onClick={() => setPage('upload')}>
-              Upload a Garment
-            </button>
+            <p>Upload your first garment or load a sample collection to get started</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 8 }}>
+              <button className="btn-primary" onClick={() => setPage('upload')}>
+                Upload a Garment
+              </button>
+              <button className="btn-secondary" onClick={handleSeed} disabled={seeding}>
+                {seeding ? 'Loading Sample...' : 'Load Sample Wardrobe'}
+              </button>
+            </div>
           </div>
         ) : filtered.length === 0 ? (
           <div className="empty-state">
