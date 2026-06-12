@@ -5,7 +5,7 @@ import App from './App.jsx'
 import { ClerkProvider } from '@clerk/clerk-react'
 
 // Import Clerk publishable key with a placeholder fallback
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || import.meta.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 if (!PUBLISHABLE_KEY) {
   console.warn("Warning: VITE_CLERK_PUBLISHABLE_KEY is missing. Please set it in your environment or Vercel dashboard.");
