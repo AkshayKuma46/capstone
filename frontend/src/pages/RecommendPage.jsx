@@ -3,7 +3,7 @@ import { useWardrobe } from '../context/WardrobeContext';
 import { OCCASIONS, COLOR_MAP } from '../data/mockData';
 import GarmentColorBlock from '../components/GarmentColorBlock';
 import Header from '../components/Header';
-import { useUser } from '@clerk/clerk-react';
+import { useUser } from '../context/authHelper';
 
 const API_BASE = import.meta.env.VITE_API_URL || 
   (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')

@@ -49,7 +49,15 @@ function AppContent() {
   );
 }
 
-export default function App() {
+export default function App({ bypassAuth }) {
+  if (bypassAuth) {
+    return (
+      <WardrobeProvider>
+        <AppContent />
+      </WardrobeProvider>
+    );
+  }
+
   return (
     <>
       <SignedIn>

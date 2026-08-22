@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { useUser } from '@clerk/clerk-react';
+import { useUser } from './authHelper';
 
 const WardrobeContext = createContext(null);
 const API_BASE = import.meta.env.VITE_API_URL || 
